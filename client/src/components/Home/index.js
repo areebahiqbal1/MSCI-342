@@ -135,7 +135,7 @@ class Home extends Component {
           >
             {this.state.mode === 0 ? (
               <React.Fragment>
-                Welcome to MSci245!
+                File upload page
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -143,7 +143,6 @@ class Home extends Component {
               </React.Fragment>
             )}
           </Typography>
-
         </Grid>
       </Grid>
     )

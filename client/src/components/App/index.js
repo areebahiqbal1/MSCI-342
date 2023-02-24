@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-const endpoint = "localhost:3000";
+const endpoint = "https://codesandbox.io/s/xv8lll8k8o";
 class App extends Component {
   state = {
     selectedFile: null,

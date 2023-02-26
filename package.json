@@ -7,6 +7,10 @@
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.10",
+    "@types/three": "^0.149.0",
     "body-parser": "^1.18.3",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
@@ -20,7 +24,8 @@
     "nodemailer": "^6.4.11",
     "nodemon": "^1.19.3",
     "react-with-firebase-auth": "^1.0.3",
-    "recompose": "^0.30.0"
+    "recompose": "^0.30.0",
+    "three": "^0.150.0"
   },
   "devDependencies": {
     "concurrently": "^4.0.1"

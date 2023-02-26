@@ -9,6 +9,27 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+//import Slide from '@material-ui/core/Slide';
+//import logo from './logo.png';
+//F8B195   F67280   C06C84   6C5B7B   355C7D
+const lighttheme = createTheme({
+  palette: {
+    type: "light",
+    background: {
+      default: "#ffedf3", //pinkish
+    },
+    primary: {
+      main: "#facad9", //pink
+    },
+    secondary: {
+      main: "#ff003c", //pinker
+    },
+  },
+});
+
+
 const INITIAL_STATE = {
   email: "",
   password: "",
@@ -94,7 +115,10 @@ class SignUpFormBase extends Component {
     const isInvalid = password === "" || email === "";
 
     return (
-      <div>
+
+      <MuiThemeProvider theme={lighttheme}>
+        <CssBaseline />
+
         <Grid
           container
           spacing={0}
@@ -159,17 +183,22 @@ class SignUpFormBase extends Component {
                   variant="contained"
                   color="primary"
                 >
-                  Sign In
+
+                  Sign Up
+
                 </Button>
               </form>
             </Container>
           </Grid>
         </Grid>
-      </div>
+
+      </MuiThemeProvider>
+
     );
   }
 }
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
 
-export default SignUpForm;
+export default SignUpForm;
+

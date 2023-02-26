@@ -1,18 +1,36 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
-import { withFirebase } from '../Firebase';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "../Firebase";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
+//import Slide from '@material-ui/core/Slide';
+//import logo from './logo.png';
+//F8B195   F67280   C06C84   6C5B7B   355C7D
+const lighttheme = createTheme({
+  palette: {
+    type: "light",
+    background: {
+      default: "#ffedf3", //pinkish
+    },
+    primary: {
+      main: "#facad9", //pink
+    },
+    secondary: {
+      main: "#ff003c", //pinker
+    },
+  },
+});
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   error: null,
 };
 
@@ -22,19 +40,18 @@ class SignInFormBase extends Component {
 
     this.state = {
       ...INITIAL_STATE,
-      browserType: '',
+      browserType: "",
       error: false,
       passwordResetEmailSent: false,
       errorPasswordResetEmailSent: false,
-
     };
   }
 
   componentDidMount() {
-   //
+    //
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     const { email, password } = this.state;
 
     this.props.firebase
@@ -43,14 +60,14 @@ class SignInFormBase extends Component {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push("/");
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ error: true });
       });
 
     event.preventDefault();
   };
 
-  onPasswordReset = event => {
+  onPasswordReset = (event) => {
     const email = this.state.email;
     console.log("email: ", email);
 
@@ -60,131 +77,119 @@ class SignInFormBase extends Component {
         // Email sent.
         this.setState({
           error: false,
-          passwordResetEmailSent: true
+          passwordResetEmailSent: true,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         // An error happened.
         this.setState({
           error: false,
-          errorPasswordResetEmailSent: true
+          errorPasswordResetEmailSent: true,
         });
-    });
-  }
+      });
+  };
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
-
     const { email, password, error } = this.state;
-    const isInvalid = password === '' || email === '';
-
+    const isInvalid = password === "" || email === "";
 
     return (
-
-        <div >
-
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justify="center"
-            
-          >
-            <Grid item>
-              <Container maxWidth="xs">
-                <form  noValidate onSubmit={this.onSubmit}>
-                  <div >
-                    <Typography component="h1" variant="h10" color="primary">
-                      Sign In
-				        </Typography>
-                  </div>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    value={email}
-                    onChange={this.onChange}
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    InputLabelProps={{ shrink: true }}
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    value={password}
-                    onChange={this.onChange}
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    InputLabelProps={{ shrink: true }}
-                  />
-                  <React.Fragment>
+      <MuiThemeProvider theme={lighttheme}>
+        <CssBaseline />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item>
+            <Container maxWidth="xs">
+              <form noValidate onSubmit={this.onSubmit}>
+                <div>
+                  <Typography component="h1" variant="h10" color="primary">
+                    Sign In
+                  </Typography>
+                </div>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  value={email}
+                  onChange={this.onChange}
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  InputLabelProps={{ shrink: true }}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  value={password}
+                  onChange={this.onChange}
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  InputLabelProps={{ shrink: true }}
+                />
+                <React.Fragment>
                   {this.state.error ? (
                     <Typography>
                       Wrong userID or password.
-                      <Link
-                        variant="body1"
-                        onClick = {this.onPasswordReset}
-                      >
+                      <Link variant="body1" onClick={this.onPasswordReset}>
                         Reset password.
-				              </Link>
+                      </Link>
                     </Typography>
                   ) : (
-                      ''
-                    )}
-                  </React.Fragment>
-                  <React.Fragment>
+                    ""
+                  )}
+                </React.Fragment>
+                <React.Fragment>
                   {this.state.passwordResetEmailSent ? (
                     <Typography>
                       Password reset link sent to <b>{this.state.email}</b>
                     </Typography>
                   ) : (
-                      ''
-                    )}
-                  </React.Fragment>
-                  <React.Fragment>
+                    ""
+                  )}
+                </React.Fragment>
+                <React.Fragment>
                   {this.state.errorPasswordResetEmailSent ? (
                     <Typography>
                       Account with this email address does not exist.
                     </Typography>
                   ) : (
-                      ''
-                    )}
-                  </React.Fragment>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                  >
-                    Sign In
-				          </Button>
-                </form>
-              </Container>
-            </Grid>
+                    ""
+                  )}
+                </React.Fragment>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                >
+                  Sign In
+                </Button>
+              </form>
+            </Container>
           </Grid>
-        </div>
+        </Grid>
+      </MuiThemeProvider>
     );
   }
 }
 
-
-
-const SignInForm = compose(
-  withRouter,
-  withFirebase,
-)(SignInFormBase);
+const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
 
 export default SignInForm;

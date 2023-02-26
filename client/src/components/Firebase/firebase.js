@@ -1,6 +1,7 @@
 import app from "firebase/app";
 import "firebase/auth";
 
+
 // Paste the firebaseConfig here
 const firebaseConfig = {
   apiKey: "AIzaSyDHha0h6ik1RmlL2DpCp6s2DDhkx4K-Z6k",
@@ -10,6 +11,7 @@ const firebaseConfig = {
   storageBucket: "can-do-coop.appspot.com",
   messagingSenderId: "487317813419",
   appId: "1:487317813419:web:878b17857a34b1aa7f5fee",
+
 };
 
 class Firebase {

@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const { response } = require('express');
 const port = process.env.PORT || 5000;
 
+// add this block (up until the double line space) to server.js
 const PORT = 4000;
 const express = require('express');
 const fileUpload = require('express-fileupload');
@@ -22,8 +23,8 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+//add the code until the listen port line to server.js
 app.use(express.static(path.join(__dirname, "client/build")));
-
 app.use(
 	fileUpload({
 		useTempFiles: true,
@@ -39,12 +40,17 @@ app.post('/upload', (req, res, next) => {
 	const md5 = require('md5');
 	const md5File = md5(uploadFile);
 	const saveAs = `${md5File}_${name}`;
-	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function(err) {
-	  if (err) {
-		return res.status(500).send(err);
-	  }
-	  return res.status(200).json({ status: 'uploaded', name, saveAs });
+	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		return res.status(200).json({ status: 'uploaded', name, saveAs });
 	});
-  });
+});
+
+
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version
 //app.listen(port, '129.97.25.211'); //for the deployed version, specify the IP address of the server
+
+
+//run the following commands: npm i md5, npm i express-fileupload, npm i cors

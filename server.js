@@ -24,28 +24,6 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.post('/api/loadUserSettings', (req, res) => {
-
-	let connection = mysql.createConnection(config);
-	let userID = req.body.userID;
-
-	let sql = `SELECT mode FROM user WHERE userID = ?`;
-	console.log(sql);
-	let data = [userID];
-	console.log(data);
-
-	connection.query(sql, data, (error, results, fields) => {
-		if (error) {
-			return console.error(error.message);
-		}
-
-		let string = JSON.stringify(results);
-		//let obj = JSON.parse(string);
-		res.send({ express: string });
-	});
-	connection.end();
-});
-
 app.use(
 	fileUpload({
 		useTempFiles: true,
@@ -58,8 +36,9 @@ app.use(
 app.post('/upload', (req, res, next) => {
 	let uploadFile = req.files.file;
 	const name = uploadFile.name;
-	const md5 = uploadFile.md5();
-	const saveAs = `${md5}_${name}`;
+	const md5 = require('md5');
+	const md5File = md5(uploadFile);
+	const saveAs = `${md5File}_${name}`;
 	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function(err) {
 	  if (err) {
 		return res.status(500).send(err);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-const endpoint = "https://codesandbox.io/s/xv8lll8k8o";
+const endpoint = "http://localhost:4000/upload";
 class App extends Component {
   state = {
     selectedFile: null,
@@ -31,13 +31,13 @@ class App extends Component {
     const data = new FormData();
     data.append("file", this.state.selectedFile, this.state.selectedFile.name);
     axios
-      .post(endpoint, data, {
-        onUploadProgress: ProgressEvent => {
+      .post(endpoint, data,  {
+        onUploadProgress: (ProgressEvent) => {
           this.setState({
             loaded: Math.round(
               (ProgressEvent.loaded / ProgressEvent.total) * 100
             )
-          });
+          })
         }
       })
       .then(res => {

@@ -16,6 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import FileApp from './FileApp'
 
 const opacityValue = 0.9;
 
@@ -99,10 +100,7 @@ const App = () => {
                     </Typography>
                     <br />
                     <Grid>
-                        <Button variant="contained" component="label" color='primary'>
-                            Upload
-                            <input hidden accept="file/*"  type="file" onChange={handleUpload}/>
-                        </Button>
+                        <FileApp />
                         <Grid>{upload}</Grid>
                     </Grid>
                     <br />

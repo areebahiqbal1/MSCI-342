@@ -1,6 +1,7 @@
 let mysql = require('mysql');
 let config = require('./config.js');
 const fetch = require('node-fetch');
+const path = require("path");
 
 // Authentication services
 require("dotenv").config();
@@ -12,15 +13,42 @@ admin.initializeApp({
 	databaseURL: "" //Paste databaseURL from firebaseConfig here
 });
 
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-
+const PORT = 4000;
 const { response } = require('express');
-const app = express();
 const port = process.env.PORT || 5000;
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const app = express();
+app.use(cors());
+app.get('/', (req, res) => {
+	return res.status(200).send("It's working");
+}); app.listen(PORT, () => {
+	console.log('Server Running sucessfully.');
+});
+
+app.use(express.static(path.join(__dirname, "client/build")));
+app.use(
+	fileUpload({
+		useTempFiles: true,
+		safeFileNames: true,
+		preserveExtension: 4,
+		tempFileDir: `${__dirname}/public/files/temp`
+	})
+);
+
+app.post('/upload', (req, res, next) => {
+	let uploadFile = req.files.file;
+	const name = uploadFile.name;
+	const md5File = req.files.file.md5;
+	const saveAs = `${md5File}_${name}`;
+	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		return res.status(200).json({ status: 'uploaded', name, saveAs });
+	});
+});
 
 app.use(express.static(path.join(__dirname, "client/build")));
 

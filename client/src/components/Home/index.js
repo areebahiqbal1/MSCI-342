@@ -6,8 +6,36 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import history from "../Navigation/history";
+import Box from "@material-ui/core/Box";
+import { createTheme, ThemeProvider, styled } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Container from '@material-ui/core/Container';
+import Toolbar from '@material-ui/core/Toolbar';
+
 
 const serverURL = "";
+
+const lightTheme = createTheme({
+  palette: {
+    type: 'light',
+    background: {
+      default: "#ffffff"
+    },
+    primary: {
+      main: '#ef9a9a',
+      light: '#ffcccb',
+      dark: '#ba6b6c',
+      background: '#eeeeee'
+    },
+    secondary: {
+      main: "#b71c1c",
+      light: '#f05545',
+      dark: '#7f0000'
+    },
+  },
+});
+
+const opacityValue = 0.9;
 
 class HomeBase extends React.Component {
   constructor(props) {
@@ -85,40 +113,83 @@ class HomeBase extends React.Component {
 
   render() {
     return (
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        justify="flex-end"
-        alignItems="center"
-      >
-        <Grid>
-          <Typography variant="h6">Home Page</Typography>
-        </Grid>
-        <Grid>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={this.signOut.bind(this)}
+        <ThemeProvider theme={lightTheme}>
+          <AppBar position="static">
+            <Container maxWidth="xl">
+              <Toolbar disableGutters>
+                <Button
+                  key='1'
+                  onClick={() => history.push('/')}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Home
+                </Button>
+                <Button
+                  key='2'
+                  onClick={() => history.push('/MyFiles')}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  My Files
+                </Button>
+                <Button
+                  key='3'
+                  onClick={() => history.push('/Upload')}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Upload
+                </Button>
+                <Button
+                  key='4'
+                  onClick={() => history.push('/Profile')}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Profile
+                </Button>
+                <Button
+                  key='5'
+                  onClick={this.signOut.bind(this)}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  SignOut
+                </Button>
+                <Button
+                  key='6'
+                  onClick={() => history.push('/Review')}
+                  sx={{ my: 2, color: 'red', display: 'block' }}
+                >
+                  Review
+                </Button>
+              </Toolbar>
+            </Container>
+          </AppBar>
+          <Box
+            sx={{
+              height: '100vh',
+              opacity: opacityValue,
+              overflow: 'scroll',
+              backgroundSize: "cover"
+            }}
           >
-            Sign Out
-          </Button>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => history.push("/Account")}
-          >
-            profile
-          </Button>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => history.push("/Upload")}
-          >
-            Upload File
-          </Button>
-        </Grid>
-      </Grid>
+            <Grid
+              container
+              spacing={1}
+              style={{ maxWidth: '100%' }}
+              direction="column"
+              justify="flex-start"
+              alignItems="stretch"
+              align="center"
+            >
+              <br />
+              <Typography variant="h3" gutterBottom component="div">
+                Home
+              </Typography>
+              <Typography variant="h6" component="div">
+                Welcome Back!
+              </Typography>
+              <br />
+            </Grid>
+          </Box>
+        </ThemeProvider>
     );
   }
 }

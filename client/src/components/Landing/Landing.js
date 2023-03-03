@@ -96,7 +96,7 @@ function TheLanding() {
 
   return (
     <MuiThemeProvider theme={lighttheme}>
-      <CssBaseline />
+      
       <Grid
         container
         direction="column"

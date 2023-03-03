@@ -8,6 +8,7 @@ import history from '../Navigation/history';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@mui/material/Paper';
 
 const opacityValue = 0.9;
 //const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3306";
@@ -38,6 +39,14 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 
 const App = () => {
 
+    const Item = styled(Paper)(({ theme }) => ({
+        ...theme.typography.body2,
+        textAlign: 'center',
+        color: lightTheme.palette.primary.light,
+        height: 37,
+        lineHeight: '40px',
+    }));
+
     const [docList, setDocList] = React.useState([]);
 
     React.useEffect(() => {
@@ -60,8 +69,7 @@ const App = () => {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "http://localhost:3000"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
 
@@ -73,14 +81,20 @@ const App = () => {
     }
 
     const createList = (givenList) => {
-        {givenList.map((doc) => {
-            return (
-                <Typography>
-                    {doc.doc_name}
-                </Typography>
+        {
+            givenList.map((doc) => {
+                return (
+                    <Typography>
+                        {doc.doc_name}
+                    </Typography>
+                )
+            }
             )
         }
-        )}
+    }
+
+    const handleSubmit = () => {
+        
     }
 
     return (
@@ -144,7 +158,7 @@ const App = () => {
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: '50%' }}
+                    style={{ maxWidth: '73.5%' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
@@ -159,9 +173,26 @@ const App = () => {
                     <Grid>
                         {docList.map((doc) => {
                             return (
-                                <Typography>
-                                    {doc.doc_name}
-                                </Typography>
+                                <Box
+                                    sx={{
+                                        p: 1,
+                                        bgcolor: 'primary.light',
+                                        display: '',
+                                        gridTemplateColumns: { md: '1fr 1fr' },
+                                        gap: 1,
+                                    }}
+                                >
+                                    <Grid container spacing={0}>
+                                        <Grid item xs={5}><Item>{doc.doc_name}</Item></Grid>
+                                        <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
+                                        <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
+                                        <Grid item xs={2.5} spacing={0}>
+                                            <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
+                                            <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
+                                            <Button variant="contained" color='secondary' onClick={handleSubmit} >COMMENTS</Button>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
                             )
                         }
                         )}

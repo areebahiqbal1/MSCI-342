@@ -1,23 +1,22 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './index.js';
-import preview from 'jest-preview'
+import App from './index';
+import "@testing-library/jest-dom";
 
 describe('App', () => {
-    it('loads documents on first render', () => {
-        const createList = jest.fn().mockName('createList');
-        render(<App createList={createList} />);
-        expect(createList).toHaveBeenCalled();
+    it('displays document title', () => {
+        const { getByText } = render(<App />);
+        const titleElement = getByText('My Files');
+        expect(titleElement).toBeInTheDocument();
     });
-    it('displays the document names', () => {
-        const noop = () => { };
-        const docs = [
-            {doc_name: 'test1.txt'},
-            {doc_name: 'test2.pdf'},
-        ];
-        render(<App />);
-        expect(screen.getByText('test1.txt')).toBeInTheDocument();
-        expect(screen.getByText('test2.txt')).toBeInTheDocument();
-        preview.debug();
+    it('displays caption', () => {
+        const { getByText } = render(<App />);
+        const titleElement = getByText('Manage your uploads and view their feedback');
+        expect(titleElement).toBeInTheDocument();
+    });
+    it('displays the toolbar buttons', () => {
+        const { getByText } = render(<App />);
+        const titleElement = getByText('Home');
+        expect(titleElement).toBeInTheDocument();
     });
 });

@@ -17,10 +17,16 @@ admin.initializeApp({
 const PORT = 4000;
 const { response } = require('express');
 
-
+const express = require("express");
+const bodyParser = require("body-parser");
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 app.use(cors());
 app.get('/', (req, res) => {
 	return res.status(200).send("It's working");
@@ -85,15 +91,7 @@ app.post('/api/getDocs', (req, res) => {
 	connection.end();
 });
 
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
 
-const { response } = require("express");
-const app = express();
-const port = process.env.PORT || 5000;
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 
 app.use(express.static(path.join(__dirname, "client/build")));

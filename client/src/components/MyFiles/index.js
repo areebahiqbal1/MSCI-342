@@ -72,6 +72,17 @@ const App = () => {
         return body;
     }
 
+    const createList = (givenList) => {
+        {givenList.map((doc) => {
+            return (
+                <Typography>
+                    {doc.doc_name}
+                </Typography>
+            )
+        }
+        )}
+    }
+
     return (
         <ThemeProvider theme={lightTheme}>
             <AppBar position="static">
@@ -154,6 +165,7 @@ const App = () => {
                             )
                         }
                         )}
+                        {createList(docList)}
                     </Grid>
                     <br />
                 </MainGridContainer>

@@ -110,6 +110,13 @@ class HomeBase extends React.Component {
           >
             profile
           </Button>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => history.push("/Upload")}
+          >
+            Upload File
+          </Button>
         </Grid>
       </Grid>
     );

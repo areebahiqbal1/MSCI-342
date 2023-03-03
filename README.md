@@ -8,6 +8,6 @@ Project Description:
   
  Installation:
   May need:
-   $ npm install axios
-   $ npm install bootstrap
-   $ npm install firebase
+   - npm install axios
+   - npm install bootstrap
+   - npm install firebase

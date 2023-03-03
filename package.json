@@ -32,6 +32,15 @@
     "three": "^0.150.0"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@testing-library/react": "^12.1.2",
+    "babel-jest": "^24.9.0",
+    "concurrently": "^4.0.1",
+    "cypress": "^9.6.0",
+    "jest": "^24.9.0",
+    "react-dom": "^16.8.6",
+    "react-test-renderer": "^16.8.6",
+    "ts-jest": "^29.0.5"
   }
 }

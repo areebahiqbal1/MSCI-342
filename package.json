@@ -28,6 +28,7 @@
     "three": "^0.150.0"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "cypress": "9.6.0"
   }
 }

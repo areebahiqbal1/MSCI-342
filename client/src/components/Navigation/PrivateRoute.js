@@ -1,6 +1,7 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import SignInForm from "../SignIn";
+import UploadForm from "../Upload";
 import SignUpPage from "../SignUp";
 import LandingPage from "../Landing";
 import HomePage from "../Home";
@@ -25,6 +26,7 @@ export default function PrivateRoute({ authenticated, ...rest }) {
         />
         <Route path="/SignIn" component={SignInForm} />
         <Route path="/SignUp" component={SignUpPage} />
+        <Route path="/Upload" component={UploadForm} />
       </Switch>
     </Router>
   );

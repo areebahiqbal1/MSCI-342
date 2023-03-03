@@ -20,6 +20,9 @@ const NavigationAuth = () => (
       <Link to={ROUTES.PROFILE}>Profile</Link>
     </li>
     <li>
+      <Link to={ROUTES.UPLOAD}>Upload</Link>
+    </li>
+    <li>
       <SignOutButton />
     </li>
   </ul>

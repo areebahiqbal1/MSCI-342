@@ -1,7 +1,7 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router-dom";
 
-import SignInForm from "../SignIn";
+import SignInForm from "../SignIn/SignIn";
 import UploadForm from "../Upload";
 import MyFilesPage from "../MyFiles";
 import SignUpPage from "../SignUp";

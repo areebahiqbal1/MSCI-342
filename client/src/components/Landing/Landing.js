@@ -69,7 +69,7 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import resume from "./resumee.jpg";
+//import resume from "./resumee.jpg";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 //import Slide from '@material-ui/core/Slide';
@@ -122,9 +122,9 @@ const CardTitle = () => {
           height="300"
           sx={{ width: 200, display: { xs: "none", sm: "block" } }}
           //image="/static/images/cards/contemplative-reptile.jpg"
-          img
-          src={resume}
-          alt="resume"
+          // img
+          // src={resume}
+          // alt="resume"
         />
 
         <CardContent sx={{ flex: 6 }}>

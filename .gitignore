@@ -1,7 +1,7 @@
 node_modules/
 client/node_modules/
 client/build/
-#serviceAccountKey.json
+##serviceAccountKey.json
 .env
 .vscode
 package-lock.json

@@ -8,7 +8,6 @@ import history from '../Navigation/history';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
-import FileApp from './FileApp'
 
 const opacityValue = 0.9;
 
@@ -105,14 +104,13 @@ const App = () => {
                     alignItems="stretch"
                 >
                     <Typography variant="h3" gutterBottom component="div">
-                        Upload Documents
+                        Profile
                     </Typography>
                     <Typography variant="h6" component="div">
-                        Resumes, Cover Letters, or Work Term Reports
+                        Manage your information
                     </Typography>
                     <br />
                     <Grid>
-                        <FileApp />
                     </Grid>
                     <br />
                 </MainGridContainer>

@@ -1,7 +1,15 @@
+
+import Box from "@material-ui/core/Box";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Button from '@material-ui/core/Button';
 //pretty much add this entire file in terms of code to whatever page you want this for
 
 import React, { Component } from "react";
 import axios from "axios";
+import { Dropdown } from "bootstrap";
 
 //endpoint is temprorary right now.  Server endpoint can be added once we actually need this running on the server.
 const endpoint = "http://localhost:4000/upload";
@@ -11,7 +19,9 @@ class FileApp extends Component {
     loaded: 0,
     message: "Choose a file...",
     defaultmessage: "Choose a file...",
-    uploading: false
+    uploading: false,
+    docType: "",
+    docTag: ""
   };
   handleFileChange = event => {
     this.setState({
@@ -22,9 +32,28 @@ class FileApp extends Component {
         : this.state.defaultmessage
     });
   };
+  handleTypeChange = event => {
+    this.setState({
+      docType: event.target.value
+    });
+  };
+  handleTagChange = event => {
+    this.setState({
+      docTag: event.target.value
+    });
+  };
   handleUpload = event => {
+    
     event.preventDefault();
     if (this.state.uploading) return;
+    if (this.state.docType == ""){
+      this.setState({ message: "Select a document type first" });
+      return;
+    }
+    if (this.state.docTag == ""){
+      this.setState({ message: "Select a industry of intrest first" });
+      return;
+    }
     if (!this.state.selectedFile) {
       this.setState({ message: "Select a file first" });
       return;
@@ -34,8 +63,10 @@ class FileApp extends Component {
     const data = new FormData();
     data.append("file", this.state.selectedFile);
     data.append("fileName", this.state.selectedFile.name)
+    data.append("type", this.state.docType)
+    data.append("tag", this.state.docTag)
     axios
-      .post(endpoint, data,  {
+      .post(endpoint, data, {
         onUploadProgress: (ProgressEvent) => {
           this.setState({
             loaded: Math.round(
@@ -47,6 +78,8 @@ class FileApp extends Component {
       .then(res => {
         this.setState({
           selectedFile: null,
+          docType: "",
+          docTag: "",
           message: "Uploaded successfully",
           uploading: false
         });
@@ -59,36 +92,65 @@ class FileApp extends Component {
       });
   };
   render() {
+    const { docType, docTag } = this.state;
     return (
-      <form className="box" onSubmit={this.handleUpload}>
-        <input
-          type="file"
-          name="file-5[]"
-          id="file-5"
-          className="inputfile inputfile-4"
-          onChange={this.handleFileChange}
-        />
-        <label htmlFor="file-5">
-          <figure>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="17"
-              viewBox="0 0 20 17"
+      <div>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Document Type</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={docType}
+              label="Document Type"
+              onChange={this.handleTypeChange}
             >
-              <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
-            </svg>
-          </figure>
-          <span>
-            {this.state.uploading
-              ? this.state.loaded + "%"
-              : this.state.message}
-          </span>
-        </label>
-        <button className="submit" onClick={this.handleUpload}>
-          Upload
-        </button>
-      </form>
+              <MenuItem value={'Resume'}>Resume</MenuItem>
+              <MenuItem value={'WorkTermReport'}>Work Term Report</MenuItem>
+              <MenuItem value={'CoverLetter'}>Cover Letter</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <br />
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={docTag}
+              label="Document Tag"
+              onChange={this.handleTagChange}
+            >
+              <MenuItem value={'Finance'}>Finance</MenuItem>
+              <MenuItem value={'Coding'}>Coding</MenuItem>
+              <MenuItem value={'Accounting'}>Accounting</MenuItem>
+              <MenuItem value={'Arts'}>Arts</MenuItem>
+              <MenuItem value={'Science'}>Science</MenuItem>
+              <MenuItem value={'Engineering'}>Engineering</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <br />
+        <form className="box" onSubmit={this.handleUpload}>
+          <input
+            type="file"
+            name="file-5[]"
+            id="file-5"
+            className="inputfile inputfile-4"
+            onChange={this.handleFileChange}
+          />
+        </form>
+        <br />
+          <Button variant="contained" color='secondary' onClick={this.handleUpload} style={{marginRight: '10px'}}>Upload</Button>
+          <label htmlFor="file-5">
+            <span>
+              {this.state.uploading
+                ? this.state.loaded + "%"
+                : this.state.message}
+            </span>
+          </label>
+      </div>
     );
   }
 }

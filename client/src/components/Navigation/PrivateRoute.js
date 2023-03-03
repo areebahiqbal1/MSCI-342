@@ -5,7 +5,7 @@ import SignInForm from "../SignIn/SignIn";
 import UploadForm from "../Upload";
 import MyFilesPage from "../MyFiles";
 import SignUpPage from "../SignUp";
-import LandingPage from "../Landing";
+import LandingPage from "../Landing/Landing";
 import ProfilePage from "../Profile";
 
 import HomePage from "../Home";

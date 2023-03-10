@@ -118,13 +118,14 @@ const App = () => {
                     alignItems="stretch"
                 >
                     <Typography variant="h3" gutterBottom component="div">
-                        Profile
+                        Doc View
                     </Typography>
                     <Typography variant="h6" component="div">
-                        Manage your information
+                        View comments and edit your document.
                     </Typography>
                     <br />
                     <Grid>
+                        
                     </Grid>
                     <br />
                 </MainGridContainer>

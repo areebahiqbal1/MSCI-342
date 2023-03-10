@@ -23,6 +23,12 @@ const NavigationAuth = () => (
       <Link to={ROUTES.UPLOAD}>Upload</Link>
     </li>
     <li>
+      <Link to={ROUTES.REVIEW}>Review</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.VIEW}>View</Link>
+    </li>
+    <li>
       <Link to={ROUTES.MYFILES}>MyFiles</Link>
     </li>
     <li>

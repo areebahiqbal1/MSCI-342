@@ -85,6 +85,20 @@ const App = () => {
                             >
                                 Review
                             </Button>
+                            <Button
+                                key='6'
+                                onClick={() => history.push('/Calendar')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                Calendar
+                            </Button>
+                            <Button
+                                key='6'
+                                onClick={() => history.push('/Admin')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                Admin
+                            </Button>
                         </Toolbar>
                     </Container>
                 </AppBar>

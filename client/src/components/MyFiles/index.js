@@ -48,6 +48,8 @@ const App = () => {
     }));
 
     const [docList, setDocList] = React.useState([]);
+    const [idList, setIDList] = React.useState([]);
+    const [num, setNum] = React.useState([]);
 
     React.useEffect(() => {
         handleDocSearch();
@@ -93,8 +95,17 @@ const App = () => {
         }
     }
 
+    const addNum = () => {
+        var i = num + 1;
+        setNum(i);
+    }
+
     const handleSubmit = () => {
         
+    }
+
+    const handleComSub = () => {
+        history.push('/View');
     }
 
     return (
@@ -144,6 +155,20 @@ const App = () => {
                         >
                             Review
                         </Button>
+                        <Button
+                                key='6'
+                                onClick={() => history.push('/Calendar')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                Calendar
+                            </Button>
+                            <Button
+                                key='6'
+                                onClick={() => history.push('/Admin')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                Admin
+                            </Button>
                     </Toolbar>
                 </Container>
             </AppBar>
@@ -189,7 +214,7 @@ const App = () => {
                                         <Grid item xs={2.5} spacing={0}>
                                             <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
                                             <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
-                                            <Button variant="contained" color='secondary' onClick={handleSubmit} >COMMENTS</Button>
+                                            <Button variant="contained" color='secondary' onClick={handleComSub} >COMMENTS</Button>
                                         </Grid>
                                     </Grid>
                                 </Box>

@@ -118,13 +118,14 @@ const App = () => {
                     alignItems="stretch"
                 >
                     <Typography variant="h3" gutterBottom component="div">
-                        Profile
+                        Calendar
                     </Typography>
                     <Typography variant="h6" component="div">
-                        Manage your information
+                        Organize your schedule.
                     </Typography>
                     <br />
                     <Grid>
+                        
                     </Grid>
                     <br />
                 </MainGridContainer>

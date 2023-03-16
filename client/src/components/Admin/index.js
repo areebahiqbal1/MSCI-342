@@ -85,7 +85,7 @@ const App = () => {
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
-                if (doc.type = "Reviewer") {
+                if (doc.doc_type == "Reviewer") {
                     return (
                         <Typography>
                             {doc.doc_name}
@@ -102,12 +102,16 @@ const App = () => {
         setNum(i);
     }
 
-    const handleSubmit = () => {
+    const handleAccept = () => {
 
     }
 
-    const handleComSub = () => {
-        history.push('/View');
+    const handleReject = () => {
+
+    }
+
+    const handleView = () => {
+        history.push('/');
     }
 
     return (
@@ -199,7 +203,7 @@ const App = () => {
                     <br />
                     <Grid>
                         {docList.map((doc) => {
-                            if (doc.type = "Reviewer") {
+                            if (doc.doc_type == "Reviewer") {
                                 return (
                                     <Box
                                         sx={{
@@ -215,9 +219,9 @@ const App = () => {
                                             <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleComSub} >COMMENTS</Button>
+                                                <Button variant="contained" color='secondary' onClick={handleAccept} >Accept</Button>
+                                                <Button variant="contained" color='secondary' onClick={handleReject} >Reject</Button>
+                                                <Button variant="contained" color='secondary' onClick={handleComSub} >View</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

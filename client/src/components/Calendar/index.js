@@ -9,6 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 
+
 const opacityValue = 0.9;
 
 const lightTheme = createTheme({
@@ -38,7 +39,9 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 const App = () => {
 
     return (
+        
         <ThemeProvider theme={lightTheme}>
+
             <AppBar position="static">
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
@@ -131,8 +134,12 @@ const App = () => {
                 </MainGridContainer>
 
             </Box>
+
         </ThemeProvider>
+        
     );
+    
+    
 }
 
 export default App;

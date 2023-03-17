@@ -86,11 +86,13 @@ const App = () => {
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
-                return (
-                    <Typography>
-                        {doc.doc_name}
-                    </Typography>
-                )
+                if (doc.doc_type !== "Reviewer") {
+                    return (
+                        <Typography>
+                            {doc.doc_name}
+                        </Typography>
+                    )
+                }
             }
             )
         }
@@ -102,7 +104,7 @@ const App = () => {
     }
 
     const handleSubmit = () => {
-        
+
     }
 
     const handleComSub = () => {
@@ -137,28 +139,30 @@ const App = () => {
                     <br />
                     <Grid>
                         {docList.map((doc) => {
-                            return (
-                                <Box
-                                    sx={{
-                                        p: 1,
-                                        bgcolor: 'primary.light',
-                                        display: '',
-                                        gridTemplateColumns: { md: '1fr 1fr' },
-                                        gap: 1,
-                                    }}
-                                >
-                                    <Grid container spacing={0}>
-                                        <Grid item xs={5}><Item>{doc.doc_name}</Item></Grid>
-                                        <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
-                                        <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
-                                        <Grid item xs={2.5} spacing={0}>
-                                            <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
-                                            <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
-                                            <Button variant="contained" color='secondary' onClick={handleComSub} >COMMENTS</Button>
+                            if (doc.doc_type !== "Reviewer") {
+                                return (
+                                    <Box
+                                        sx={{
+                                            p: 1,
+                                            bgcolor: 'primary.light',
+                                            display: '',
+                                            gridTemplateColumns: { md: '1fr 1fr' },
+                                            gap: 1,
+                                        }}
+                                    >
+                                        <Grid container spacing={0}>
+                                            <Grid item xs={5}><Item>{doc.doc_name}</Item></Grid>
+                                            <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
+                                            <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
+                                            <Grid item xs={2.5} spacing={0}>
+                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
+                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
+                                                <Button variant="contained" color='secondary' onClick={handleComSub} >COMMENTS</Button>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </Box>
-                            )
+                                    </Box>
+                                )
+                            }
                         }
                         )}
                         {createList(docList)}

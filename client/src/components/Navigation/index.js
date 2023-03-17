@@ -32,6 +32,9 @@ const NavigationAuth = () => (
       <Link to={ROUTES.MYFILES}>MyFiles</Link>
     </li>
     <li>
+      <Link to={ROUTES.REVIEWERAPP}>ReviewerApp</Link>
+    </li>
+    <li>
       <SignOutButton />
     </li>
   </ul>

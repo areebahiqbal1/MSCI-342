@@ -45,8 +45,17 @@ const styles = {
   },
   main: {
     flexGrow: "1"
+  },
+  title: {
+    fontFamily: "cursive",
+    fontSize: "3rem",
+    fontWeight: "bold",
+    color: "#f08699",
+    textShadow: "1px 1px 3px rgba(0,0,0,0.5)",
+    marginBottom: "1rem"
   }
 };
+
 
 class Calendar extends Component {
 
@@ -205,9 +214,9 @@ class Calendar extends Component {
                     justify="flex-start"
                     alignItems="stretch"
                 >
-                    <Typography variant="h3" gutterBottom component="div">
-                        Calendar
-                    </Typography>
+                  <Typography variant="h1" align="center" style={styles.title}>
+                    Calendar
+                  </Typography>
                     <Typography variant="h6" component="div">
                         Organize your schedule.
                     </Typography>

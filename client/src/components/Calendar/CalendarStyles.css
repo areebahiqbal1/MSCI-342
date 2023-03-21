@@ -1,11 +1,8 @@
-/* adjusting the built-in theme */
-
-/* calendar event */
 .calendar_default_event_inner {
-    background: #2e78d6;
-    color: #fff;
+    background: #fac2b6;
+    color: #000003;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     font-size: 10pt;
     padding: 5px;
     opacity: 0.8;

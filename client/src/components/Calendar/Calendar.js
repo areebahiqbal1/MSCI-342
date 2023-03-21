@@ -91,33 +91,34 @@ class Calendar extends Component {
       {
         id: 1,
         text: "Event 1",
-        start: "2023-03-07T10:30:00",
-        end: "2023-03-07T13:00:00"
+        start: "2023-03-21T10:30:00",
+        end: "2023-03-21T13:00:00",
+        backColor: "#e2edab"
       },
       {
         id: 2,
         text: "Event 2",
-        start: "2023-03-08T09:30:00",
-        end: "2023-03-08T11:30:00",
-        backColor: "#6aa84f"
+        start: "2023-03-22T09:30:00",
+        end: "2023-03-22T11:30:00",
+        backColor: "#fac2b6"
       },
       {
         id: 3,
         text: "Event 3",
-        start: "2023-03-08T12:00:00",
-        end: "2023-03-08T15:00:00",
-        backColor: "#f1c232"
+        start: "2023-03-22T12:00:00",
+        end: "2023-03-22T15:00:00",
+        backColor: "#c0f0d6"
       },
       {
         id: 4,
         text: "Event 4",
-        start: "2023-03-06T11:30:00",
-        end: "2023-03-06T14:30:00",
-        backColor: "#cc4125"
+        start: "2023-03-23T11:30:00",
+        end: "2023-03-23T14:30:00",
+        backColor: "#c9c3eb"
       },
     ];
 
-    const startDate = "2023-03-07";
+    const startDate = "2023-03-19";
 
     this.calendar.update({startDate, events});
 
@@ -199,7 +200,7 @@ class Calendar extends Component {
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: '50%' }}
+                    style={{ maxWidth: '90%' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
@@ -216,10 +217,10 @@ class Calendar extends Component {
                             <div style={styles.left}>
                                 <DayPilotNavigator
                                     selectMode={"week"}
-                                    showMonths={3}
-                                    skipMonths={3}
-                                    startDate={"2023-03-07"}
-                                    selectionDay={"2023-03-07"}
+                                    showMonths={2}
+                                    skipMonths={2}
+                                    startDate={"2023-03-19"}
+                                    selectionDay={"2023-03-19"}
                                     onTimeRangeSelected={ args => {
                                         this.calendar.update({
                                             startDate: args.day

@@ -9,6 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
+//import {docID} from '../MyFiles'
 
 const opacityValue = 0.9;
 
@@ -37,6 +38,8 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 }))
 
 const App = () => {
+
+    //console.log(docID)
 
     return (
         <ThemeProvider theme={lightTheme}>

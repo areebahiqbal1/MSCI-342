@@ -49,8 +49,6 @@ const App = () => {
     }));
 
     const [docList, setDocList] = React.useState([]);
-    const [idList, setIDList] = React.useState([]);
-    const [num, setNum] = React.useState([]);
 
     React.useEffect(() => {
         handleDocSearch();
@@ -98,17 +96,27 @@ const App = () => {
         }
     }
 
-    const addNum = () => {
-        var i = num + 1;
-        setNum(i);
+    const handleEditSubmit = (id) => {
+        console.log(id);
+        callApiEdit(id);
     }
 
-    const handleSubmit = () => {
-
+    const handleDelSubmit = (id) => {
+        console.log(id);
+        callApiDelete(id);
     }
 
-    const handleComSub = () => {
+    const handleComSubmit = (id) => {
+        console.log(id);
         history.push('/View');
+    }
+
+    const callApiDelete = async () => {
+
+    }
+
+    const callApiEdit = async () => {
+
     }
 
     return (
@@ -155,9 +163,9 @@ const App = () => {
                                             <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleComSub} >COMMENTS</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} >Edit</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} >DELETE</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.id)} >COMMENTS</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

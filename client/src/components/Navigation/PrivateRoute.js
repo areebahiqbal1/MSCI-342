@@ -11,6 +11,7 @@ import MyFilesPage from "../MyFiles";
 import SignUpPage from "../SignUp";
 import LandingPage from "../Landing/Landing";
 import ProfilePage from "../Profile";
+import ReviewerAppPage from "../ReviewerApp";
 
 import HomePage from "../Home";
 import history from "./history";
@@ -41,6 +42,7 @@ export default function PrivateRoute({ authenticated, ...rest }) {
         <Route path="/Calendar" component={CalendarPage} />
         <Route path="/MyFiles" component={MyFilesPage} />
         <Route path="/Profile" component={ProfilePage} />
+        <Route path="/Apply" component={ReviewerAppPage} />
       </Switch>
     </Router>
   );

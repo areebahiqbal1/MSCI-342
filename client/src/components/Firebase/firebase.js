@@ -1,7 +1,6 @@
 import app from "firebase/app";
 import "firebase/auth";
 
-
 // Paste the firebaseConfig here
 const firebaseConfig = {
   apiKey: "AIzaSyDHha0h6ik1RmlL2DpCp6s2DDhkx4K-Z6k",
@@ -11,7 +10,6 @@ const firebaseConfig = {
   storageBucket: "can-do-coop.appspot.com",
   messagingSenderId: "487317813419",
   appId: "1:487317813419:web:878b17857a34b1aa7f5fee",
-
 };
 
 class Firebase {
@@ -34,6 +32,14 @@ class Firebase {
 
   doPasswordUpdate = (password) =>
     this.auth.currentUser.updatePassword(password);
+
+  doEmailUpdate = (email) => this.auth.currentUser.updateEmail(email);
+
+  doReAuthenticateUser = (password) => {
+    var user = this.auth.currentUser;
+    var cred = app.auth.EmailAuthProvider.credential(user.email, password);
+    return this.auth.currentUser.reauthenticateWithCredential(cred);
+  };
 
   doGetIdToken = (bool) => {
     return this.auth.currentUser.getIdToken(/* forceRefresh */ bool);

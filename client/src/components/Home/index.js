@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider, styled } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
+import './Home.css';
 
 
 const serverURL = "";
@@ -201,17 +202,18 @@ class HomeBase extends React.Component {
 <Grid container spacing={6} justifyContent="center">
   <Grid item>
     <Typography
+    class="can-do-co-op"
       variant="h1"
       component="h1"
       align="center"
       gutterBottom
       style={{
-        color: '#333', // change the color to your preference
-        fontSize: '4rem', // adjust the font size as needed
-        fontWeight: 'bold', // make the font bold
-        textShadow: '2px 2px #ccc', // add a subtle text shadow
-        letterSpacing: '0.1em', // increase the letter spacing for a more modern look
-        lineHeight: '1.2', // adjust the line height for better readability
+        color: '#333', 
+        fontSize: '4rem', 
+        fontWeight: 'bold', 
+        textShadow: '2px 2px #ccc', 
+        letterSpacing: '0.1em', 
+        lineHeight: '1.2', 
       }}
     >
       CAN-DO-CO-OP

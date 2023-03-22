@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 import PrivateRoute from '../Navigation/PrivateRoute.js';
 import { withFirebase } from '../Firebase';
-
+import store from '../Store/store'
+import { Provider }from 'react-redux'
 
 class App extends Component {
   constructor(props) {
@@ -41,14 +42,16 @@ class App extends Component {
   render() {
     const authUser = this.props.authUser;
     return (
-      <Router>
-        <div>
-          <PrivateRoute 
-            authenticated={this.state.authenticated} 
-            authUser={this.state.authUser} 
-          />
-        </div>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <div>
+            <PrivateRoute 
+              authenticated={this.state.authenticated} 
+              authUser={this.state.authUser} 
+            />
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }

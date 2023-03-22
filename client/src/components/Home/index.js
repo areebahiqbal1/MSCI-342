@@ -114,6 +114,16 @@ class HomeBase extends React.Component {
   render() {
     return (
       <ThemeProvider theme={lightTheme}>
+
+        <Box
+          sx={{
+            height: '100vh',
+            opacity: opacityValue,
+            overflow: 'scroll',
+            backgroundImage: `url(https://source.unsplash.com/q10VITrVYUM)`,
+            backgroundSize: "cover"
+          }}
+        >
         <AppBar position="static">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
@@ -173,38 +183,74 @@ class HomeBase extends React.Component {
               >
                 Admin
               </Button>
+              
             </Toolbar>
           </Container>
         </AppBar>
         <Box
-          sx={{
-            height: '100vh',
-            opacity: opacityValue,
-            overflow: 'scroll',
-            backgroundSize: "cover"
-          }}
-        >
-          <Grid
-            container
-            spacing={1}
-            style={{ maxWidth: '100%' }}
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            align="center"
+        sx={{
+          mt: 15,
+          mx: 20,
+          px: 4,
+          py: 10,
+          backgroundColor: "background.paper",
+          borderRadius: 1,
+          boxShadow: 5,
+        }}
+      >
+<Grid container spacing={6} justifyContent="center">
+  <Grid item>
+    <Typography
+      variant="h1"
+      component="h1"
+      align="center"
+      gutterBottom
+      style={{
+        color: '#333', // change the color to your preference
+        fontSize: '4rem', // adjust the font size as needed
+        fontWeight: 'bold', // make the font bold
+        textShadow: '2px 2px #ccc', // add a subtle text shadow
+        letterSpacing: '0.1em', // increase the letter spacing for a more modern look
+        lineHeight: '1.2', // adjust the line height for better readability
+      }}
+    >
+      CAN-DO-CO-OP
+    </Typography>
+  </Grid>
+</Grid>
+<Grid container
+direction="column"
+judtifyContent="center"
+alignItems="center">
+
+    <Button
+            key='1'
+            onClick={() => history.push('/SignUp')}
+            type="submit"
+            halfWidth
+            variant="contained"
+            color="primary"
           >
-            <br />
-            <Typography variant="h3" gutterBottom component="div">
-              Home
-            </Typography>
-            <Typography variant="h6" component="div">
-              Welcome Back!
-            </Typography>
-            <br />
-          </Grid>
-        </Box>
-      </ThemeProvider>
-    );
+            Sign Up
+        </Button>  
+   <br></br>
+   <br></br>
+      <Button
+            key='2'
+            onClick={() => history.push('/SignIn')}
+            type="submit"
+            halfWidth
+            variant="contained"
+            color="primary"
+          >
+            Sign In
+        </Button>  
+   </Grid>
+    </Box>
+    </Box>
+
+  </ThemeProvider>
+);
   }
 }
 

@@ -11,7 +11,8 @@ import { createTheme, ThemeProvider, styled } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
-import MenuBar from '../MenuBar/menu';
+import './Home.css';
+
 
 const serverURL = "";
 
@@ -114,36 +115,144 @@ class HomeBase extends React.Component {
   render() {
     return (
       <ThemeProvider theme={lightTheme}>
-        <MenuBar />
+
         <Box
           sx={{
             height: '100vh',
             opacity: opacityValue,
             overflow: 'scroll',
+            backgroundImage: `url(https://source.unsplash.com/q10VITrVYUM)`,
             backgroundSize: "cover"
-          }}
-        >
-          <Grid
-            container
-            spacing={1}
-            style={{ maxWidth: '100%' }}
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            align="center"
+          }}
+        >
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <Button
+                key='1'
+                onClick={() => history.push('/')}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Home
+              </Button>
+              <Button
+                key='2'
+                onClick={() => history.push('/MyFiles')}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                My Files
+              </Button>
+              <Button
+                key='3'
+                onClick={() => history.push('/Upload')}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Upload
+              </Button>
+              <Button
+                key='4'
+                onClick={() => history.push('/Profile')}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Profile
+              </Button>
+              <Button
+                key='5'
+                onClick={this.signOut.bind(this)}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                SignOut
+              </Button>
+              <Button
+                key='6'
+                onClick={() => history.push('/Review')}
+                sx={{ my: 2, color: 'red', display: 'block' }}
+              >
+                Review
+              </Button>
+              <Button
+                key='6'
+                onClick={() => history.push('/Calendar')}
+                sx={{ my: 2, color: 'red', display: 'block' }}
+              >
+                Calendar
+              </Button>
+              <Button
+                key='6'
+                onClick={() => history.push('/Admin')}
+                sx={{ my: 2, color: 'red', display: 'block' }}
+              >
+                Admin
+              </Button>
+              
+            </Toolbar>
+          </Container>
+        </AppBar>
+        <Box
+        sx={{
+          mt: 15,
+          mx: 20,
+          px: 4,
+          py: 10,
+          backgroundColor: "background.paper",
+          borderRadius: 1,
+          boxShadow: 5,
+        }}
+      >
+<Grid container spacing={6} justifyContent="center">
+  <Grid item>
+    <Typography
+    class="can-do-co-op"
+      variant="h1"
+      component="h1"
+      align="center"
+      gutterBottom
+      style={{
+        color: '#333', 
+        fontSize: '4rem', 
+        fontWeight: 'bold', 
+        textShadow: '2px 2px #ccc', 
+        letterSpacing: '0.1em', 
+        lineHeight: '1.2', 
+      }}
+    >
+      CAN-DO-CO-OP
+    </Typography>
+  </Grid>
+</Grid>
+<Grid container
+direction="column"
+judtifyContent="center"
+alignItems="center">
+
+    <Button
+            key='1'
+            onClick={() => history.push('/SignUp')}
+            type="submit"
+            halfWidth
+            variant="contained"
+            color="primary"
           >
-            <br />
-            <Typography variant="h3" gutterBottom component="div">
-              Home
-            </Typography>
-            <Typography variant="h6" component="div">
-              Welcome Back!
-            </Typography>
-            <br />
-          </Grid>
-        </Box>
-      </ThemeProvider>
-    );
+            Sign Up
+        </Button>  
+   <br></br>
+   <br></br>
+      <Button
+            key='2'
+            onClick={() => history.push('/SignIn')}
+            type="submit"
+            halfWidth
+            variant="contained"
+            color="primary"
+          >
+            Sign In
+        </Button>  
+   </Grid>
+    </Box>
+    </Box>
+
+  </ThemeProvider>
+);
   }
 }
 

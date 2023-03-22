@@ -161,7 +161,7 @@ const App = () => {
                                             <Grid item xs={2.5} spacing={0}>
                                                 <Button variant="contained" color='secondary' onClick={handleAccept} >Accept</Button>
                                                 <Button variant="contained" color='secondary' onClick={handleReject} >Reject</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleComSub} >View</Button>
+                                                <Button variant="contained" color='secondary' onClick={handleView} >View</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

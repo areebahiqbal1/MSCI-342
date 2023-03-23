@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
 import Paper from '@mui/material/Paper';
+import { useSelector } from 'react-redux';
 
 const opacityValue = 0.9;
 const serverURL = "";
@@ -39,6 +40,9 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 }))
 
 const App = () => {
+
+    const viewCount = useSelector((state) => state.viewer.value)
+    console.log(viewCount)
 
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,

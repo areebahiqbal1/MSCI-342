@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
 import { useSelector } from 'react-redux';
-//import {docID} from '../MyFiles'
+import firebase from "firebase/app";
 
 const opacityValue = 0.9;
 
@@ -40,9 +40,19 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 
 const App = () => {
 
+    //Gets and returns document ID
     const viewCount = useSelector((state) => state.viewer.value)
-
     console.log(viewCount)
+
+    //Gets and returns users email
+    const [userEmail, setUserEmail] = React.useState("");
+    firebase.auth().onAuthStateChanged((user) => {
+        //if user is logged in then get the user email
+        if (user) {
+          setUserEmail(user.email);
+        }
+    });
+    console.log(userEmail)
 
     return (
         <ThemeProvider theme={lightTheme}>
@@ -71,7 +81,12 @@ const App = () => {
                     </Typography>
                     <br />
                     <Grid>
-                        
+                        <Typography variant="h6" component="div">
+                            {"User: " + userEmail }
+                        </Typography>
+                        <Typography variant="h6" csmponent="div">
+                            {"Document ID: " + viewCount }
+                        </Typography>
                     </Grid>
                     <br />
                 </MainGridContainer>

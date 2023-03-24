@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import React, { Component } from "react";
 import axios from "axios";
 import { Dropdown } from "bootstrap";
+import firebase from "firebase/app";
 
 //endpoint is temprorary right now.  Server endpoint can be added once we actually need this running on the server.
 const endpoint = "http://localhost:4000/upload";
@@ -21,8 +22,17 @@ class FileApp extends Component {
     defaultmessage: "Choose a file...",
     uploading: false,
     docType: "",
-    docTag: ""
+    docTag: "",
+    userEmail: null,
   };
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      //if user is logged in then get the user email
+      if (user) {
+        this.setState({ userEmail: user.email });
+      }
+    });
+  }
   handleFileChange = event => {
     this.setState({
       selectedFile: event.target.files[0],
@@ -65,6 +75,7 @@ class FileApp extends Component {
     data.append("fileName", this.state.selectedFile.name)
     data.append("type", this.state.docType)
     data.append("tag", this.state.docTag)
+    data.append("email", this.state.userEmail)
     axios
       .post(endpoint, data, {
         onUploadProgress: (ProgressEvent) => {

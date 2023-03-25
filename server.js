@@ -44,6 +44,13 @@ app.use(
 	})
 );
 
+app.use('/files', express.static(path.join(__dirname, "public/files")), (req, res) => {
+    return res.status(200).send("It's working");
+})
+app.get('/files/*', (req, res) => {
+    return res.status(200).send("It's working");
+})
+
 app.post('/upload', (req, res, next) => {
 	let connection = mysql.createConnection(config)
 	console.log(req)

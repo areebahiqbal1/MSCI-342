@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/Typography";
 import { createTheme, ThemeProvider, styled } from '@material-ui/core/styles';
@@ -13,6 +14,7 @@ import { useSelector } from 'react-redux';
 import firebase from "firebase/app";
 import axios from "axios";
 import FileSaver from "file-saver";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
 const opacityValue = 0.9;
 const endpoint = "http://localhost:4000";
@@ -46,7 +48,7 @@ const App = () => {
     //Gets and returns document ID
     const viewCount = useSelector((state) => state.viewer.value)
     console.log(viewCount)
-    
+    const docs = [{ uri: endpoint + '/files/' + viewCount }];
 
     //Gets and returns users email
     const [userEmail, setUserEmail] = React.useState("");
@@ -63,10 +65,10 @@ const App = () => {
             method: 'get',
             url: endpoint + '/files/' + viewCount,
             responseType: 'blob'
-          })
-          .then((response) => {
-            FileSaver.saveAs(response.data, viewCount);
-        });
+        })
+            .then((response) => {
+                FileSaver.saveAs(response.data, viewCount);
+            });
     }
 
     return (
@@ -102,7 +104,8 @@ const App = () => {
                         <Typography variant="h6" csmponent="div">
                             {"Document ID: " + viewCount}
                         </Typography>
-                        <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
+
+                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />;
                     </Grid>
                     <br />
                 </MainGridContainer>

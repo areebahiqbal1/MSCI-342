@@ -217,12 +217,11 @@ class HomeBase extends React.Component {
       }}
     >
       CAN-DO-CO-OP
+      <br></br><br></br>
     </Typography>
   </Grid>
 </Grid>
-<div style={{ border: '1px solid #ccc', padding: '1rem', backgroundColor: '#f5f5f5',   animation: 'fade-in 3s forwards', // Add animation here
-// Add background color here
- }}>
+<div style={{ border: '3px solid #ccc', padding: '0.5rem', backgroundColor: '#f5f5f5', animation: 'fade-in 3s forwards' }}>
   <Typography
     variant="h1"
     component="h1"
@@ -235,7 +234,7 @@ class HomeBase extends React.Component {
       lineHeight: '1.2', 
     }}
   >
-    Can Do Co-op is a website that connects students with experienced reviewers to get feedback on their cover letters, resumes, and work term reports. It's a user-friendly platform with helpful resources and tips for students to improve their job search skills.
+    Can Do Co-op is a website that connects students with experienced reviewers to get feedback on their <br></br>cover letters, resumes, and work term reports. <br></br>It's a user-friendly platform with helpful resources and tips for students to improve their job search skills.
   </Typography>
 </div>
 <Grid container

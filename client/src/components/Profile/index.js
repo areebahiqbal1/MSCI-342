@@ -28,8 +28,8 @@ const lightTheme = createTheme({
         },
         primary: {
             main: '#EEE2DC',
-            light: '#000000',
-            dark: '#000000',
+            light: '#bfafa6',
+            dark: '#bfafa6',
             background: '#000000'
         },
         secondary: {
@@ -188,7 +188,7 @@ const App = () => {
           height: "100vh",
           opacity: opacityValue,
           overflow: "scroll",
-          backgroundImage: `url(https://source.unsplash.com/d3ci37Gcgxg)`,
+          backgroundImage: `url(https://source.unsplash.com/_0sEjWfAK3Q)`,
 
           backgroundSize: "cover",
         }}

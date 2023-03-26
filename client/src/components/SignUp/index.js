@@ -27,13 +27,13 @@ const lighttheme = createTheme({
   palette: {
     type: "light",
     background: {
-      default: "#ffedf3", //pinkish
+      default: "#EEE2DC", //pinkish
     },
     primary: {
-      main: "#facad9", //pink
+      main: "#bfafa6", //pink
     },
     secondary: {
-      main: "#ff003c", //pinker
+      main: "#000000", //pinker
     },
   },
 });

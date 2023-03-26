@@ -220,33 +220,29 @@ class HomeBase extends React.Component {
     </Typography>
   </Grid>
 </Grid>
+<div style={{ border: '1px solid #ccc', padding: '1rem', backgroundColor: '#f5f5f5',   animation: 'fade-in 3s forwards', // Add animation here
+// Add background color here
+ }}>
+  <Typography
+    variant="h1"
+    component="h1"
+    align="center"
+    gutterBottom
+    style={{
+      color: '#000', 
+      fontSize: '1.5rem', 
+      letterSpacing: '0.1em', 
+      lineHeight: '1.2', 
+    }}
+  >
+    Can Do Co-op is a website that connects students with experienced reviewers to get feedback on their cover letters, resumes, and work term reports. It's a user-friendly platform with helpful resources and tips for students to improve their job search skills.
+  </Typography>
+</div>
 <Grid container
 direction="column"
 judtifyContent="center"
 alignItems="center">
 
-    <Button
-            key='1'
-            onClick={() => history.push('/SignUp')}
-            type="submit"
-            halfWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign Up
-        </Button>  
-   <br></br>
-   <br></br>
-      <Button
-            key='2'
-            onClick={() => history.push('/SignIn')}
-            type="submit"
-            halfWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign In
-        </Button>  
    </Grid>
     </Box>
     </Box>

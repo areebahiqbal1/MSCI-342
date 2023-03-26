@@ -7,28 +7,25 @@ import FileApp from './FileApp';
 import MenuBar from '../MenuBar/menu';
 
 const opacityValue = 0.9;
-
 const lightTheme = createTheme({
     palette: {
-        type: 'light',
-        background: {
-            default: "#ffffff"
-        },
-        primary: {
-            main: '#EEE2DC',
-            light: '#f5eae6',
-            dark: '#ffffff',
-            background: '#ffffff'
-        },
-        secondary: {
-            main: "#EDC7B7",
-            light: '#EDC7B7',
-            dark: '#EDC7B7'
-        },
+      type: 'light',
+      background: {
+        default: "#EDC7B7"
+      },
+      primary: {
+        main: '#EEE2DC',
+        light: '#EDC7B7',
+        dark: '#EDC7B7',
+        background: '#EE2DC'
+      },
+      secondary: {
+        main: "#EDC7B7",
+        light: '#EDC7B7',
+        dark: '#BAB2B5'
+      },
     },
-});
-
-
+  });
 const MainGridContainer = styled(Grid)(({ theme }) => ({
     margin: theme.spacing(4),
 }))

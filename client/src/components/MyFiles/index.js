@@ -31,7 +31,7 @@ const lightTheme = createTheme({
         secondary: {
             main: "#EDC7B7",
             light: '#000000',
-            dark: '#EDC7B7'
+            dark: '#000000'
         },
     },
 });

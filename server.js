@@ -15,15 +15,18 @@ admin.initializeApp({
 
 const PORT = 4000;
 const { response } = require("express");
-
+//const bodyParser = require("body-parser");
+//app.use(bodyParser.json());
 const express = require("express");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
-
 app.use(bodyParser.json({ limit: "50mb" }));
+//app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
+//app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 app.get("/", (req, res) => {
@@ -128,6 +131,7 @@ app.post("/login", (req, res) => {
     });
 });
 
+//Aamina- post user email when account created
 app.post("/api/addReview", (req, res) => {
   let connection = mysql.createConnection(config);
 
@@ -142,6 +146,76 @@ app.post("/api/addReview", (req, res) => {
       return console.error(error.message);
     }
     res.send({ message: "email Successfully Added" });
+  });
+  connection.end();
+});
+
+//Aamina- username update
+app.post("/api/profile", (req, res) => {
+  let connection = mysql.createConnection(config);
+
+  const username = req.body.newName;
+  const currentemail = req.body.email;
+
+  let sql = "UPDATE users SET user_name = ? WHERE user_email = ?";
+  let data = [username, currentemail];
+  //let sql = "INSERT INTO `users` (user_email, user_name) VALUES (?, ?)";
+  //let data = [username, currentemail];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.send({ message: "profile Successfully updated" });
+  });
+  connection.end();
+});
+/*
+//Aamina - get user name for profile page
+app.post("/api/getAvrage", (req, res) => {
+  let connection = mysql.createConnection(config);
+
+  //const currentemail = req.body.email;
+  const currentemail = "bingo@gmail.com";
+
+  let sql = "SELECT user_name FROM users WHERE user_email = ?";
+
+  let data = [currentemail];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    console.log(results);
+    let string = JSON.stringify(results);
+    //let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});*/
+
+//load the username
+app.post("/api/getAvrage", (req, res) => {
+  let connection = mysql.createConnection(config);
+
+  const currentemail = req.body.theEmail;
+  //const currentemail = "bingo@gmail.com";
+  console.log("the found email for profile " + currentemail);
+
+  let sql = "SELECT user_name FROM users WHERE user_email = ?";
+
+  let data = [currentemail];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    console.log(results);
+    let string = JSON.stringify(results);
+    //let obj = JSON.parse(string);
+    res.send({ express: string });
   });
   connection.end();
 });
@@ -164,24 +238,6 @@ app.post("/api/loadUserSettings", auth, (req, res) => {
     let string = JSON.stringify(results);
     //let obj = JSON.parse(string);
     res.send({ express: string });
-  });
-  connection.end();
-});
-
-app.post("/api/addProfile", (req, res) => {
-  let connection = mysql.createConnection(config);
-
-  const email = req.body.user_email;
-
-  let sql =
-    "INSERT INTO `Review` (User_userID, movies_movieID, reviewTitle, reviewContent, reviewScore) VALUES (?,?,?,?,?)";
-  let data = [email];
-
-  connection.query(sql, data, (error, results, fields) => {
-    if (error) {
-      return console.error(error.message);
-    }
-    res.send({ message: "Review Successfully Added" });
   });
   connection.end();
 });

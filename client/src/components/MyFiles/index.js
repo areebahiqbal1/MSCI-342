@@ -15,7 +15,7 @@ import { setView } from '../Store/viewerSlice';
 
 const opacityValue = 0.9;
 //const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3306";
-const serverURL = "";
+const serverURL = "http://localhost:4000";
 const lightTheme = createTheme({
     palette: {
         type: 'light',
@@ -86,6 +86,31 @@ const App = () => {
         return body;
     }
 
+    const delDocument = (id) => {
+        callApiDelDocs(id);
+        window.location.reload();
+    }
+
+    const callApiDelDocs = async (id) => {
+
+        const url = serverURL + "/api/delDocs";
+        console.log(url);
+        console.log(viewCount);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                viewCount: id,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
@@ -103,26 +128,19 @@ const App = () => {
 
     const handleEditSubmit = (id) => {
         console.log(id);
-        callApiEdit(id);
+        dispatch(setView(id));
     }
 
     const handleDelSubmit = (id) => {
         console.log(id);
-        callApiDelete(id);
+        dispatch(setView(id));
+        delDocument(id);
     }
 
     const handleComSubmit = (id) => {
         console.log(id);
         dispatch(setView(id))
         history.push('/View');
-    }
-
-    const callApiDelete = async () => {
-
-    }
-
-    const callApiEdit = async () => {
-
     }
 
     return (

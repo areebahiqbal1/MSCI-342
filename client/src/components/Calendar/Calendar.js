@@ -17,18 +17,18 @@ const lightTheme = createTheme({
     palette: {
         type: 'light',
         background: {
-            default: "#ffffff"
+          default: "#EDC7B7"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+          main: '#EEE2DC',
+          light: '#EDC7B7',
+          dark: '#EDC7B7',
+          background: '#EE2DC'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+          main: "#EDC7B7",
+          light: '#EDC7B7',
+          dark: '#BAB2B5'
         },
     },
 });
@@ -100,34 +100,34 @@ class Calendar extends Component {
       {
         id: 1,
         text: "Event 1",
-        start: "2023-03-21T10:30:00",
-        end: "2023-03-21T13:00:00",
+        start: "2023-03-27T10:30:00",
+        end: "2023-03-27T13:00:00",
         backColor: "#e2edab"
       },
       {
         id: 2,
         text: "Event 2",
-        start: "2023-03-22T09:30:00",
-        end: "2023-03-22T11:30:00",
+        start: "2023-03-28T09:30:00",
+        end: "2023-03-28T11:30:00",
         backColor: "#fac2b6"
       },
       {
         id: 3,
         text: "Event 3",
-        start: "2023-03-22T12:00:00",
-        end: "2023-03-22T15:00:00",
+        start: "2023-03-28T12:00:00",
+        end: "2023-03-28T15:00:00",
         backColor: "#c0f0d6"
       },
       {
         id: 4,
         text: "Event 4",
-        start: "2023-03-23T11:30:00",
-        end: "2023-03-23T14:30:00",
+        start: "2023-03-29T11:30:00",
+        end: "2023-03-29T14:30:00",
         backColor: "#c9c3eb"
       },
     ];
 
-    const startDate = "2023-03-19";
+    const startDate = "2023-03-26";
 
     this.calendar.update({startDate, events});
 
@@ -228,8 +228,8 @@ class Calendar extends Component {
                                     selectMode={"week"}
                                     showMonths={2}
                                     skipMonths={2}
-                                    startDate={"2023-03-19"}
-                                    selectionDay={"2023-03-19"}
+                                    startDate={"2023-03-26"}
+                                    selectionDay={"2023-03-26"}
                                     onTimeRangeSelected={ args => {
                                         this.calendar.update({
                                             startDate: args.day

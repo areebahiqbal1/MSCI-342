@@ -20,18 +20,18 @@ const lightTheme = createTheme({
   palette: {
     type: 'light',
     background: {
-      default: "#ffffff"
+      default: "#EDC7B7"
     },
     primary: {
-      main: '#ef9a9a',
-      light: '#ffcccb',
-      dark: '#ba6b6c',
-      background: '#eeeeee'
+      main: '#EEE2DC',
+      light: '#EDC7B7',
+      dark: '#EDC7B7',
+      background: '#EE2DC'
     },
     secondary: {
-      main: "#b71c1c",
-      light: '#f05545',
-      dark: '#7f0000'
+      main: "#EDC7B7",
+      light: '#EDC7B7',
+      dark: '#BAB2B5'
     },
   },
 });
@@ -110,7 +110,7 @@ class HomeBase extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
     this.props.firebase.doSignOut();
     this.props.history.push("/");
-  }
+  }
 
   render() {
     return (
@@ -225,28 +225,6 @@ direction="column"
 judtifyContent="center"
 alignItems="center">
 
-    <Button
-            key='1'
-            onClick={() => history.push('/SignUp')}
-            type="submit"
-            halfWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign Up
-        </Button>  
-   <br></br>
-   <br></br>
-      <Button
-            key='2'
-            onClick={() => history.push('/SignIn')}
-            type="submit"
-            halfWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign In
-        </Button>  
    </Grid>
     </Box>
     </Box>

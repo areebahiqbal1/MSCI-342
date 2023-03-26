@@ -20,15 +20,15 @@ const lightTheme = createTheme({
             default: "#ffffff"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+            main: '#EEE2DC',
+            light: '#f5eae6',
+            dark: '#ffffff',
+            background: '#ffffff'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+            main: "#EDC7B7",
+            light: '#000000',
+            dark: '#EDC7B7'
         },
     },
 });
@@ -81,7 +81,7 @@ const App = () => {
         if (response.status !== 200) throw Error(body.message);
         return body;
     }
-
+    
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
@@ -145,7 +145,7 @@ const App = () => {
                         </Button>
                         <Button
                             key='5'
-                            onClick={() => history.push('/SignOut')}
+                            onClick={() => history.push('/')}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
                             SignOut

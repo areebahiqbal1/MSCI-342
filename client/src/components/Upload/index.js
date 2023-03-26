@@ -19,18 +19,19 @@ const lightTheme = createTheme({
             default: "#ffffff"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+            main: '#EEE2DC',
+            light: '#f5eae6',
+            dark: '#ffffff',
+            background: '#ffffff'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+            main: "#EDC7B7",
+            light: '#EDC7B7',
+            dark: '#EDC7B7'
         },
     },
 });
+
 
 const MainGridContainer = styled(Grid)(({ theme }) => ({
     margin: theme.spacing(4),

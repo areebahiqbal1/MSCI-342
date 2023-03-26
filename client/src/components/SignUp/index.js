@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+//import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../Firebase";
@@ -8,27 +8,35 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-
+import { useSelector, useDispatch } from "react-redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-//import Slide from '@material-ui/core/Slide';
+import React, { useState, useEffect } from "react";
+import Slide from "@material-ui/core/Slide";
+import { useHistory } from "react-router-dom";
+import app from "firebase/app";
+import "firebase/auth";
+
+const serverURL = "http://localhost:4000";
+//const serverURL = "ec2-18-216-101-119.us-east-2.compute.amazonaws.com";
 //import logo from './logo.png';
 //F8B195   F67280   C06C84   6C5B7B   355C7D
+//const serverURL = "";
+
 const lighttheme = createTheme({
   palette: {
     type: "light",
     background: {
-      default: "#ffedf3", //pinkish
+      default: "#EEE2DC", //pinkish
     },
     primary: {
-      main: "#facad9", //pink
+      main: "#bfafa6", //pink
     },
     secondary: {
-      main: "#ff003c", //pinker
+      main: "#000000", //pinker
     },
   },
 });
-
 
 const INITIAL_STATE = {
   email: "",
@@ -36,7 +44,164 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class SignUpFormBase extends Component {
+const SignUpFormBase = ({ firebase }) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    error: null,
+  });
+
+  const [browserType, setBrowserType] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passError, setPassError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [passwordResetEmailSent, setPasswordResetEmailSent] = useState(false);
+  const [errorPasswordResetEmailSent, setErrorPasswordResetEmailSent] =
+    useState(false);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    // code here
+  }, []);
+
+  const loadApiAddUser = () => {
+    callApiAddUser().then((res) => {
+      console.log(res.message);
+    });
+  };
+
+  const callApiAddUser = async () => {
+    const url = serverURL + "/api/addReview";
+
+    let revContent = {
+      email: formData.email,
+      pass: formData.password,
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(revContent),
+    });
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    return body;
+  };
+
+  const onSubmit = (event) => {
+    const auth = app.auth();
+    event.preventDefault();
+    const { email, password } = formData;
+
+    //props.firebase
+    firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then(() => {
+        setFormData({ ...INITIAL_STATE });
+        loadApiAddUser();
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error.code);
+        switch (error.code) {
+          case "auth/email-already-in-use":
+          case "auth/invalid-email":
+            setEmailError(true);
+            setErrorMsg(error.message);
+            break;
+          case "auth/weak-password":
+            setPassError(true);
+            setErrorMsg(error.message);
+            break;
+        }
+        console.log(emailError); //for testing
+        console.log(passError); //for testing
+      });
+  };
+
+  const onChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  return (
+    <MuiThemeProvider theme={lighttheme}>
+      <CssBaseline />
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
+        <Grid item>
+          <Container maxWidth="xs">
+            <form noValidate onSubmit={onSubmit}>
+              <div>
+                <Typography component="h1" variant="h10" color="primary">
+                  Sign Up
+                </Typography>
+              </div>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                value={formData.email}
+                onChange={onChange}
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                value={formData.password}
+                onChange={onChange}
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                InputLabelProps={{ shrink: true }}
+              />
+              <React.Fragment>
+                {passError ? <Typography>{errorMsg}</Typography> : ""}
+              </React.Fragment>
+
+              <React.Fragment>
+                {emailError ? <Typography>{errorMsg}</Typography> : ""}
+              </React.Fragment>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
+                Sign Up
+              </Button>
+            </form>
+          </Container>
+        </Grid>
+      </Grid>
+    </MuiThemeProvider>
+  );
+};
+
+const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
+
+export default SignUpForm;
+/*class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
 
@@ -63,6 +228,7 @@ class SignUpFormBase extends Component {
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push("/");
+        //dispatch(setView(email));
       })
       .catch((error) => {
         console.log(error.code);
@@ -106,7 +272,7 @@ class SignUpFormBase extends Component {
       });
   };*/
 
-  onChange = (event) => {
+/* onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -115,7 +281,6 @@ class SignUpFormBase extends Component {
     const isInvalid = password === "" || email === "";
 
     return (
-
       <MuiThemeProvider theme={lighttheme}>
         <CssBaseline />
 
@@ -183,22 +348,17 @@ class SignUpFormBase extends Component {
                   variant="contained"
                   color="primary"
                 >
-
                   Sign Up
-
                 </Button>
               </form>
             </Container>
           </Grid>
         </Grid>
-
       </MuiThemeProvider>
-
     );
   }
 }
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
 
-export default SignUpForm;
-
+export default SignUpFormBase;*/

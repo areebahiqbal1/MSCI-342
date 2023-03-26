@@ -20,18 +20,18 @@ const lightTheme = createTheme({
   palette: {
     type: 'light',
     background: {
-      default: "#ffffff"
+      default: "#EDC7B7"
     },
     primary: {
-      main: '#ef9a9a',
-      light: '#ffcccb',
-      dark: '#ba6b6c',
-      background: '#eeeeee'
+      main: '#EEE2DC',
+      light: '#EDC7B7',
+      dark: '#EDC7B7',
+      background: '#EE2DC'
     },
     secondary: {
-      main: "#b71c1c",
-      light: '#f05545',
-      dark: '#7f0000'
+      main: "#EDC7B7",
+      light: '#EDC7B7',
+      dark: '#BAB2B5'
     },
   },
 });
@@ -110,7 +110,7 @@ class HomeBase extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
     this.props.firebase.doSignOut();
     this.props.history.push("/");
-  }
+  }
 
   render() {
     return (
@@ -217,36 +217,31 @@ class HomeBase extends React.Component {
       }}
     >
       CAN-DO-CO-OP
+      <br></br><br></br>
     </Typography>
   </Grid>
 </Grid>
+<div style={{ border: '3px solid #ccc', padding: '0.5rem', backgroundColor: '#f5f5f5', animation: 'fade-in 3s forwards' }}>
+  <Typography
+    variant="h1"
+    component="h1"
+    align="center"
+    gutterBottom
+    style={{
+      color: '#000', 
+      fontSize: '1.5rem', 
+      letterSpacing: '0.1em', 
+      lineHeight: '1.2', 
+    }}
+  >
+    Can Do Co-op is a website that connects students with experienced reviewers to get feedback on their <br></br>cover letters, resumes, and work term reports. <br></br>It's a user-friendly platform with helpful resources and tips for students to improve their job search skills.
+  </Typography>
+</div>
 <Grid container
 direction="column"
 judtifyContent="center"
 alignItems="center">
 
-    <Button
-            key='1'
-            onClick={() => history.push('/SignUp')}
-            type="submit"
-            halfWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign Up
-        </Button>  
-   <br></br>
-   <br></br>
-      <Button
-            key='2'
-            onClick={() => history.push('/SignIn')}
-            type="submit"
-            halfWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign In
-        </Button>  
    </Grid>
     </Box>
     </Box>

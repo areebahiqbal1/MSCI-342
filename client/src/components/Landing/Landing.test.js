@@ -11,7 +11,7 @@ jest.mock('./resumee.jpg', () => ({})); // Mocks the resumee.jpg file
 describe('TheLanding component', () => {
   it('renders the landing page title', () => {
     const { getByText } = render(<TheLanding />);
-    const titleElement = getByText('Can do Co-op');
+    const titleElement = getByText('CAN-DO-CO-OP');
     expect(titleElement).toBeInTheDocument();
   });
   describe('TheLanding', () => {
@@ -24,25 +24,25 @@ describe('TheLanding component', () => {
     });
   });
 
-const lighttheme = createTheme({
-  palette: {
-    type: "light",
-    background: {
-      default: "#ffedf3", //pinkish
-    },
-    primary: {
-      main: "#facad9", //pink
-    },
-    secondary: {
-      main: "#ff003c", //pinker
-    },
-  },
-});
+// const lighttheme = createTheme({
+//   palette: {
+//     type: "light",
+//     background: {
+//       default: "#ffedf3", //pinkish
+//     },
+//     primary: {
+//       main: "#facad9", //pink
+//     },
+//     secondary: {
+//       main: "#ff003c", //pinker
+//     },
+//   },
+// });
 
-describe("Theme colors", () => {
-  test("Primary color should be pink", () => {
-    expect(lighttheme.palette.primary.main).toBe("#facad9");
-  });
-});
+// describe("Theme colors", () => {
+//   test("Primary color should be pink", () => {
+//     expect(lighttheme.palette.primary.main).toBe("#facad9");
+//   });
+// });
 
 });

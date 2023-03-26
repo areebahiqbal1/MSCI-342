@@ -23,15 +23,15 @@ const lightTheme = createTheme({
             default: "#ffffff"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+            main: '#EEE2DC',
+            light: '#f5eae6',
+            dark: '#ffffff',
+            background: '#ffffff'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+            main: "#EDC7B7",
+            light: '#000000',
+            dark: '#000000'
         },
     },
 });
@@ -85,6 +85,7 @@ const App = () => {
         if (response.status !== 200) throw Error(body.message);
         return body;
     }
+
 
     const delDocument = (id) => {
         callApiDelDocs(id);
@@ -183,9 +184,9 @@ const App = () => {
                                         }}
                                     >
                                         <Grid container spacing={0}>
-                                            <Grid item xs={5}><Item>{doc.doc_name}</Item></Grid>
-                                            <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
-                                            <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
+                                            <Grid item color='secondary' xs={5}><Item>{doc.doc_name}</Item></Grid>
+                                            <Grid item color='secondary' xs={2}><Item>{doc.doc_type}</Item></Grid>
+                                            <Grid item color='secondary' xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
                                                 <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} >Edit</Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} >DELETE</Button>

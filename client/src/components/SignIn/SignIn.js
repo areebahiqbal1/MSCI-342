@@ -17,13 +17,13 @@ const lighttheme = createTheme({
   palette: {
     type: "light",
     background: {
-      default: "#ffedf3", //pinkish
+      default: "#EEE2DC", //pinkish
     },
     primary: {
-      main: "#facad9", //pink
+      main: "#bfafa6", //pink
     },
     secondary: {
-      main: "#ff003c", //pinker
+      main: "#000000", //pinker
     },
   },
 });
@@ -112,7 +112,7 @@ class SignInFormBase extends Component {
               <form noValidate onSubmit={this.onSubmit}>
                 <div>
                   <Typography component="h1" variant="h10" color="primary">
-                    Sign In
+                   <br></br> <br></br>Sign In
                   </Typography>
                 </div>
                 <TextField

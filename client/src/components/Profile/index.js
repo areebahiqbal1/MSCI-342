@@ -21,22 +21,23 @@ const fetch = require("node-fetch");
 const opacityValue = 0.9;
 
 const lightTheme = createTheme({
-  palette: {
-    type: "light",
-    background: {
-      default: "#ffffff",
-    },
-    primary: {
-      main: "#ef9a9a",
-      light: "#ffcccb",
-      dark: "#ba6b6c",
-      background: "#eeeeee",
-    },
-    secondary: {
-      main: "#b71c1c",
-      light: "#f05545",
-      dark: "#7f0000",
-    },
+    palette: {
+        type: 'light',
+        background: {
+            default: "#ffffff"
+        },
+        primary: {
+            main: '#EEE2DC',
+            light: '#f5eae6',
+            dark: '#ffffff',
+            background: '#ffffff'
+        },
+        secondary: {
+            main: "#EDC7B7",
+            light: '#EDC7B7',
+            dark: '#EDC7B7'
+        },
+
   },
 });
 

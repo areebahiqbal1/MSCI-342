@@ -63,12 +63,12 @@ app.post('/upload', (req, res, next) => {
 	let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email) 
 	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${uploadFile.data}', '${up.email}')`;
 
-	//uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
-		//if (err) {
-			//return res.status(500).send(err);
-		//}
-		//return res.status(200).json({ status: 'uploaded', name, saveAs });
-	//});
+	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		return res.status(200).json({ status: 'uploaded', name, saveAs });
+	});
 
 	connection.query(sql, (error, results, fields) => {
 		if (error) {
@@ -83,7 +83,7 @@ app.post('/upload', (req, res, next) => {
 app.post('/api/getDocs', (req, res) => {
 	let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM a6anjum.myFiles`;
+	let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ?`;
 	let data = [];
 	
 	connection.query(sql, data, (error, results, fields) => {

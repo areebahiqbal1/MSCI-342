@@ -123,7 +123,7 @@ const App = () => {
                         Reviewer Application page
                     </Typography>
                     <Typography variant="h6" component="div">
-                        Apply to be a reviewer here
+                        Apply to be a reviewer here (Applying more than once will overwrite your previous applications)
                     </Typography>
                     <br />
                     <Grid>

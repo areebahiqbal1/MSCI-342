@@ -41,7 +41,7 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 }))
 
 const App = () => {
-
+    const viewCount = useSelector((state) => state.viewer.value)
     const dispatch = useDispatch()
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -86,6 +86,27 @@ const App = () => {
         return body;
     }
 
+    const callApiDelDocs = async (id) => {
+
+        const url = serverURL + "/api/delDocs";
+        console.log(url);
+        console.log(viewCount);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                viewCount: id,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
+
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
@@ -106,12 +127,19 @@ const App = () => {
         setNum(i);
     }
 
-    const handleAccept = () => {
-
+    const delDocument = (id) => {
+        callApiDelDocs(id);
+        window.location.reload();
     }
 
-    const handleReject = () => {
+    const handleAccept = (id) => {
+        dispatch(setView(id));
+        delDocument(id);
+    }
 
+    const handleReject = (id) => {
+        dispatch(setView(id));
+        delDocument(id);
     }
 
     const handleView = (id) => {
@@ -165,8 +193,8 @@ const App = () => {
                                             <Grid item xs={4}><Item>{doc.user_email}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleAccept()} >Accept</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleReject()} >Reject</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id)} >Accept</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleReject(doc.id)} >Reject</Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleView(doc.doc_name)} >View</Button>
                                             </Grid>
                                         </Grid>

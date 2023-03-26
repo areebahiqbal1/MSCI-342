@@ -376,6 +376,7 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 }));
 
 class App extends Component {
+  
   state = {
     userEmail: "",
     userName: "",
@@ -383,7 +384,7 @@ class App extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      //if user is loged in then get the user email
+      //if user is logged in then get the user email
       if (user) {
         this.setState({ userEmail: user.email });
       }
@@ -392,9 +393,11 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <ThemeProvider theme={lightTheme}>
         <NavBar />
+        
         <Box
           sx={{
             height: "100vh",

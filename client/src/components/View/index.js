@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/Typography";
 import { createTheme, ThemeProvider, styled } from '@material-ui/core/styles';
@@ -11,8 +12,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
 import { useSelector } from 'react-redux';
 import firebase from "firebase/app";
+import axios from "axios";
+import FileSaver from "file-saver";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
 const opacityValue = 0.9;
+const endpoint = "http://localhost:4000";
 
 const lightTheme = createTheme({
     palette: {
@@ -43,16 +48,28 @@ const App = () => {
     //Gets and returns document ID
     const viewCount = useSelector((state) => state.viewer.value)
     console.log(viewCount)
+    const docs = [{ uri: endpoint + '/files/' + viewCount }];
 
     //Gets and returns users email
     const [userEmail, setUserEmail] = React.useState("");
     firebase.auth().onAuthStateChanged((user) => {
         //if user is logged in then get the user email
         if (user) {
-          setUserEmail(user.email);
+            setUserEmail(user.email);
         }
     });
     console.log(userEmail)
+
+    const handleDownload = () => {
+        axios({
+            method: 'get',
+            url: endpoint + '/files/' + viewCount,
+            responseType: 'blob'
+        })
+            .then((response) => {
+                FileSaver.saveAs(response.data, viewCount);
+            });
+    }
 
     return (
         <ThemeProvider theme={lightTheme}>
@@ -82,11 +99,14 @@ const App = () => {
                     <br />
                     <Grid>
                         <Typography variant="h6" component="div">
-                            {"User: " + userEmail }
+                            {"User: " + userEmail}
                         </Typography>
                         <Typography variant="h6" csmponent="div">
-                            {"Document ID: " + viewCount }
+                            {"File Name: " + viewCount}
                         </Typography>
+
+                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />;
+                        <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
                     </Grid>
                     <br />
                 </MainGridContainer>

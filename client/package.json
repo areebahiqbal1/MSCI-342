@@ -4,12 +4,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@daypilot/daypilot-lite-react": "^3.12.1",
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.0.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.0.0",
     "@material/ripple": "^4.0.0",
+    "@reduxjs/toolkit": "^1.9.3",
     "array-move": "^2.1.0",
+    "file-saver": "^2.0.5",
     "firebase": "^8.6.2",
     "form-data": "^3.0.0",
     "install": "^0.12.2",
@@ -26,10 +29,11 @@
     "react-sortable-hoc": "^1.9.1",
     "react-with-firebase-auth": "^1.0.3",
     "recompose": "^0.30.0",
+    "redux": "^4.2.1",
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "jest",
     "cypress": "cypress open",

@@ -169,8 +169,8 @@ const App = () => {
                                             <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.doc_name)} >Edit</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.doc_name)} >DELETE</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} >Edit</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} >DELETE</Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.doc_name)} >COMMENTS</Button>
                                             </Grid>
                                         </Grid>

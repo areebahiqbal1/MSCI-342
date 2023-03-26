@@ -102,10 +102,11 @@ const App = () => {
                             {"User: " + userEmail}
                         </Typography>
                         <Typography variant="h6" csmponent="div">
-                            {"Document ID: " + viewCount}
+                            {"File Name: " + viewCount}
                         </Typography>
 
                         <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />;
+                        <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
                     </Grid>
                     <br />
                 </MainGridContainer>

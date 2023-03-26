@@ -10,7 +10,8 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
 import Paper from '@mui/material/Paper';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setView } from '../Store/viewerSlice';
 
 const opacityValue = 0.9;
 const serverURL = "";
@@ -41,8 +42,7 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 
 const App = () => {
 
-    const viewCount = useSelector((state) => state.viewer.value)
-    console.log(viewCount)
+    const dispatch = useDispatch()
 
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
@@ -53,7 +53,6 @@ const App = () => {
     }));
 
     const [docList, setDocList] = React.useState([]);
-    const [idList, setIDList] = React.useState([]);
     const [num, setNum] = React.useState([]);
 
     React.useEffect(() => {
@@ -115,8 +114,10 @@ const App = () => {
 
     }
 
-    const handleView = () => {
-        history.push('/');
+    const handleView = (id) => {
+        console.log(id)
+        dispatch(setView(id))
+        history.push('/AdminView');
     }
 
     return (
@@ -148,6 +149,7 @@ const App = () => {
                     <Grid>
                         {docList.map((doc) => {
                             if (doc.doc_type == "Reviewer") {
+                                console.log(doc)
                                 return (
                                     <Box
                                         sx={{
@@ -159,13 +161,13 @@ const App = () => {
                                         }}
                                     >
                                         <Grid container spacing={0}>
-                                            <Grid item xs={5}><Item>{doc.doc_name}</Item></Grid>
-                                            <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
+                                            <Grid item xs={3}><Item>{doc.doc_name}</Item></Grid>
+                                            <Grid item xs={4}><Item>{doc.user_email}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={handleAccept} >Accept</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleReject} >Reject</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleView} >View</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleAccept()} >Accept</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleReject()} >Reject</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleView(doc.doc_name)} >View</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

@@ -46,24 +46,24 @@ app.use(
   })
 );
 
-app.post("/upload", (req, res, next) => {
-  let connection = mysql.createConnection(config);
-  console.log(req);
-  let up = req.body;
-  let uploadFile = req.files.file;
-  const name = uploadFile.name;
-  const md5File = req.files.file.md5;
-  const saveAs = `${name}`;
+app.post('/upload', (req, res, next) => {
+	let connection = mysql.createConnection(config)
+	//console.log(req)
+	let up = req.body;
+	let uploadFile = req.files.file;
+	const name = uploadFile.name;
+	const md5File = req.files.file.md5;
+	const saveAs = `${name}`;
 
-  let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data) 
-	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${uploadFile.data}')`;
+	let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email) 
+	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${uploadFile.data}', '${up.email}')`;
 
-  uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    return res.status(200).json({ status: "uploaded", name, saveAs });
-  });
+	//uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
+		//if (err) {
+			//return res.status(500).send(err);
+		//}
+		//return res.status(200).json({ status: 'uploaded', name, saveAs });
+	//});
 
   connection.query(sql, (error, results, fields) => {
     if (error) {
@@ -78,19 +78,38 @@ app.post("/upload", (req, res, next) => {
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-  let sql = `SELECT * FROM a6anjum.myFiles`;
-  let data = [];
+	let sql = `SELECT * FROM a6anjum.myFiles`;
+	let data = [];
+	
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
 
-  connection.query(sql, data, (error, results, fields) => {
-    if (error) {
-      return console.error(error.message);
-    }
 
     let string = JSON.stringify(results);
     let obj = JSON.parse(string);
     res.send({ express: string });
   });
   connection.end();
+});
+
+app.post('/api/delDocs', (req, res) => {
+	let connection = mysql.createConnection(config);
+	console.log(req.body.viewCount)
+	let sql = `delete FROM a6anjum.myFiles a WHERE a.id = ?`;
+	let data = [req.body.viewCount];
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let string = JSON.stringify(results);
+		let obj = JSON.parse(string);
+		res.send({ express: string });
+	});
+	connection.end();
 });
 
 app.use(express.static(path.join(__dirname, "client/build")));

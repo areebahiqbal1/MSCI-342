@@ -225,6 +225,28 @@ direction="column"
 judtifyContent="center"
 alignItems="center">
 
+    <Button
+            key='1'
+            onClick={() => history.push('/SignUp')}
+            type="submit"
+            halfWidth
+            variant="contained"
+            color="primary"
+          >
+            Sign Up
+        </Button>  
+   <br></br>
+   <br></br>
+      <Button
+            key='2'
+            onClick={() => history.push('/SignIn')}
+            type="submit"
+            halfWidth
+            variant="contained"
+            color="primary"
+          >
+            Sign In
+        </Button>  
    </Grid>
     </Box>
     </Box>

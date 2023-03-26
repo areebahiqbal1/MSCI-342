@@ -9,6 +9,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@mui/material/Paper';
+import MenuBar from '../MenuBar/menu';
+import { useSelector, useDispatch } from 'react-redux';
+import { setView } from '../Store/viewerSlice';
 
 const opacityValue = 0.9;
 //const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3306";
@@ -39,6 +42,9 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 
 const App = () => {
 
+    const viewCount = useSelector((state) => state.viewer.value)
+    const dispatch = useDispatch()
+
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
         textAlign: 'center',
@@ -48,8 +54,6 @@ const App = () => {
     }));
 
     const [docList, setDocList] = React.useState([]);
-    const [idList, setIDList] = React.useState([]);
-    const [num, setNum] = React.useState([]);
 
     React.useEffect(() => {
         handleDocSearch();
@@ -97,17 +101,28 @@ const App = () => {
         }
     }
 
-    const addNum = () => {
-        var i = num + 1;
-        setNum(i);
+    const handleEditSubmit = (id) => {
+        console.log(id);
+        callApiEdit(id);
     }
 
-    const handleSubmit = () => {
-
+    const handleDelSubmit = (id) => {
+        console.log(id);
+        callApiDelete(id);
     }
 
-    const handleComSub = () => {
+    const handleComSubmit = (id) => {
+        console.log(id);
+        dispatch(setView(id))
         history.push('/View');
+    }
+
+    const callApiDelete = async () => {
+
+    }
+
+    const callApiEdit = async () => {
+
     }
 
     return (
@@ -174,6 +189,7 @@ const App = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
+
             <Box
                 sx={{
                     height: '100vh',
@@ -215,9 +231,9 @@ const App = () => {
                                             <Grid item xs={2}><Item>{doc.doc_type}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >Edit</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleSubmit} >DELETE</Button>
-                                                <Button variant="contained" color='secondary' onClick={handleComSub} >COMMENTS</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} >Edit</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} >DELETE</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.id)} >COMMENTS</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

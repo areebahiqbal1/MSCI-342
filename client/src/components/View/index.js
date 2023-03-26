@@ -105,7 +105,7 @@ const App = () => {
                             {"File Name: " + viewCount}
                         </Typography>
 
-                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />;
+                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
                         <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
                     </Grid>
                     <br />

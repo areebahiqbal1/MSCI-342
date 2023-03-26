@@ -85,7 +85,7 @@ app.post('/upload', (req, res, next) => {
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ?`;
+	let sql = `SELECT * FROM a6anjum.myFiles`;
 	let data = [];
 	
 	connection.query(sql, data, (error, results, fields) => {

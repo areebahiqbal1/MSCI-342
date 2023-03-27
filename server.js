@@ -46,15 +46,19 @@ app.use(
   })
 );
 
-app.use('/files', express.static(path.join(__dirname, "public/files")), (req, res) => {
+app.use(
+  "/files",
+  express.static(path.join(__dirname, "public/files")),
+  (req, res) => {
+    return res.status(200).send("It's working");
+  }
+);
+app.get("/files/*", (req, res) => {
   return res.status(200).send("It's working");
-})
-app.get('/files/*', (req, res) => {
-  return res.status(200).send("It's working");
-})
+});
 
-app.post('/upload', (req, res, next) => {
-  let connection = mysql.createConnection(config)
+app.post("/upload", (req, res, next) => {
+  let connection = mysql.createConnection(config);
   //console.log(req)
   let up = req.body;
   let uploadFile = req.files.file;
@@ -62,7 +66,7 @@ app.post('/upload', (req, res, next) => {
   const md5File = req.files.file.md5;
   const saveAs = `${name}`;
 
-  if (up.type = "Reviewer") {
+  if ((up.type = "Reviewer")) {
     let sql = `DELETE FROM a6anjum.myFiles a WHERE a.doc_type = 'Reviewer' AND a.user_email = ?`;
     let data = [up.email];
 
@@ -74,14 +78,16 @@ app.post('/upload', (req, res, next) => {
   }
 
   let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email, reviewer_id) 
-	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${uploadFile.data}', '${up.email}', NULL)`;
+	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${
+    uploadFile.data
+  }', '${up.email}', NULL)`;
 
-	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
-		if (err) {
-			return res.status(500).send(err);
-		}
-		//return res.status(200).json({ status: 'uploaded', name, saveAs });
-	});
+  uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    //return res.status(200).json({ status: 'uploaded', name, saveAs });
+  });
 
   connection.query(sql, (error, results, fields) => {
     if (error) {
@@ -97,14 +103,14 @@ app.post("/api/getIndustryDocs", (req, res) => {
   let connection = mysql.createConnection(config);
   let type = req.body.type;
 
-	let sql = `SELECT * FROM a6anjum.myFiles WHERE tag = ? AND reviewer_id IS NULL`;
-	let data = [type];
-	
-	connection.query(sql, data, (error, results, fields) => {
-		if (error) {
-			return console.error(error.message);
-		}
-    
+  let sql = `SELECT * FROM a6anjum.myFiles WHERE tag = ? AND reviewer_id IS NULL`;
+  let data = [type];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
     let success = JSON.stringify("Success");
     res.send({ express: success });
     connection.end();
@@ -138,15 +144,15 @@ app.post("/dateUpload", (req, res, next) => {
 
 app.post("/getDates", (req, res) => {
   let connection = mysql.createConnection(config);
-
+  let email = req.body.email;
   let sql = `SELECT start_date, end_date, date_title, date_id
   FROM dates
   WHERE user_id = (
     SELECT user_id
     FROM users
-    WHERE user_email = 'test90@gmail.com'
+    WHERE user_email = ?
   );`;
-  let data = [];
+  let data = [email];
 
   connection.query(sql, data, (error, results, fields) => {
     if (error) {
@@ -165,13 +171,13 @@ app.post("/api/getUser", (req, res) => {
   let email = req.body;
   console.log(email);
 
-	let sql = `SELECT * FROM a6anjum.users WHERE user_email = ?`;
-	let data = [email.type];
-	
-	connection.query(sql, data, (error, results, fields) => {
-		if (error) {
-			return console.error(error.message);
-		}
+  let sql = `SELECT * FROM a6anjum.users WHERE user_email = ?`;
+  let data = [email.type];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
 
     let string = JSON.stringify(results);
     let obj = JSON.parse(string);
@@ -183,14 +189,13 @@ app.post("/api/getUser", (req, res) => {
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ? OR reviewer_id = ?`;
-	let data = [req.body.type, req.body.id];
-	
-	connection.query(sql, data, (error, results, fields) => {
-		if (error) {
-			return console.error(error.message);
-		}
+  let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ? OR reviewer_id = ?`;
+  let data = [req.body.type, req.body.id];
 
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
 
     let string = JSON.stringify(results);
     let obj = JSON.parse(string);
@@ -199,9 +204,9 @@ app.post("/api/getDocs", (req, res) => {
   connection.end();
 });
 
-app.post('/api/delDocs', (req, res) => {
+app.post("/api/delDocs", (req, res) => {
   let connection = mysql.createConnection(config);
-  console.log(req.body.viewCount)
+  console.log(req.body.viewCount);
   let sql = `delete FROM a6anjum.myFiles a WHERE a.id = ?`;
   let data = [req.body.viewCount];
 
@@ -217,7 +222,7 @@ app.post('/api/delDocs', (req, res) => {
   connection.end();
 });
 
-app.post('/api/Claim', (req, res) => {
+app.post("/api/Claim", (req, res) => {
   let connection = mysql.createConnection(config);
   let sql = `UPDATE myFiles SET reviewer_id = ? WHERE id = ? AND reviewer_id IS NULL`;
   let data = [req.body.type, req.body.id];
@@ -234,28 +239,28 @@ app.post('/api/Claim', (req, res) => {
   connection.end();
 });
 
-app.post('/api/editDocs', (req, res) => {
+app.post("/api/editDocs", (req, res) => {
   let connection = mysql.createConnection(config);
   let up = req.body;
-  console.log(req.body.viewCount)
+  console.log(req.body.viewCount);
   let sql = `UPDATE a6anjum.myFiles a SET `;
   let data = [];
 
-  if(up.newName != ""){
+  if (up.newName != "") {
     sql = sql + " doc_name = ?";
     data.push(up.newName);
   }
-  if(up.newName != "" && up.newType != ""){
-    sql = sql + ","
+  if (up.newName != "" && up.newType != "") {
+    sql = sql + ",";
   }
-  if(up.newType != ""){
+  if (up.newType != "") {
     sql = sql + " doc_type = ?";
     data.push(up.newType);
   }
-  if(up.newIndustry != "" && up.newType != ""){
-    sql = sql + ","
+  if (up.newIndustry != "" && up.newType != "") {
+    sql = sql + ",";
   }
-  if(up.newIndustry != ""){
+  if (up.newIndustry != "") {
     sql = sql + " tag = ?";
     data.push(up.newIndustry);
   }

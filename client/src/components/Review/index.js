@@ -69,7 +69,7 @@ const App = () => {
     });
 
     React.useEffect(() => {
-        if (userEmail !== ""){
+        if (userEmail !== "") {
             handleDocSearch();
         }
     }, [userEmail]);
@@ -81,7 +81,7 @@ const App = () => {
         const url = endpoint + "/api/getUser";
         console.log(url);
         console.log("getting: " + userEmail)
-        
+
         const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -109,12 +109,14 @@ const App = () => {
     }
 
     React.useEffect(() => {
-        callApiFindIndustryDocs()
-                    .then(res => {
-                        var docParsed = JSON.parse(res.express);
-                        console.log(docParsed);
-                        setDocList(docParsed);
-                    });
+        if (industry !== "" & docList == []) {
+            callApiFindIndustryDocs()
+                .then(res => {
+                    var docParsed = JSON.parse(res.express);
+                    console.log(docParsed);
+                    setDocList(docParsed);
+                });
+        }
     }, [industry])
 
     const callApiFindIndustryDocs = async () => {
@@ -179,8 +181,6 @@ const App = () => {
         dispatch(setView(id))
         history.push('/View');
     }
-
-
     return (
         <ThemeProvider theme={lightTheme}>
             <MenuBar />

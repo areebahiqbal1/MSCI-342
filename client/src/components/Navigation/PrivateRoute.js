@@ -5,7 +5,7 @@ import SignInForm from "../SignIn/SignIn";
 import UploadForm from "../Upload";
 import ReviewForm from "../Review";
 import ViewPage from "../View";
-import CalendarPage from "../Calendar/Calendar";
+import CalendarPage from "../Calendar";
 import AdminPage from "../Admin";
 import AdminView from "../AdminView";
 import MyFilesPage from "../MyFiles";

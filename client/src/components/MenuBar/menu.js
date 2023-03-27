@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withFirebase } from "../Firebase";
 import firebase from "firebase/app";
 
+
 const lightTheme = createTheme({
     palette: {
         type: 'light',
@@ -28,10 +29,10 @@ const lightTheme = createTheme({
     },
 });
 const App = () => {
-    const signOut = () => {
+    //const signOut = () => {
         
-        history.push('/SignOut')
-      }
+        //history.push('/SignOut')
+    //  }
 
     //Gets and returns users email
     const [userEmail, setUserEmail] = React.useState("");
@@ -42,6 +43,10 @@ const App = () => {
         }
     });
     console.log(userEmail)
+
+    const handleLogout = () => {               
+        
+    }
 
     return (
         <ThemeProvider theme={lightTheme}>
@@ -85,7 +90,7 @@ const App = () => {
                             </Button>
                             <Button
                                 key='6'
-                                onClick={() => signOut()}
+                                onClick={() => handleLogout()}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 SignOut
@@ -106,13 +111,20 @@ const App = () => {
                             </Button>
                             <Button
                                 key='9'
+                                onClick={() => history.push('/Apply')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                Apply
+                            </Button>
+                            <Button
+                                key='10'
                                 onClick={() => history.push('/Review')}
                                 sx={{ my: 2, color: 'red', display: 'block' }}
                             >
                                 Review
                             </Button>
                             <Button
-                                key='10'
+                                key='11'
                                 onClick={() => history.push('/Admin')}
                                 sx={{ my: 2, color: 'red', display: 'block' }}
                             >

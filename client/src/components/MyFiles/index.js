@@ -15,6 +15,12 @@ import { setView } from '../Store/viewerSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ComIcon from '@mui/icons-material/ChatBubble';
+import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const opacityValue = 0.9;
 //const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3306";
@@ -133,6 +139,7 @@ const App = () => {
     const handleEditSubmit = (id) => {
         console.log(id);
         dispatch(setView(id));
+        editDocs(id);
     }
 
     const handleDelSubmit = (id) => {
@@ -145,6 +152,49 @@ const App = () => {
         console.log(id);
         dispatch(setView(id))
         history.push('/View');
+    }
+
+    const [newName, setNewName] = React.useState("");
+    const handleNameChange = (event) => {
+        setNewName(event.target.value);
+    }
+
+    const [newIndustry, setNewIndustry] = React.useState("");
+    const handleIndustryChange = (event) => {
+        setNewIndustry(event.target.value);
+    }
+
+    const [newType, setNewType] = React.useState("");
+    const handleTypeChange = (event) => {
+        setNewType(event.target.value);
+    }
+
+    const editDocs = (id) => {
+        callApiEditDocs(id);
+        window.location.reload();
+    }
+
+    const callApiEditDocs = async (id) => {
+
+        const url = serverURL + "/api/editDocs";
+        console.log(url);
+        console.log(viewCount);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                viewCount: id,
+                newName: newName,
+                newIndustry: newIndustry,
+                newType: newType,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
     }
 
     return (
@@ -187,13 +237,58 @@ const App = () => {
                                         }}
                                     >
                                         <Grid container spacing={0}>
-                                            <Grid item color='secondary' xs={5}><Item>{doc.doc_name}</Item></Grid>
-                                            <Grid item color='secondary' xs={2}><Item>{doc.doc_type}</Item></Grid>
-                                            <Grid item color='secondary' xs={2}><Item>{doc.tag}</Item></Grid>
+                                            <Grid item color='secondary' xs={5} >
+                                                <Paper elevation={1} >
+                                                    <Box height="30px" padding="12px">
+                                                        <TextField defaultValue={doc.doc_name} onChange={handleNameChange} fullWidth disableUnderline={true} size="small" variant="standard" />
+                                                    </Box>
+                                                </Paper>
+                                            </Grid>
+                                            <Grid item color='secondary' xs={2}>
+                                                <Paper elevation={1} >
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                                                        <Select
+                                                            labelId="demo-simple-select-label"
+                                                            id="demo-simple-select"
+                                                            value={doc.doc_type}
+                                                            label="Document Type"
+                                                            onChange={handleTypeChange}
+                                                        >
+                                                            <MenuItem value={'Resume'}>Resume</MenuItem>
+                                                            <MenuItem value={'WorkTermReport'}>Work Term Report</MenuItem>
+                                                            <MenuItem value={'CoverLetter'}>Cover Letter</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </Paper>
+                                            </Grid>
+                                            <Grid item color='secondary' xs={2}>
+                                                <Paper elevation={1} >
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="demo-simple-select-label">Industry</InputLabel>
+                                                        <Select
+                                                            labelId="demo-simple-select-label"
+                                                            id="demo-simple-select"
+                                                            value={doc.tag}
+                                                            label="Document Tag"
+                                                            onChange={handleIndustryChange}
+                                                        >
+                                                            <MenuItem value={'Finance'}>Finance</MenuItem>
+                                                            <MenuItem value={'Coding'}>Coding</MenuItem>
+                                                            <MenuItem value={'Accounting'}>Accounting</MenuItem>
+                                                            <MenuItem value={'Arts'}>Arts</MenuItem>
+                                                            <MenuItem value={'Science'}>Science</MenuItem>
+                                                            <MenuItem value={'Engineering'}>Engineering</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </Paper>
+                                            </Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} ><EditIcon /></Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} ><DeleteIcon /></Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.doc_name)} ><ComIcon /></Button>
+                                                <Box padding="8px">
+                                                    <Button variant="contained" color='secondary' size="large" onClick={() => handleEditSubmit(doc.id)} ><EditIcon /></Button>
+                                                    <Button variant="contained" color='secondary' size="large" onClick={() => handleDelSubmit(doc.id)} ><DeleteIcon /></Button>
+                                                    <Button variant="contained" color='secondary' size="large" onClick={() => handleComSubmit(doc.doc_name)} ><ComIcon /></Button>
+                                                </Box>
                                             </Grid>
                                         </Grid>
                                     </Box>

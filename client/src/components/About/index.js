@@ -131,7 +131,7 @@ const App = () => {
                                 <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
                                     <div>
                                         <h2>Tristan Walker</h2>
-                                        <p>Philantropist, upstanding civilian, good samartian and all around nice guy.</p>
+                                        <p>Philantropist, upstanding civilian, good samaritan and all around nice guy.</p>
                                     </div>
                                 </Box>
                             </Paper>

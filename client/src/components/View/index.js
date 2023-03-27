@@ -90,7 +90,7 @@ const App = () => {
         dispatch(setView(viewCount));
         dispatch(setView2(viewCount2));
         setComment("");
-        handleComSearch();
+        history.push('/Rebound');
     }
 
     const callApiAddComment = async (id) => {
@@ -218,7 +218,7 @@ const App = () => {
                                             gap: 1,
                                         }}
                                     >
-                                        {doc.data}
+                                        {doc.user_id + ": " +doc.data}
                                     </Box>
                                 )
                             }

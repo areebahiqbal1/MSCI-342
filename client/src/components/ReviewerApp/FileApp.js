@@ -72,6 +72,7 @@ class FileApp extends Component {
     data.append("type", "Reviewer")
     data.append("tag", this.state.docTag)
     data.append("email", this.state.userEmail)
+    data.append("email2", null)
     axios
       .post(endpoint + "/upload", data, {
         onUploadProgress: (ProgressEvent) => {

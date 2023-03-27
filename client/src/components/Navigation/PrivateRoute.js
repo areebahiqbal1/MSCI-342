@@ -17,6 +17,7 @@ import FAQPage from "../FAQ";
 import AboutUs from "../About";
 import HomePage from "../Home";
 import history from "./history";
+import SignOutPage from "../SignOut";
 //import profile from "../Profile";
 
 export default function PrivateRoute({ authenticated, ...rest }) {
@@ -37,6 +38,7 @@ export default function PrivateRoute({ authenticated, ...rest }) {
         />
         <Route path="/SignIn" component={SignInForm} />
         <Route path="/SignUp" component={SignUpPage} />
+        <Route path="/SignOut" component={SignOutPage} />
         <Route path="/Upload" component={UploadForm} />
         <Route path="/Review" component={ReviewForm} />
         <Route path="/Admin" component={AdminPage} />

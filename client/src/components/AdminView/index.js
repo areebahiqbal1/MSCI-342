@@ -86,7 +86,7 @@ const App = () => {
                     </Typography>
                     <br />
                     <Grid>
-                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />;
+                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
                     </Grid>
                     <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
                     <br />

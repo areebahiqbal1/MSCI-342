@@ -14,6 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import MenuBar from '../MenuBar/menu';
 
 const serverURL = "http://localhost:4000";
 //const serverURL = "ec2-18-216-101-119.us-east-2.compute.amazonaws.com";
@@ -182,7 +183,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <NavBar />
+      <MenuBar />
       <Box
         sx={{
           height: "100vh",
@@ -264,7 +265,7 @@ const App = () => {
   );
 };
 
-const NavBar = () => {
+/* const NavBar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -330,7 +331,7 @@ const NavBar = () => {
     </AppBar>
   );
 };
-
+*/
 export default App;
 
 /*import * as React from "react";

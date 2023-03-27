@@ -5,6 +5,8 @@ import history from '../Navigation/history';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
+import { withFirebase } from "../Firebase";
+import firebase from "firebase/app";
 
 const lightTheme = createTheme({
     palette: {
@@ -26,6 +28,20 @@ const lightTheme = createTheme({
     },
 });
 const App = () => {
+    const signOut = () => {
+        
+        history.push('/SignOut')
+      }
+
+    //Gets and returns users email
+    const [userEmail, setUserEmail] = React.useState("");
+    firebase.auth().onAuthStateChanged((user) => {
+        //if user is logged in then get the user email
+        if (user) {
+            setUserEmail(user.email);
+        }
+    });
+    console.log(userEmail)
 
     return (
         <ThemeProvider theme={lightTheme}>
@@ -69,7 +85,7 @@ const App = () => {
                             </Button>
                             <Button
                                 key='6'
-                                onClick={() => history.push('/SignOut')}
+                                onClick={() => signOut()}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 SignOut

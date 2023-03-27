@@ -20,15 +20,20 @@ signOut() {
     this.props.firebase.doSignOut();
     this.props.history.push("/");
   }
+    
 render() {
     return (
-<Button
-key='5'
-onClick={this.signOut.bind(this)}
-sx={{ my: 2, color: 'white', display: 'block' }}
->
-SignOut
-</Button>
+        <Container onMouseEnter = {this.signOut.bind(this)} height = "500px">
+            {this.signOut.bind(this)}
+            <Button
+                key='5'
+                onClick={this.signOut.bind(this)}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+                SignOut
+            </Button>
+        </Container>
+        
     )
 }
 }

@@ -77,7 +77,7 @@ const App = () => {
     const [userID, setUserID] = React.useState("");
 
     React.useEffect(() => {
-        if (userEmail !== "") {
+        if (userEmail != "") {
             handleUserID();
         }
     }, [userEmail]);

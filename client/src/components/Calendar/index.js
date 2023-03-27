@@ -17,6 +17,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import axios from "axios";
 import firebase from "firebase/app";
 import MenuBar from "../MenuBar/menu";
+import TextField from "@material-ui/core/TextField";
 
 const opacityValue = 0.9;
 
@@ -70,8 +71,12 @@ class Calendar extends Component {
     this.calendarRef = React.createRef();
     this.state = {
       list: [{ start_date: "", end_date: "", date_title: "", date_id: 1 }],
+      list2: [{ start_date: "", end_date: "", date_title: "", date_id: 1 }],
       userEmail: "",
       viewType: "Week",
+      userInput: "",
+      isSaved: false,
+      //calander: this.calendar,
       durationBarVisible: false,
       timeRangeSelectedHandling: "Enabled",
       onTimeRange: async (args) => {
@@ -104,6 +109,40 @@ class Calendar extends Component {
             console.log(error);
           });
       },
+      handleSaveClick: async (args) => {
+        const dp = this.calendar;
+        const Data = {
+          email: this.state.userInput,
+        };
+        this.setState({ isSaved: true });
+        axios
+          .post("http://localhost:4000/getDates", Data, {})
+          .then(
+            function (response) {
+              console.log(response.data.express);
+              var parsed = JSON.parse(response.data.express);
+              console.log(parsed);
+              this.setState({ list2: parsed });
+              const events = this.state.list2.map((item) => {
+                dp.events.add({
+                  start: item.start_date,
+                  end: item.end_date,
+                  id: item.date_id,
+                  text: item.date_title,
+                  backColor: "#e2edab",
+                });
+              });
+              console.log(events);
+              const startDate = "2023-03-19";
+
+              //this.calendar.update({ startDate, events });
+            }.bind(this)
+          )
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+
       onTimeRangeSelected: async (args) => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.prompt(
@@ -250,6 +289,29 @@ class Calendar extends Component {
               Organize your schedule.
             </Typography>
             <br />
+            <Grid item xs={12}>
+              <div>
+                <TextField
+                  label="Enter email, view schedule"
+                  variant="outlined"
+                  fullWidth
+                  value={this.state.userInput}
+                  onChange={(e) => {
+                    this.setState({ userInput: e.target.value });
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={this.state.handleSaveClick}
+                >
+                  Save
+                </Button>
+                {this.state.isSaved && (
+                  <div>Data saved: {this.state.userInput}</div>
+                )}
+              </div>
+            </Grid>
+
             <Grid>
               <div style={styles.wrap}>
                 <div style={styles.left}>

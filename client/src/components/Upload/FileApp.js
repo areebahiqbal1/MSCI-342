@@ -11,6 +11,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Dropdown } from "bootstrap";
 import firebase from "firebase/app";
+import TextField from '@mui/material/TextField';
 
 //endpoint is temprorary right now.  Server endpoint can be added once we actually need this running on the server.
 const endpoint = "http://localhost:4000/upload";
@@ -24,6 +25,7 @@ class FileApp extends Component {
     docType: "",
     docTag: "",
     userEmail: null,
+    email2: null,
   };
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -53,14 +55,14 @@ class FileApp extends Component {
     });
   };
   handleUpload = event => {
-    
+
     event.preventDefault();
     if (this.state.uploading) return;
-    if (this.state.docType == ""){
+    if (this.state.docType == "") {
       this.setState({ message: "Select a document type first" });
       return;
     }
-    if (this.state.docTag == ""){
+    if (this.state.docTag == "") {
       this.setState({ message: "Select a industry of intrest first" });
       return;
     }
@@ -76,6 +78,8 @@ class FileApp extends Component {
     data.append("type", this.state.docType)
     data.append("tag", this.state.docTag)
     data.append("email", this.state.userEmail)
+    data.append("email2", this.state.email2)
+    console.log(this.state.email2)
     axios
       .post(endpoint, data, {
         onUploadProgress: (ProgressEvent) => {
@@ -102,6 +106,20 @@ class FileApp extends Component {
         });
       });
   };
+
+  handleChange = (event) => {
+
+    if (event.target.value == "") {
+      this.setState({
+        email2: null
+      });
+    }
+    else {
+      this.setState({
+        email2: event.target.value
+      });
+    }
+  }
   render() {
     const { docType, docTag } = this.state;
     return (
@@ -143,6 +161,10 @@ class FileApp extends Component {
           </FormControl>
         </Box>
         <br />
+        <TextField fullWidth label={"Insert email of person you want to share with"} onChange={this.handleChange}>
+
+        </TextField>
+        <br />
         <form className="box" onSubmit={this.handleUpload}>
           <input
             type="file"
@@ -153,14 +175,14 @@ class FileApp extends Component {
           />
         </form>
         <br />
-          <Button variant="contained" color='secondary' onClick={this.handleUpload} style={{marginRight: '10px'}}>Upload</Button>
-          <label htmlFor="file-5">
-            <span>
-              {this.state.uploading
-                ? this.state.loaded + "%"
-                : this.state.message}
-            </span>
-          </label>
+        <Button variant="contained" color='secondary' onClick={this.handleUpload} style={{ marginRight: '10px' }}>Upload</Button>
+        <label htmlFor="file-5">
+          <span>
+            {this.state.uploading
+              ? this.state.loaded + "%"
+              : this.state.message}
+          </span>
+        </label>
       </div>
     );
   }

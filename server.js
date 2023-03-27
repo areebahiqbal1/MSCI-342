@@ -78,10 +78,10 @@ app.post("/upload", (req, res, next) => {
     });
   }
 
-  let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email, reviewer_id) 
+  let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email, reviewer_id, email2) 
 	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${
     uploadFile.data
-  }', '${up.email}', NULL)`;
+  }', '${up.email}', NULL, '${up.email2}')`;
 
   uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
     if (err) {

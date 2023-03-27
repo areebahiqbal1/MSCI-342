@@ -132,6 +132,7 @@ const App = () => {
                                     <div>
                                         <h2>Tristan Walker</h2>
                                         <p>Philantropist, upstanding civilian, good samaritan and all around nice guy.</p>
+
                                     </div>
                                 </Box>
                             </Paper>

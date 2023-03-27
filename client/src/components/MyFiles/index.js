@@ -171,7 +171,7 @@ const App = () => {
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
-                if ((doc.doc_type !== "Reviewer") & (doc.user_email == userEmail | doc.reviewer_id == userID)) {
+                if ((doc.doc_type !== "Reviewer") & (doc.user_email == userEmail | doc.email2 == userEmail | doc.reviewer_id == userID)) {
                     return (
                         <Typography>
                             {doc.doc_name}
@@ -273,7 +273,7 @@ const App = () => {
                     <br />
                     <Grid>
                         {docList.map((doc) => {
-                            if ((doc.doc_type !== "Reviewer") & (doc.user_email == userEmail | doc.reviewer_id == userID)) {
+                            if ((doc.doc_type !== "Reviewer") & (doc.user_email == userEmail | doc.email2 == userEmail | doc.reviewer_id == userID)) {
                                 return (
                                     <Box
                                         sx={{

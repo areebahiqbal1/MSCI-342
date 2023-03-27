@@ -15,6 +15,7 @@ import firebase from "firebase/app";
 import axios from "axios";
 import FileSaver from "file-saver";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import Paper from '@mui/material/Paper';
 
 const opacityValue = 0.9;
 const endpoint = "http://localhost:4000";
@@ -26,15 +27,15 @@ const lightTheme = createTheme({
             default: "#ffffff"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+            main: '#EEE2DC',
+            light: '#f5eae6',
+            dark: '#ffffff',
+            background: '#ffffff'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+            main: "#EDC7B7",
+            light: '#ffffff',
+            dark: '#ffffff'
         },
     },
 });
@@ -85,7 +86,7 @@ const App = () => {
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: '50%' }}
+                    style={{ maxWidth: '90%' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
@@ -94,19 +95,31 @@ const App = () => {
                         Doc View
                     </Typography>
                     <Typography variant="h6" component="div">
-                        View comments and edit your document.
+                        View comments and edit your document
                     </Typography>
                     <br />
-                    <Grid>
-                        <Typography variant="h6" component="div">
-                            {"User: " + userEmail}
-                        </Typography>
-                        <Typography variant="h6" csmponent="div">
-                            {"File Name: " + viewCount}
-                        </Typography>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <Typography variant="h6" component="div">
+                                {"User: " + userEmail}
+                            </Typography>
+                            <Typography variant="h6" csmponent="div">
+                                {"File Name: " + viewCount}
+                            </Typography>
+                            <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
+                            <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
 
-                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
-                        <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box>
+                                <Paper >
+                                    Comments:
+                                    <Box height="900px">
+
+                                    </Box>
+                                </Paper>
+                            </Box>
+                        </Grid>
                     </Grid>
                     <br />
                 </MainGridContainer>

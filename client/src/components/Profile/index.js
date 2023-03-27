@@ -129,39 +129,6 @@ const App = () => {
     if (response.status !== 200) throw Error(body.message);
     return body;
   };
-  /*
-  const loadApiAvg = () => {
-    callApiAvg().then((res) => {
-      console.log(" returned: ", res);
-      var parsed = JSON.parse(res.express);
-      console.log("callApiFindAvg parsed: ", parsed[0]);
-      setUserName(parsed);
-      //this.setState({ userName: parsed[0] });
-      //console.log(this.state.userName);
-    });
-  };
-
-  //call the post api thingy
-  const callApiAvg = async () => {
-    const url = serverURL + "/api/getAvrage";
-    console.log(url);
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        //authorization: `Bearer ${this.state.token}`
-      },
-      body: JSON.stringify({
-        email: userEmail,
-      }),
-    });
-
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    console.log("Found recipes: ", body);
-    return body;
-  };*/
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);

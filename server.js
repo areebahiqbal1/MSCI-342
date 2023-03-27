@@ -74,6 +74,55 @@ app.post("/upload", (req, res, next) => {
   });
   connection.end();
 });
+//aamina - will upload the new date
+app.post("/dateUpload", (req, res, next) => {
+  let connection = mysql.createConnection(config);
+  console.log(req);
+
+  const email = req.body.email;
+  const title = req.body.title;
+  const start = req.body.start;
+  const end = req.body.end;
+
+  let sql =
+    "INSERT INTO dates (user_id, start_date, end_date, date_title) SELECT user_id, ?, ?, ? FROM users WHERE user_email = ?;";
+  let data = [start, end, title, email];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    let success = JSON.stringify("Success");
+    res.send({ express: success });
+    connection.end();
+  });
+});
+
+//aamina - will get the dates from sql
+
+app.post("/getDates", (req, res) => {
+  let connection = mysql.createConnection(config);
+
+  let sql = `SELECT start_date, end_date, date_title, date_id
+  FROM dates
+  WHERE user_id = (
+    SELECT user_id
+    FROM users
+    WHERE user_email = 'test90@gmail.com'
+  );`;
+  let data = [];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
 
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
@@ -170,30 +219,6 @@ app.post("/api/profile", (req, res) => {
   });
   connection.end();
 });
-/*
-//Aamina - get user name for profile page
-app.post("/api/getAvrage", (req, res) => {
-  let connection = mysql.createConnection(config);
-
-  //const currentemail = req.body.email;
-  const currentemail = "bingo@gmail.com";
-
-  let sql = "SELECT user_name FROM users WHERE user_email = ?";
-
-  let data = [currentemail];
-
-  connection.query(sql, data, (error, results, fields) => {
-    if (error) {
-      return console.error(error.message);
-    }
-
-    console.log(results);
-    let string = JSON.stringify(results);
-    //let obj = JSON.parse(string);
-    res.send({ express: string });
-  });
-  connection.end();
-});*/
 
 //load the username
 app.post("/api/getAvrage", (req, res) => {

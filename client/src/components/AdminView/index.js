@@ -25,20 +25,20 @@ const lightTheme = createTheme({
     palette: {
         type: 'light',
         background: {
-            default: "#ffffff"
+          default: "#EDC7B7"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+          main: '#EEE2DC',
+          light: '#EDC7B7',
+          dark: '#EDC7B7',
+          background: '#EE2DC'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+          main: "#EDC7B7",
+          light: '#EDC7B7',
+          dark: '#BAB2B5'
         },
-    },
+      },
 });
 
 const MainGridContainer = styled(Grid)(({ theme }) => ({

@@ -104,6 +104,48 @@ app.post("/api/getIndustryDocs", (req, res) => {
 		if (error) {
 			return console.error(error.message);
 		}
+//aamina - will upload the new date
+app.post("/dateUpload", (req, res, next) => {
+  let connection = mysql.createConnection(config);
+  console.log(req);
+
+  const email = req.body.email;
+  const title = req.body.title;
+  const start = req.body.start;
+  const end = req.body.end;
+
+  let sql =
+    "INSERT INTO dates (user_id, start_date, end_date, date_title) SELECT user_id, ?, ?, ? FROM users WHERE user_email = ?;";
+  let data = [start, end, title, email];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    let success = JSON.stringify("Success");
+    res.send({ express: success });
+    connection.end();
+  });
+});
+
+//aamina - will get the dates from sql
+
+app.post("/getDates", (req, res) => {
+  let connection = mysql.createConnection(config);
+
+  let sql = `SELECT start_date, end_date, date_title, date_id
+  FROM dates
+  WHERE user_id = (
+    SELECT user_id
+    FROM users
+    WHERE user_email = 'test90@gmail.com'
+  );`;
+  let data = [];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
 
     let string = JSON.stringify(results);
     let obj = JSON.parse(string);
@@ -173,6 +215,35 @@ app.post('/api/Claim', (req, res) => {
   let connection = mysql.createConnection(config);
   let sql = `UPDATE myFiles SET reviewer_id = ? WHERE id = ? AND reviewer_id IS NULL`;
   let data = [req.body.type, req.body.id];
+  
+app.post('/api/editDocs', (req, res) => {
+  let connection = mysql.createConnection(config);
+  let up = req.body;
+  console.log(req.body.viewCount)
+  let sql = `UPDATE a6anjum.myFiles a SET `;
+  let data = [];
+
+  if(up.newName != ""){
+    sql = sql + " doc_name = ?";
+    data.push(up.newName);
+  }
+  if(up.newName != "" && up.newType != ""){
+    sql = sql + ","
+  }
+  if(up.newType != ""){
+    sql = sql + " doc_type = ?";
+    data.push(up.newType);
+  }
+  if(up.newIndustry != "" && up.newType != ""){
+    sql = sql + ","
+  }
+  if(up.newIndustry != ""){
+    sql = sql + " tag = ?";
+    data.push(up.newIndustry);
+  }
+
+  sql = sql + " WHERE a.id = ?";
+  data.push(up.viewCount);
 
   connection.query(sql, data, (error, results, fields) => {
     if (error) {

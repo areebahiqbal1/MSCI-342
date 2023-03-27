@@ -45,7 +45,7 @@ const App = () => {
 
     const faqData = [
         {
-            question: 'Questionn 1',
+            question: 'Question 1',
             answer: 'Answer 1'
         },
         {

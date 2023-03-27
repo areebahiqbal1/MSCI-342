@@ -47,13 +47,15 @@ const App = () => {
                     height: '100vh',
                     opacity: opacityValue,
                     overflow: 'scroll',
+                    backgroundImage: `url(https://source.unsplash.com/_0sEjWfAK3Q)`,
                     backgroundSize: "cover"
+
                 }}
             >
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: 'sm' }}
+                    style={{ maxWidth: '90%' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
@@ -65,8 +67,80 @@ const App = () => {
                         Our dedicated team and mission
                     </Typography>
                     <br />
-                    <Grid>
-                        
+                    <Paper>
+                        <Box height="150px" spacing={2} textAlign="center">
+                            <div>
+                                <h2>Mission Statement</h2>
+                                <p>To enable students in their pursuit of employment by ensuring</p>
+                                <p>they have the proper support and tools to exceed interview expectations.</p>
+                            </div>
+                        </Box>
+                    </Paper>
+                    <br />
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <Box textAlign={"center"}>
+                                <img src="./Chicken1.jpg" alt="logo" />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Paper>
+                                <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
+                                    <div>
+                                        <h2>Areeba Iqbal</h2>
+                                        <p>Team Captain.</p>
+                                    </div>
+                                </Box>
+                            </Paper>
+                        </Grid>
+                        <br />
+                        <Grid item xs={8}>
+                            <Paper>
+                                <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
+                                    <div>
+                                        <h2>Aamina</h2>
+                                        <p>Lablet God</p>
+                                    </div>
+                                </Box>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Box textAlign={"center"}>
+                                <img src="./Chicken3.jpg" alt="logo" />
+                            </Box>
+                        </Grid>
+                        <br />
+                        <Grid item xs={4}>
+                            <Box textAlign={"center"}>
+                                <img src="./Chicken4.jpg" alt="logo" />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Paper>
+                                <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
+                                    <div>
+                                        <h2>Dylan Chow</h2>
+                                        <p>Extremely muscular. Extremely.</p>
+                                    </div>
+                                </Box>
+                            </Paper>
+                        </Grid>
+                        <br />
+                        <Grid item xs={8}>
+                            <Paper>
+                                <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
+                                    <div>
+                                        <h2>Tristan Walker</h2>
+                                        <p>Philantropist, upstanding civilian, good samartian and all around nice guy.</p>
+                                    </div>
+                                </Box>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Box textAlign={"center"}>
+                                <img src="./Chicken2.jpg" alt="logo" />
+                            </Box>
+                        </Grid>
                     </Grid>
                     <br />
                 </MainGridContainer>

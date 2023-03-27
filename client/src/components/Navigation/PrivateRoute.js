@@ -18,6 +18,7 @@ import AboutUs from "../About";
 import HomePage from "../Home";
 import history from "./history";
 import SignOutPage from "../SignOut";
+import Rebound from "../Rebound";
 //import profile from "../Profile";
 
 export default function PrivateRoute({ authenticated, ...rest }) {
@@ -50,6 +51,7 @@ export default function PrivateRoute({ authenticated, ...rest }) {
         <Route path="/Apply" component={ReviewerAppPage} />
         <Route path="/About" component={AboutUs} />
         <Route path="/FAQ" component={FAQPage} />
+        <Route path="/Rebound" component={Rebound} />
       </Switch>
     </Router>
   );

@@ -161,7 +161,7 @@ const App = () => {
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: 'sm' }}
+                    style={{ maxWidth: '90%' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"

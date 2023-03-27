@@ -19,11 +19,17 @@ signOut() {
     this.setState({ mobileMoreAnchorEl: null });
     this.props.firebase.doSignOut();
     this.props.history.push("/");
-  }
-    
+}
+
+componentDidMount() {
+    // call api or anything
+    this.signOut.bind(this);
+}
+
 render() {
+    this.signOut.bind(this);
     return (
-        <Container onMouseEnter = {this.signOut.bind(this)} height = "500px">
+        <Container onMouseEnter = {this.signOut.bind(this)} height = "2000px">
             {this.signOut.bind(this)}
             <Button
                 key='5'

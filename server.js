@@ -93,11 +93,98 @@ app.post('/upload', (req, res, next) => {
   connection.end();
 });
 
+app.post("/api/getIndustryDocs", (req, res) => {
+  let connection = mysql.createConnection(config);
+  let type = req.body.type;
+
+	let sql = `SELECT * FROM a6anjum.myFiles WHERE tag = ? AND reviewer_id IS NULL`;
+	let data = [type];
+	
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+    
+    let success = JSON.stringify("Success");
+    res.send({ express: success });
+    connection.end();
+  });
+});
+//aamina - will upload the new date
+app.post("/dateUpload", (req, res, next) => {
+  let connection = mysql.createConnection(config);
+  console.log(req);
+
+  const email = req.body.email;
+  const title = req.body.title;
+  const start = req.body.start;
+  const end = req.body.end;
+
+  let sql =
+    "INSERT INTO dates (user_id, start_date, end_date, date_title) SELECT user_id, ?, ?, ? FROM users WHERE user_email = ?;";
+  let data = [start, end, title, email];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    let success = JSON.stringify("Success");
+    res.send({ express: success });
+    connection.end();
+  });
+});
+
+//aamina - will get the dates from sql
+
+app.post("/getDates", (req, res) => {
+  let connection = mysql.createConnection(config);
+
+  let sql = `SELECT start_date, end_date, date_title, date_id
+  FROM dates
+  WHERE user_id = (
+    SELECT user_id
+    FROM users
+    WHERE user_email = 'test90@gmail.com'
+  );`;
+  let data = [];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
+app.post("/api/getUser", (req, res) => {
+  let connection = mysql.createConnection(config);
+  let email = req.body;
+  console.log(email);
+
+	let sql = `SELECT * FROM a6anjum.users WHERE user_email = ?`;
+	let data = [email.type];
+	
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM a6anjum.myFiles`;
-	let data = [];
+	let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ? OR reviewer_id = ?`;
+	let data = [req.body.type, req.body.id];
 	
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
@@ -117,6 +204,23 @@ app.post('/api/delDocs', (req, res) => {
   console.log(req.body.viewCount)
   let sql = `delete FROM a6anjum.myFiles a WHERE a.id = ?`;
   let data = [req.body.viewCount];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
+app.post('/api/Claim', (req, res) => {
+  let connection = mysql.createConnection(config);
+  let sql = `UPDATE myFiles SET reviewer_id = ? WHERE id = ? AND reviewer_id IS NULL`;
+  let data = [req.body.type, req.body.id];
 
   connection.query(sql, data, (error, results, fields) => {
     if (error) {

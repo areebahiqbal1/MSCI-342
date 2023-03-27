@@ -14,7 +14,11 @@ import history from "../Navigation/history";
 import AppBar from "@material-ui/core/AppBar";
 import Container from "@material-ui/core/Container";
 import Toolbar from "@material-ui/core/Toolbar";
+import axios from "axios";
+import firebase from "firebase/app";
 import MenuBar from '../MenuBar/menu';
+
+
 
 const opacityValue = 0.9;
 
@@ -60,15 +64,48 @@ const styles = {
     marginBottom: "1rem",
   },
 };
+const endpoint = "http://localhost:4000/dateUpload";
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
     this.calendarRef = React.createRef();
     this.state = {
+      list: [{ start_date: "", end_date: "", date_title: "", date_id: 1 }],
+      userEmail: "",
       viewType: "Week",
       durationBarVisible: false,
       timeRangeSelectedHandling: "Enabled",
+      onTimeRange: async (args) => {
+        const Data = {
+          email: this.state.userEmail,
+        };
+        axios
+          .post("http://localhost:4000/getDates", Data, {})
+          .then(
+            function (response) {
+              console.log(response.data.express);
+              var parsed = JSON.parse(response.data.express);
+              console.log(parsed);
+              this.setState({ list: parsed });
+              const events = this.state.list.map((item) => {
+                return {
+                  id: item.date_id,
+                  text: item.date_title,
+                  start: item.start_date,
+                  end: item.end_date,
+                };
+              });
+              console.log(events);
+              const startDate = "2023-03-19";
+
+              this.calendar.update({ startDate, events });
+            }.bind(this)
+          )
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
       onTimeRangeSelected: async (args) => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.prompt(
@@ -85,6 +122,62 @@ class Calendar extends Component {
           id: DayPilot.guid(),
           text: modal.result,
         });
+        // define upload
+        const data = new FormData();
+        data.append("title", "non");
+        data.append("end", args.end);
+        data.append("start", args.start);
+        data.append("email", "bingo@gmail.com");
+
+        const Data = {
+          title: modal.result,
+          end: args.end,
+          start: args.start,
+          email: this.state.userEmail,
+        };
+
+        console.log(Data);
+
+        axios
+          .post(endpoint, Data, {
+            onUploadProgress: (ProgressEvent) => {
+              this.setState({
+                loaded: Math.round(
+                  (ProgressEvent.loaded / ProgressEvent.total) * 100
+                ),
+              });
+            },
+          })
+          .then(() => {
+            setTimeout(() => {
+              axios
+                .post("http://localhost:4000/getDates", Data, {})
+                .then(
+                  function (response) {
+                    console.log(response.data.express);
+                    var parsed = JSON.parse(response.data.express);
+                    console.log(parsed);
+                    this.setState({ list: parsed });
+                    const events = this.state.list.map((item) => {
+                      return {
+                        id: item.date_id,
+                        text: item.date_title,
+                        start: item.start_date,
+                        end: item.end_date,
+                      };
+                    });
+                    console.log(events);
+                    const startDate = "2023-03-19";
+
+                    this.calendar.update({ startDate, events });
+                  }.bind(this)
+                )
+                .catch(function (error) {
+                  console.log(error);
+                });
+            }, 1000);
+          });
+        //const list = [{ start_date: "2023-03-21T10:30:00", end_date: "2023-03-21T13:00:00", date_title: "Event 1", date_id: 1 }];
       },
       eventDeleteHandling: "Update",
       onEventClick: async (args) => {
@@ -108,13 +201,21 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    const events = [
+    firebase.auth().onAuthStateChanged((user) => {
+      //if user is loged in then get the user email
+      if (user) {
+        this.setState({ userEmail: user.email });
+      }
+    });
+
+    this.state.onTimeRange();
+
+    /* const events = [
       {
         id: 1,
         text: "Event 1",
         start: "2023-03-21T10:30:00",
         end: "2023-03-21T13:00:00",
-        backColor: "#e2edab",
       },
       {
         id: 2,
@@ -138,11 +239,11 @@ class Calendar extends Component {
         backColor: "#c9c3eb",
       },
     ];
-
     const startDate = "2023-03-19";
-
-    this.calendar.update({ startDate, events });
+    this.calendar.update({ startDate, events });*/
   }
+
+
 
   render() {
     return (
@@ -164,9 +265,22 @@ class Calendar extends Component {
             justify="flex-start"
             alignItems="stretch"
           >
-            <Typography variant="h1" align="center" style={styles.title}>
-              Calendar
-            </Typography>
+                    <Typography 
+                            variant="h1"
+                            component="h1"
+                            align="center"
+                            gutterBottom
+                            style={{
+                            color: '#000', 
+                            fontSize: '3rem', 
+                            fontWeight: 'bold', 
+                            textShadow: '1px 1px #ccc', 
+                            letterSpacing: '0.1em', 
+                            lineHeight: '1.2', 
+                            }}
+                            >                    
+                            Calendar
+                  </Typography>
             <Typography variant="h6" component="div">
               Organize your schedule.
             </Typography>
@@ -200,4 +314,4 @@ class Calendar extends Component {
   }
 }
 
-export default Calendar;
+export default Calendar;

@@ -198,7 +198,7 @@ const App = () => {
                                             <Grid item xs={2.5} spacing={0}>
                                                 <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id)} ><Check /></Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleReject(doc.id)} ><Clear /></Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleView(doc.doc_name)} ><ViewIcon /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleView([doc.doc_name, doc.id])} ><ViewIcon /></Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

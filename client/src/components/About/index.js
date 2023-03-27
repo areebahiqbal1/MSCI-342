@@ -87,7 +87,7 @@ const App = () => {
                             <Paper>
                                 <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
                                     <div>
-                                        <h2>Areeba Iqbal</h2>
+                                        <h2>Areebah Iqbal</h2>
                                         <p>Team Captain.</p>
                                     </div>
                                 </Box>

@@ -10,12 +10,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import firebase from "firebase/app";
 import axios from "axios";
 import FileSaver from "file-saver";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import SendIcon from '@mui/icons-material/Send';
+import { setView, setView2} from '../Store/viewerSlice';
+
 
 const opacityValue = 0.9;
 const endpoint = "http://localhost:4000";
@@ -48,6 +52,8 @@ const App = () => {
 
     //Gets and returns document ID
     const viewCount = useSelector((state) => state.viewer.value)
+    const viewCount2 = useSelector((state) => state.viewer.value2)
+    const dispatch = useDispatch()
     console.log(viewCount)
     const docs = [{ uri: endpoint + '/files/' + viewCount }];
 
@@ -70,6 +76,91 @@ const App = () => {
             .then((response) => {
                 FileSaver.saveAs(response.data, viewCount);
             });
+    }
+
+    const [comment, setComment] = React.useState("");
+
+    const handleChange = (event) => {
+        setComment(event.target.value);
+        console.log(event.target.value);
+    }
+
+    const handleSubmit = () => {
+        callApiAddComment();
+        dispatch(setView(viewCount));
+        dispatch(setView2(viewCount2));
+        setComment("");
+        handleComSearch();
+    }
+
+    const callApiAddComment = async (id) => {
+
+        const url = endpoint + "/api/addComment";
+        console.log(url);
+        console.log(viewCount2);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                data: comment,
+                docID: viewCount2,
+                userID: userEmail,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
+    const [docList, setDocList] = React.useState([]);
+
+    React.useEffect(() => {
+        handleComSearch();
+    }, []);
+
+    const handleComSearch = () => {
+        callApiGetComments()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                setDocList(parsed);
+            });
+    }
+
+    const callApiGetComments = async () => {
+
+        const url = endpoint + "/api/getComments";
+        console.log(url);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                docID: viewCount2,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
+    const createList = (givenList) => {
+        {
+            givenList.map((doc) => {
+                if (doc.doc_type !== "Reviewer") {
+                    return (
+                        <Typography>
+                            {doc.data}
+                        </Typography>
+                    )
+                }
+            }
+            )
+        }
     }
 
     return (
@@ -114,10 +205,40 @@ const App = () => {
                             <Box>
                                 <Paper >
                                     Comments:
-                                    <Box height="900px">
-
+                                    <Box height="400px">
+                                    {docList.map((doc) => {
+                            if (doc.doc_type !== "Reviewer") {
+                                return (
+                                    <Box
+                                        sx={{
+                                            p: 1,
+                                            bgcolor: 'primary.light',
+                                            display: '',
+                                            gridTemplateColumns: { md: '1fr 1fr' },
+                                            gap: 1,
+                                        }}
+                                    >
+                                        {doc.data}
+                                    </Box>
+                                )
+                            }
+                        }
+                        )}
+                        {createList(docList)}
                                     </Box>
                                 </Paper>
+                                <Grid container>
+                                    <Grid item xs={11}>
+                                        <TextField fullWidth label={"Type here"} onChange={handleChange}>
+                                            Type here.
+                                        </TextField>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <Box padding="10px">
+                                            <Button variant="contained" color="secondary" onClick={() => handleSubmit()}><SendIcon /></Button>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
                     </Grid>

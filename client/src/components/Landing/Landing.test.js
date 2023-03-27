@@ -22,7 +22,9 @@ describe('TheLanding component', () => {
       expect(signInButton).toBeInTheDocument();
       expect(signUpButton).toBeInTheDocument();
     });
+  
   });
+  
 
 // const lighttheme = createTheme({
 //   palette: {

@@ -13,6 +13,7 @@ import MenuBar from '../MenuBar/menu';
 import { useSelector, useDispatch } from 'react-redux';
 import firebase from "firebase/app";
 import { setView, setView2} from '../Store/viewerSlice';
+import firebase from "firebase/app";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ComIcon from '@mui/icons-material/ChatBubble';

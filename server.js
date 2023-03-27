@@ -47,22 +47,33 @@ app.use(
 );
 
 app.use('/files', express.static(path.join(__dirname, "public/files")), (req, res) => {
-    return res.status(200).send("It's working");
+  return res.status(200).send("It's working");
 })
 app.get('/files/*', (req, res) => {
-    return res.status(200).send("It's working");
+  return res.status(200).send("It's working");
 })
 
 app.post('/upload', (req, res, next) => {
-	let connection = mysql.createConnection(config)
-	//console.log(req)
-	let up = req.body;
-	let uploadFile = req.files.file;
-	const name = uploadFile.name;
-	const md5File = req.files.file.md5;
-	const saveAs = `${name}`;
+  let connection = mysql.createConnection(config)
+  //console.log(req)
+  let up = req.body;
+  let uploadFile = req.files.file;
+  const name = uploadFile.name;
+  const md5File = req.files.file.md5;
+  const saveAs = `${name}`;
 
-	let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email) 
+  if (up.type = "Reviewer") {
+    let sql = `DELETE FROM a6anjum.myFiles a WHERE a.doc_type = 'Reviewer' AND a.user_email = ?`;
+    let data = [up.email];
+
+    connection.query(sql, data, (error, results, fields) => {
+      if (error) {
+        return console.error(error.message);
+      }
+    });
+  }
+
+  let sql = `INSERT INTO myFiles (doc_name, doc_type, tag, userID, data, user_email) 
 	VALUES ('${name}', '${up.type}', '${up.tag}', '${1337}', '${uploadFile.data}', '${up.email}')`;
 
 	uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
@@ -102,21 +113,21 @@ app.post("/api/getDocs", (req, res) => {
 });
 
 app.post('/api/delDocs', (req, res) => {
-	let connection = mysql.createConnection(config);
-	console.log(req.body.viewCount)
-	let sql = `delete FROM a6anjum.myFiles a WHERE a.id = ?`;
-	let data = [req.body.viewCount];
+  let connection = mysql.createConnection(config);
+  console.log(req.body.viewCount)
+  let sql = `delete FROM a6anjum.myFiles a WHERE a.id = ?`;
+  let data = [req.body.viewCount];
 
-	connection.query(sql, data, (error, results, fields) => {
-		if (error) {
-			return console.error(error.message);
-		}
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
 
-		let string = JSON.stringify(results);
-		let obj = JSON.parse(string);
-		res.send({ express: string });
-	});
-	connection.end();
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
 });
 
 app.use(express.static(path.join(__dirname, "client/build")));

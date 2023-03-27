@@ -44,8 +44,9 @@ const App = () => {
     });
     console.log(userEmail)
 
-    const handleLogout = () => {               
-        
+    const handleLogout =() => {
+        firebase.auth().signOut();
+        history.push('/');
     }
 
     return (
@@ -89,13 +90,6 @@ const App = () => {
                                 Calendar
                             </Button>
                             <Button
-                                key='6'
-                                onClick={() => handleLogout()}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                SignOut
-                            </Button>
-                            <Button
                                 key='7'
                                 onClick={() => history.push('/About')}
                                 sx={{ my: 2, color: 'red', display: 'block' }}
@@ -129,6 +123,13 @@ const App = () => {
                                 sx={{ my: 2, color: 'red', display: 'block' }}
                             >
                                 Admin
+                            </Button>
+                            <Button
+                                key='6'
+                                onClick={() => handleLogout()}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                SignOut
                             </Button>
                         </Toolbar>
                     </Container>

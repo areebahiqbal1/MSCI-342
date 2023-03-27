@@ -45,20 +45,20 @@ const App = () => {
 
     const faqData = [
         {
-            question: 'What is your return policy?',
-            answer: 'We accept returns within 30 days of purchase. Items must be in new and unused condition.'
+            question: 'Questionn 1',
+            answer: 'Answer 1'
         },
         {
-            question: 'How long does shipping take?',
-            answer: 'Shipping times vary depending on your location. Please allow 3-5 business days for delivery.'
+            question: 'Question 2',
+            answer: 'Answer 2'
         },
         {
-            question: 'Do you offer international shipping?',
-            answer: 'Yes, we offer international shipping to select countries. Please contact us for more information.'
+            question: 'Question 3',
+            answer: 'Answer 3'
         },
         {
-            question: 'How can I contact customer service?',
-            answer: 'You can contact us by phone, email, or through our website contact form.'
+            question: 'Question 4',
+            answer: 'Answer 4'
         }
     ];
 

@@ -10,6 +10,10 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@mui/material/Paper';
 import MenuBar from '../MenuBar/menu';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const opacityValue = 0.9;
 
@@ -39,6 +43,25 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 
 const App = () => {
 
+    const faqData = [
+        {
+            question: 'Questionn 1',
+            answer: 'Answer 1'
+        },
+        {
+            question: 'Question 2',
+            answer: 'Answer 2'
+        },
+        {
+            question: 'Question 3',
+            answer: 'Answer 3'
+        },
+        {
+            question: 'Question 4',
+            answer: 'Answer 4'
+        }
+    ];
+
     return (
         <ThemeProvider theme={lightTheme}>
             <MenuBar />
@@ -47,27 +70,57 @@ const App = () => {
                     height: '100vh',
                     opacity: opacityValue,
                     overflow: 'scroll',
-                    backgroundSize: "cover"
+                      backgroundImage: `url(https://source.unsplash.com/_0sEjWfAK3Q)`,
+                      backgroundSize: "cover"
+
                 }}
             >
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: 'sm' }}
+                    style={{ maxWidth: '800px' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
                 >
-                    <Typography variant="h3" gutterBottom component="div">
+                    <Typography 
+                            variant="h1"
+                            component="h1"
+                            align="center"
+                            gutterBottom
+                            style={{
+                            color: '#000', 
+                            fontSize: '3rem', 
+                            fontWeight: 'bold', 
+                            textShadow: '1px 1px #ccc', 
+                            letterSpacing: '0.1em', 
+                            lineHeight: '1.2', 
+                            }}
+                            >
                         Frequently Asked Questions
                     </Typography>
                     <Typography variant="h6" component="div">
                         Browse our precurated answers to your questions.
                     </Typography>
                     <br />
-                    <Grid>
-                        
-                    </Grid>
+                    {faqData.map((faq, index) => (
+                        <Accordion key={index}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls={`faq-${index}-content`}
+                                id={`faq-${index}-header`}
+                            >
+                                <Typography variant="h6" component="div">
+                                    {faq.question}
+                                </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails  sx={{  backgroundColor: '#2196f3', color: '#fff'  }}>
+                                <Typography>
+                                    {faq.answer}
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion>
+                    ))}
                     <br />
                 </MainGridContainer>
             </Box>

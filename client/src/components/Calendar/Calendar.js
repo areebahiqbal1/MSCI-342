@@ -154,8 +154,21 @@ class Calendar extends Component {
                     justify="flex-start"
                     alignItems="stretch"
                 >
-                  <Typography variant="h1" align="center" style={styles.title}>
-                    Calendar
+                    <Typography 
+                            variant="h1"
+                            component="h1"
+                            align="center"
+                            gutterBottom
+                            style={{
+                            color: '#000', 
+                            fontSize: '3rem', 
+                            fontWeight: 'bold', 
+                            textShadow: '1px 1px #ccc', 
+                            letterSpacing: '0.1em', 
+                            lineHeight: '1.2', 
+                            }}
+                            >                    
+                            Calendar
                   </Typography>
                     <Typography variant="h6" component="div">
                         Organize your schedule.

@@ -17,7 +17,7 @@ import FileSaver from "file-saver";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import SendIcon from '@mui/icons-material/ChatBubble';
+import SendIcon from '@mui/icons-material/Send';
 import { setView, setView2} from '../Store/viewerSlice';
 
 
@@ -87,10 +87,10 @@ const App = () => {
 
     const handleSubmit = () => {
         callApiAddComment();
-        dispatch(setView(viewCount))
-        dispatch(setView2(viewCount2))
+        dispatch(setView(viewCount));
+        dispatch(setView2(viewCount2));
         setComment("");
-        history.push('/View');
+        handleComSearch();
     }
 
     const callApiAddComment = async (id) => {
@@ -229,7 +229,7 @@ const App = () => {
                                 </Paper>
                                 <Grid container>
                                     <Grid item xs={11}>
-                                        <TextField fullWidth label="Type here" onChange={handleChange}>
+                                        <TextField fullWidth label={"Type here"} onChange={handleChange}>
                                             Type here.
                                         </TextField>
                                     </Grid>

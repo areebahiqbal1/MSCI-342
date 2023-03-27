@@ -11,6 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@mui/material/Paper';
 import MenuBar from '../MenuBar/menu';
 import { useSelector, useDispatch } from 'react-redux';
+import firebase from "firebase/app";
 import { setView } from '../Store/viewerSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -58,9 +59,52 @@ const App = () => {
 
     const [docList, setDocList] = React.useState([]);
 
+    const [userEmail, setUserEmail] = React.useState("");
+
+    firebase.auth().onAuthStateChanged((user) => {
+        //if user is logged in then get the user email
+        if (user) {
+            setUserEmail(user.email);
+        }
+    });
+
+    const [userID, setUserID] = React.useState("");
+    React.useEffect(() => {
+        handleUserID();
+    }, [userEmail]);
+
+    const handleUserID = () => {
+        getUser()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                parsed = parsed[0];
+                console.log(parsed);
+                setUserID(parsed.user_id);
+            });
+    }
+
+    const getUser = async () => {
+        const url = serverURL + "/api/getUser";
+        console.log(url);
+        console.log("getting: " + userEmail)
+        
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: userEmail
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
     React.useEffect(() => {
         handleDocSearch();
-    }, []);
+    }, [userID]);
 
     const handleDocSearch = () => {
         callApiFindDocs()
@@ -81,7 +125,8 @@ const App = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-
+                type: userEmail,
+                id: userID
             })
         });
         const body = await response.json();

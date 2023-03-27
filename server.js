@@ -93,11 +93,50 @@ app.post('/upload', (req, res, next) => {
   connection.end();
 });
 
+app.post("/api/getIndustryDocs", (req, res) => {
+  let connection = mysql.createConnection(config);
+  let type = req.body.type;
+
+	let sql = `SELECT * FROM a6anjum.myFiles WHERE tag = ? AND reviewer_id IS NULL`;
+	let data = [type];
+	
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
+app.post("/api/getUser", (req, res) => {
+  let connection = mysql.createConnection(config);
+  let email = req.body;
+  console.log(email);
+
+	let sql = `SELECT * FROM a6anjum.users WHERE user_email = ?`;
+	let data = [email.type];
+	
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM a6anjum.myFiles`;
-	let data = [];
+	let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ? OR reviewer_id = ?`;
+	let data = [req.body.type, req.body.id];
 	
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
@@ -117,6 +156,23 @@ app.post('/api/delDocs', (req, res) => {
   console.log(req.body.viewCount)
   let sql = `delete FROM a6anjum.myFiles a WHERE a.id = ?`;
   let data = [req.body.viewCount];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
+app.post('/api/Claim', (req, res) => {
+  let connection = mysql.createConnection(config);
+  let sql = `UPDATE myFiles SET reviewer_id = ? WHERE id = ? AND reviewer_id IS NULL`;
+  let data = [req.body.type, req.body.id];
 
   connection.query(sql, data, (error, results, fields) => {
     if (error) {

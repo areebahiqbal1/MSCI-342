@@ -8,11 +8,14 @@ import history from '../Navigation/history';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
-import { useSelector } from 'react-redux';
 import FileSaver from "file-saver";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import axios from "axios";
 import MenuBar from '../MenuBar/menu';
+import Check from '@mui/icons-material/Check';
+import Clear from '@mui/icons-material/Clear';
+import { useSelector, useDispatch } from 'react-redux';
+import { setView } from '../Store/viewerSlice';
 
 
 const opacityValue = 0.9;
@@ -46,6 +49,8 @@ const App = () => {
 
     const viewCount = useSelector((state) => state.viewer.value)
     console.log(viewCount)
+    const dispatch = useDispatch()
+
     const docs = [{ uri: endpoint + '/files/' + viewCount }];
 
     const handleDownload = () => {
@@ -57,6 +62,41 @@ const App = () => {
             .then((response) => {
                 FileSaver.saveAs(response.data, viewCount);
             });
+    }
+
+    const handleAccept = (id) => {
+        dispatch(setView(id));
+        delDocument(id);
+    }
+
+    const handleReject = (id) => {
+        dispatch(setView(id));
+        delDocument(id);
+    }
+
+    const delDocument = (id) => {
+        callApiDelDocs(id);
+        window.location.reload();
+    }
+
+    const callApiDelDocs = async (id) => {
+
+        const url = endpoint + "/api/delDocs";
+        console.log(url);
+        console.log(viewCount);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                viewCount: id,
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
     }
 
     return (
@@ -89,6 +129,10 @@ const App = () => {
                         <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
                     </Grid>
                     <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
+                    <br />
+                    <Button variant="contained" color='secondary' onClick={() => handleAccept(viewCount)} ><Check /></Button>
+                    <br />
+                    <Button variant="contained" color='secondary' onClick={() => handleReject(viewCount)} ><Clear /></Button>
                     <br />
                 </MainGridContainer>
 

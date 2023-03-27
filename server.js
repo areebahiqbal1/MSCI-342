@@ -182,6 +182,47 @@ app.post('/api/delDocs', (req, res) => {
   connection.end();
 });
 
+app.post('/api/editDocs', (req, res) => {
+  let connection = mysql.createConnection(config);
+  let up = req.body;
+  console.log(req.body.viewCount)
+  let sql = `UPDATE a6anjum.myFiles a SET `;
+  let data = [];
+
+  if(up.newName != ""){
+    sql = sql + " doc_name = ?";
+    data.push(up.newName);
+  }
+  if(up.newName != "" && up.newType != ""){
+    sql = sql + ","
+  }
+  if(up.newType != ""){
+    sql = sql + " doc_type = ?";
+    data.push(up.newType);
+  }
+  if(up.newIndustry != "" && up.newType != ""){
+    sql = sql + ","
+  }
+  if(up.newIndustry != ""){
+    sql = sql + " tag = ?";
+    data.push(up.newIndustry);
+  }
+
+  sql = sql + " WHERE a.id = ?";
+  data.push(up.viewCount);
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 const auth = async (req, res, next) => {

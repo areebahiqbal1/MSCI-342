@@ -13,7 +13,6 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import './Home.css';
 
-
 const serverURL = "";
 
 const lightTheme = createTheme({

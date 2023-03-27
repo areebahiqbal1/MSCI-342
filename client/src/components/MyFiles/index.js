@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@mui/material/Paper';
 import MenuBar from '../MenuBar/menu';
 import { useSelector, useDispatch } from 'react-redux';
-import { setView } from '../Store/viewerSlice';
+import { setView, setView2} from '../Store/viewerSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ComIcon from '@mui/icons-material/ChatBubble';
@@ -148,9 +148,10 @@ const App = () => {
         delDocument(id);
     }
 
-    const handleComSubmit = (id) => {
+    const handleComSubmit = (id, id2) => {
         console.log(id);
         dispatch(setView(id))
+        dispatch(setView2(id2))
         history.push('/View');
     }
 
@@ -287,7 +288,7 @@ const App = () => {
                                                 <Box padding="8px">
                                                     <Button variant="contained" color='secondary' size="large" onClick={() => handleEditSubmit(doc.id)} ><EditIcon /></Button>
                                                     <Button variant="contained" color='secondary' size="large" onClick={() => handleDelSubmit(doc.id)} ><DeleteIcon /></Button>
-                                                    <Button variant="contained" color='secondary' size="large" onClick={() => handleComSubmit(doc.doc_name)} ><ComIcon /></Button>
+                                                    <Button variant="contained" color='secondary' size="large" onClick={() => handleComSubmit(doc.doc_name, doc.id)} ><ComIcon /></Button>
                                                 </Box>
                                             </Grid>
                                         </Grid>

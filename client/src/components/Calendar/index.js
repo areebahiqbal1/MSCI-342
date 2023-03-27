@@ -16,9 +16,7 @@ import Container from "@material-ui/core/Container";
 import Toolbar from "@material-ui/core/Toolbar";
 import axios from "axios";
 import firebase from "firebase/app";
-import MenuBar from '../MenuBar/menu';
-
-
+import MenuBar from "../MenuBar/menu";
 
 const opacityValue = 0.9;
 
@@ -202,48 +200,15 @@ class Calendar extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      //if user is loged in then get the user email
+      //if user is logged in then get the user email
       if (user) {
-        this.setState({ userEmail: user.email });
+        this.setState({ userEmail: user.email }, () => {
+          // Call onTimeRange only after userEmail state has been updated
+          this.state.onTimeRange();
+        });
       }
     });
-
-    this.state.onTimeRange();
-
-    /* const events = [
-      {
-        id: 1,
-        text: "Event 1",
-        start: "2023-03-21T10:30:00",
-        end: "2023-03-21T13:00:00",
-      },
-      {
-        id: 2,
-        text: "Event 2",
-        start: "2023-03-22T09:30:00",
-        end: "2023-03-22T11:30:00",
-        backColor: "#fac2b6",
-      },
-      {
-        id: 3,
-        text: "Event 3",
-        start: "2023-03-22T12:00:00",
-        end: "2023-03-22T15:00:00",
-        backColor: "#c0f0d6",
-      },
-      {
-        id: 4,
-        text: "Event 4",
-        start: "2023-03-23T11:30:00",
-        end: "2023-03-23T14:30:00",
-        backColor: "#c9c3eb",
-      },
-    ];
-    const startDate = "2023-03-19";
-    this.calendar.update({ startDate, events });*/
   }
-
-
 
   render() {
     return (
@@ -265,22 +230,22 @@ class Calendar extends Component {
             justify="flex-start"
             alignItems="stretch"
           >
-                    <Typography 
-                            variant="h1"
-                            component="h1"
-                            align="center"
-                            gutterBottom
-                            style={{
-                            color: '#000', 
-                            fontSize: '3rem', 
-                            fontWeight: 'bold', 
-                            textShadow: '1px 1px #ccc', 
-                            letterSpacing: '0.1em', 
-                            lineHeight: '1.2', 
-                            }}
-                            >                    
-                            Calendar
-                  </Typography>
+            <Typography
+              variant="h1"
+              component="h1"
+              align="center"
+              gutterBottom
+              style={{
+                color: "#000",
+                fontSize: "3rem",
+                fontWeight: "bold",
+                textShadow: "1px 1px #ccc",
+                letterSpacing: "0.1em",
+                lineHeight: "1.2",
+              }}
+            >
+              Calendar
+            </Typography>
             <Typography variant="h6" component="div">
               Organize your schedule.
             </Typography>

@@ -66,7 +66,8 @@ app.post("/upload", (req, res, next) => {
   const md5File = req.files.file.md5;
   const saveAs = `${name}`;
 
-  if (up.type == "Reviewer") {
+  if ((up.type == "Reviewer")) {
+
     let sql = `DELETE FROM a6anjum.myFiles a WHERE a.doc_type = 'Reviewer' AND a.user_email = ?`;
     let data = [up.email];
 

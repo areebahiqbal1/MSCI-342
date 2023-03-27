@@ -67,6 +67,7 @@ app.post("/upload", (req, res, next) => {
   const saveAs = `${name}`;
 
   if ((up.type == "Reviewer")) {
+
     let sql = `DELETE FROM a6anjum.myFiles a WHERE a.doc_type = 'Reviewer' AND a.user_email = ?`;
     let data = [up.email];
 
@@ -116,6 +117,7 @@ app.post("/api/getIndustryDocs", (req, res) => {
     connection.end();
   });
 });
+
 //aamina - will upload the new date
 app.post("/dateUpload", (req, res, next) => {
   let connection = mysql.createConnection(config);
@@ -189,8 +191,8 @@ app.post("/api/getUser", (req, res) => {
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-  let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ? OR reviewer_id = ?`;
-  let data = [req.body.type, req.body.id];
+	let sql = `SELECT * FROM a6anjum.myFiles`;
+	let data = [req.body.type, req.body.id];
 
   connection.query(sql, data, (error, results, fields) => {
     if (error) {

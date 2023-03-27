@@ -134,8 +134,7 @@ const App = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                type: userEmail,
-                id: userID
+
             })
         });
         const body = await response.json();
@@ -172,7 +171,7 @@ const App = () => {
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
-                if (doc.doc_type !== "Reviewer") {
+                if ((doc.doc_type !== "Reviewer") & (doc.user_email == userEmail | doc.reviewer_id == userID)) {
                     return (
                         <Typography>
                             {doc.doc_name}
@@ -274,7 +273,7 @@ const App = () => {
                     <br />
                     <Grid>
                         {docList.map((doc) => {
-                            if (doc.doc_type !== "Reviewer") {
+                            if ((doc.doc_type !== "Reviewer") & (doc.user_email == userEmail | doc.reviewer_id == userID)) {
                                 return (
                                     <Box
                                         sx={{

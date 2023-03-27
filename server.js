@@ -280,6 +280,41 @@ app.post("/api/editDocs", (req, res) => {
   connection.end();
 });
 
+app.post("/api/addComment", (req, res) => {
+  let connection = mysql.createConnection(config);
+  let up = req.body;
+
+  let sql = "INSERT INTO `comments` (data, id, user_id) VALUES (?, ?, ?)";
+  let data = [up.data, up.docID, up.userID];
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.send({ message: "email Successfully Added" });
+  });
+  connection.end();
+});
+
+app.post("/api/getComments", (req, res) => {
+  let connection = mysql.createConnection(config);
+  let up = req.body;
+	let sql = `SELECT * FROM a6anjum.comments WHERE id = ?`;
+	let data = [up.docID];
+	
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			return console.error(error.message);
+		}
+
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 const auth = async (req, res, next) => {

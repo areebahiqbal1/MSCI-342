@@ -45,20 +45,20 @@ const App = () => {
 
     const faqData = [
         {
-            question: 'Question 1',
-            answer: 'Answer 1'
+            question: 'Q: What criteria do reviewers have to meet in order to be selected?',
+            answer: 'A: Reviewers must upload valid criedntials for Admin review.'
         },
         {
-            question: 'Question 2',
-            answer: 'Answer 2'
+            question: 'Q: As a Student, am I allowed to schedule a meeting with my Reviewer?',
+            answer: 'A: Yes, meetings can be scheduled through comments with your reviewer, and vice versa. '
         },
         {
-            question: 'Question 3',
-            answer: 'Answer 3'
+            question: 'Q: Can a Reviewer be a reviewee as well?',
+            answer: 'A: Yes, Reviewers can also have their documents reviewed by other Reveiwers!'
         },
         {
-            question: 'Question 4',
-            answer: 'Answer 4'
+            question: 'Q: Is Can Do Co-op user-friendly?',
+            answer: 'A: Yes, Can Do Co-op is designed to be user-friendly and easy to navigate for students seeking to improve their job search skills.'
         }
     ];
 

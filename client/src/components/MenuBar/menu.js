@@ -62,20 +62,6 @@ const App = () => {
                             </Button>
                             <Button
                                 key='5'
-                                onClick={() => history.push('/SignOut')}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                SignOut
-                            </Button>
-                            <Button
-                                key='6'
-                                onClick={() => history.push('/Review')}
-                                sx={{ my: 2, color: 'red', display: 'block' }}
-                            >
-                                Review
-                            </Button>
-                            <Button
-                                key='6'
                                 onClick={() => history.push('/Calendar')}
                                 sx={{ my: 2, color: 'red', display: 'block' }}
                             >
@@ -83,6 +69,34 @@ const App = () => {
                             </Button>
                             <Button
                                 key='6'
+                                onClick={() => history.push('/SignOut')}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                SignOut
+                            </Button>
+                            <Button
+                                key='7'
+                                onClick={() => history.push('/About')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                About
+                            </Button>
+                            <Button
+                                key='8'
+                                onClick={() => history.push('/FAQ')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                FAQ
+                            </Button>
+                            <Button
+                                key='9'
+                                onClick={() => history.push('/Review')}
+                                sx={{ my: 2, color: 'red', display: 'block' }}
+                            >
+                                Review
+                            </Button>
+                            <Button
+                                key='10'
                                 onClick={() => history.push('/Admin')}
                                 sx={{ my: 2, color: 'red', display: 'block' }}
                             >

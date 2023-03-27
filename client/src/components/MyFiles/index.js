@@ -75,8 +75,11 @@ const App = () => {
     });
 
     const [userID, setUserID] = React.useState("");
+
     React.useEffect(() => {
-        handleUserID();
+        if (userEmail !== "") {
+            handleUserID();
+        }
     }, [userEmail]);
 
     const handleUserID = () => {
@@ -84,7 +87,7 @@ const App = () => {
             .then(res => {
                 var parsed = JSON.parse(res.express);
                 parsed = parsed[0];
-                console.log(parsed);
+                console.log(parsed.user_id);
                 setUserID(parsed.user_id);
             });
     }
@@ -93,7 +96,7 @@ const App = () => {
         const url = serverURL + "/api/getUser";
         console.log(url);
         console.log("getting: " + userEmail)
-        
+
         const response = await fetch(url, {
             method: "POST",
             headers: {

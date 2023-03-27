@@ -104,6 +104,12 @@ app.post("/api/getIndustryDocs", (req, res) => {
 		if (error) {
 			return console.error(error.message);
 		}
+    
+    let success = JSON.stringify("Success");
+    res.send({ express: success });
+    connection.end();
+  });
+});
 //aamina - will upload the new date
 app.post("/dateUpload", (req, res, next) => {
   let connection = mysql.createConnection(config);
@@ -215,7 +221,19 @@ app.post('/api/Claim', (req, res) => {
   let connection = mysql.createConnection(config);
   let sql = `UPDATE myFiles SET reviewer_id = ? WHERE id = ? AND reviewer_id IS NULL`;
   let data = [req.body.type, req.body.id];
-  
+
+  connection.query(sql, data, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+
+    let string = JSON.stringify(results);
+    let obj = JSON.parse(string);
+    res.send({ express: string });
+  });
+  connection.end();
+});
+
 app.post('/api/editDocs', (req, res) => {
   let connection = mysql.createConnection(config);
   let up = req.body;

@@ -12,6 +12,9 @@ import Paper from '@mui/material/Paper';
 import MenuBar from '../MenuBar/menu';
 import { useSelector, useDispatch } from 'react-redux';
 import { setView } from '../Store/viewerSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ComIcon from '@mui/icons-material/ChatBubble';
 
 const opacityValue = 0.9;
 //const serverURL = "http://ec2-18-216-101-119.us-east-2.compute.amazonaws.com:3306";
@@ -30,8 +33,8 @@ const lightTheme = createTheme({
         },
         secondary: {
             main: "#EDC7B7",
-            light: '#000000',
-            dark: '#000000'
+            light: '#ffffff',
+            dark: '#ffffff'
         },
     },
 });
@@ -158,7 +161,7 @@ const App = () => {
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: '73.5%' }}
+                    style={{ maxWidth: 'sm' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
@@ -188,9 +191,9 @@ const App = () => {
                                             <Grid item color='secondary' xs={2}><Item>{doc.doc_type}</Item></Grid>
                                             <Grid item color='secondary' xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} >Edit</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} >DELETE</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.doc_name)} >COMMENTS</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} ><EditIcon /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleDelSubmit(doc.id)} ><DeleteIcon /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.doc_name)} ><ComIcon /></Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

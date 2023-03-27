@@ -69,7 +69,7 @@ app.post('/upload', (req, res, next) => {
 		if (err) {
 			return res.status(500).send(err);
 		}
-		return res.status(200).json({ status: 'uploaded', name, saveAs });
+		//return res.status(200).json({ status: 'uploaded', name, saveAs });
 	});
 
   connection.query(sql, (error, results, fields) => {
@@ -85,7 +85,7 @@ app.post('/upload', (req, res, next) => {
 app.post("/api/getDocs", (req, res) => {
   let connection = mysql.createConnection(config);
 
-	let sql = `SELECT * FROM a6anjum.myFiles WHERE user_email = ?`;
+	let sql = `SELECT * FROM a6anjum.myFiles`;
 	let data = [];
 	
 	connection.query(sql, data, (error, results, fields) => {

@@ -35,6 +35,12 @@ const NavigationAuth = () => (
       <Link to={ROUTES.REVIEWERAPP}>ReviewerApp</Link>
     </li>
     <li>
+      <Link to={ROUTES.ABOUT}>About</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.FAQ}>FAQ</Link>
+    </li>
+    <li>
       <SignOutButton />
     </li>
   </ul>

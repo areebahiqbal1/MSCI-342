@@ -12,6 +12,9 @@ import MenuBar from '../MenuBar/menu';
 import Paper from '@mui/material/Paper';
 import { useSelector, useDispatch } from 'react-redux';
 import { setView } from '../Store/viewerSlice';
+import ViewIcon from '@mui/icons-material/Visibility';
+import Check from '@mui/icons-material/Check';
+import Clear from '@mui/icons-material/Clear';
 
 const opacityValue = 0.9;
 const serverURL = "";
@@ -31,7 +34,7 @@ const lightTheme = createTheme({
         secondary: {
             main: "#EDC7B7",
             light: '#000000',
-            dark: '#000000'
+            dark: '#ffffff'
         },
     },
 });
@@ -193,9 +196,9 @@ const App = () => {
                                             <Grid item xs={4}><Item>{doc.user_email}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id)} >Accept</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleReject(doc.id)} >Reject</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleView(doc.doc_name)} >View</Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id)} ><Check /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleReject(doc.id)} ><Clear /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleView(doc.doc_name)} ><ViewIcon /></Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

@@ -8,15 +8,10 @@ import history from '../Navigation/history';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
-import { useSelector } from 'react-redux';
-import FileSaver from "file-saver";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
-import axios from "axios";
+import Paper from '@mui/material/Paper';
 import MenuBar from '../MenuBar/menu';
 
-
 const opacityValue = 0.9;
-const endpoint = "http://localhost:4000";
 
 const lightTheme = createTheme({
     palette: {
@@ -25,15 +20,15 @@ const lightTheme = createTheme({
             default: "#ffffff"
         },
         primary: {
-            main: '#ef9a9a',
-            light: '#ffcccb',
-            dark: '#ba6b6c',
-            background: '#eeeeee'
+            main: '#EEE2DC',
+            light: '#f5eae6',
+            dark: '#ffffff',
+            background: '#ffffff'
         },
         secondary: {
-            main: "#b71c1c",
-            light: '#f05545',
-            dark: '#7f0000'
+            main: "#EDC7B7",
+            light: '#ffffff',
+            dark: '#ffffff'
         },
     },
 });
@@ -43,21 +38,6 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 }))
 
 const App = () => {
-
-    const viewCount = useSelector((state) => state.viewer.value)
-    console.log(viewCount)
-    const docs = [{ uri: endpoint + '/files/' + viewCount }];
-
-    const handleDownload = () => {
-        axios({
-            method: 'get',
-            url: endpoint + '/files/' + viewCount,
-            responseType: 'blob'
-        })
-            .then((response) => {
-                FileSaver.saveAs(response.data, viewCount);
-            });
-    }
 
     return (
         <ThemeProvider theme={lightTheme}>
@@ -73,25 +53,23 @@ const App = () => {
                 <MainGridContainer
                     container
                     spacing={1}
-                    style={{ maxWidth: '50%' }}
+                    style={{ maxWidth: 'sm' }}
                     direction="column"
                     justify="flex-start"
                     alignItems="stretch"
                 >
                     <Typography variant="h3" gutterBottom component="div">
-                        Doc View
+                        About Us
                     </Typography>
                     <Typography variant="h6" component="div">
-                        View comments and edit your document.
+                        Our dedicated team and mission
                     </Typography>
                     <br />
                     <Grid>
-                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+                        
                     </Grid>
-                    <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
                     <br />
                 </MainGridContainer>
-
             </Box>
         </ThemeProvider>
     );

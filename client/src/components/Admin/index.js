@@ -69,6 +69,7 @@ const App = () => {
 
     React.useEffect(() => {
         handleDocSearch();
+        handleUser();
     }, []);
 
     const handleDocSearch = () => {

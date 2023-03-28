@@ -105,6 +105,7 @@ const App = () => {
                 console.log(parsed);
                 setUserID(parsed.user_id);
                 setIndustry(parsed.industry);
+                setRole(parsed.user_role);
             });
     }
 
@@ -181,25 +182,13 @@ const App = () => {
         dispatch(setView(id))
         history.push('/View');
     }
-    return (
-        <ThemeProvider theme={lightTheme}>
-            <MenuBar />
-            <Box
-                sx={{
-                    height: '100vh',
-                    opacity: opacityValue,
-                    overflow: 'scroll',
-                    backgroundSize: "cover"
-                }}
-            >
-                <MainGridContainer
-                    container
-                    spacing={1}
-                    style={{ maxWidth: '90%' }}
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="stretch"
-                >
+
+    const [role, setRole] = React.useState(-1);
+
+    const allowView = () => {
+        if (role == 1) {
+            return (
+                <Grid>
                     <Typography variant="h3" gutterBottom component="div">
                         Review Document
                     </Typography>
@@ -236,7 +225,40 @@ const App = () => {
                         }
                         )}
                     </Grid>
-                    <br />
+                </Grid>
+            )
+        }
+        else {
+            return (
+                <Grid>
+                    <Typography variant="h3" gutterBottom component="div">
+                        You cannot view this page
+                    </Typography>
+                </Grid>
+            )
+        }
+    }
+
+    return (
+        <ThemeProvider theme={lightTheme}>
+            <MenuBar />
+            <Box
+                sx={{
+                    height: '100vh',
+                    opacity: opacityValue,
+                    overflow: 'scroll',
+                    backgroundSize: "cover"
+                }}
+            >
+                <MainGridContainer
+                    container
+                    spacing={1}
+                    style={{ maxWidth: '90%' }}
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="stretch"
+                >
+                    {allowView()}
                 </MainGridContainer>
 
             </Box>

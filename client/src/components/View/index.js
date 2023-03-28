@@ -32,7 +32,7 @@ const lightTheme = createTheme({
         },
         primary: {
             main: '#EEE2DC',
-            light: '#f5eae6',
+            light: '#fcf7f5',
             dark: '#EEE2DC',
             background: '#ffffff'
         },

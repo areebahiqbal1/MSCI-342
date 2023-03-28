@@ -12,7 +12,7 @@ describe('SignUpFormBase', () => {
         <SignUpFormBase render={mockRender} />
       </MemoryRouter>
     );
-    // const signUpButton = screen.getByRole('button', { name: 'Sign Up' });
-    // expect(signUpButton).toBeInTheDocument();
+     const signUpButton = screen.getByRole('button', { name: 'Sign Up' });
+     expect(signUpButton).toBeInTheDocument();
   });
 });

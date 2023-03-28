@@ -8,5 +8,6 @@ describe('App', () => {
       const render = jest.fn().mockName('render');
       render(<App render={render} />);
   });
+  
 });
 

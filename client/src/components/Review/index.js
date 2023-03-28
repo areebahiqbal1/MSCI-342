@@ -115,7 +115,7 @@ const App = () => {
                 console.log(parsed + " 5");
                 setDocList(parsed);
             });
-            console.log("Doc Search Called");
+        console.log("Doc Search Called");
     }
 
     const handleUserFetch = () => {
@@ -127,7 +127,7 @@ const App = () => {
                 setUserID(parsed.user_id);
                 setIndustry(parsed.industry);
             });
-            console.log("User Search Called");
+        console.log("User Search Called");
     }
 
     /*const handleDocSearch = () => {
@@ -138,6 +138,7 @@ const App = () => {
                 console.log(parsed);
                 setUserID(parsed.user_id);
                 setIndustry(parsed.industry);
+                setRole(parsed.user_role);
             });
     }*/
 
@@ -218,7 +219,6 @@ const App = () => {
         dispatch(setView2(id2))
         history.push('/View');
     }
-
     const createList = (givenList) => {
         {
             givenList.map((doc) => {
@@ -232,25 +232,15 @@ const App = () => {
         }
     }
 
+    const [role, setRole] = React.useState(-1);
+
+    const allowView = () => {
+        if (role == 1) {
+        
+    
+
     return (
-        <ThemeProvider theme={lightTheme}>
-            <MenuBar />
-            <Box
-                sx={{
-                    height: '100vh',
-                    opacity: opacityValue,
-                    overflow: 'scroll',
-                    backgroundSize: "cover"
-                }}
-            >
-                <MainGridContainer
-                    container
-                    spacing={1}
-                    style={{ maxWidth: '90%' }}
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="stretch"
-                >
+                <Grid>
                     <Typography variant="h3" gutterBottom component="div">
                         Review Document
                     </Typography>
@@ -286,14 +276,46 @@ const App = () => {
                             }
                         }
                         )}
-                        {createList(docList)}
                     </Grid>
-                    <br />
+                </Grid>
+            )
+        }
+        else {
+            return (
+                <Grid>
+                    <Typography variant="h3" gutterBottom component="div">
+                        You cannot view this page
+                    </Typography>
+                </Grid>
+            )
+        }
+    }
+
+    return (
+        <ThemeProvider theme={lightTheme}>
+            <MenuBar />
+            <Box
+                sx={{
+                    height: '100vh',
+                    opacity: opacityValue,
+                    overflow: 'scroll',
+                    backgroundSize: "cover"
+                }}
+            >
+                <MainGridContainer
+                    container
+                    spacing={1}
+                    style={{ maxWidth: '90%' }}
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="stretch"
+                >
+                    {allowView()}
                 </MainGridContainer>
 
-            </Box>
-        </ThemeProvider>
-    );
+                                </Box>
+                            </ThemeProvider>
+                            );
 }
 
-export default App;
+                            export default App;

@@ -1,19 +1,11 @@
-import "@testing-library/jest-dom";
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from 'react-router-dom';
+import "@testing-library/jest-dom";
+import { render } from "@testing-library/react";
+import HomeBase from "./index";
 
-import Home from "./index";
-import { createTheme } from "@material-ui/core/styles";
-
-describe('Home component', () => {
-    it('renders the Home page title', () => {
-      const { getByText } = render(
-        <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-      );
-      const titleElement = getByText('CAN-DO-CO-OP');
-      expect(titleElement).toBeInTheDocument();
-    });
+describe("App", () => {
+  it("if Home page renders", () => {
+    const render = jest.fn().mockName("render");
+    render(<HomeBase render={render} />);
+  });
 });

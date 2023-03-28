@@ -16,6 +16,7 @@ import Check from '@mui/icons-material/Check';
 import Clear from '@mui/icons-material/Clear';
 import { useSelector, useDispatch } from 'react-redux';
 import { setView } from '../Store/viewerSlice';
+import firebase from "firebase/app";
 
 
 const opacityValue = 0.9;
@@ -25,20 +26,20 @@ const lightTheme = createTheme({
     palette: {
         type: 'light',
         background: {
-          default: "#EDC7B7"
+            default: "#EDC7B7"
         },
         primary: {
-          main: '#EEE2DC',
-          light: '#EDC7B7',
-          dark: '#EDC7B7',
-          background: '#EE2DC'
+            main: '#EEE2DC',
+            light: '#EDC7B7',
+            dark: '#EDC7B7',
+            background: '#EE2DC'
         },
         secondary: {
-          main: "#EDC7B7",
-          light: '#EDC7B7',
-          dark: '#BAB2B5'
+            main: "#EDC7B7",
+            light: '#EDC7B7',
+            dark: '#BAB2B5'
         },
-      },
+    },
 });
 
 const MainGridContainer = styled(Grid)(({ theme }) => ({
@@ -51,16 +52,24 @@ const App = () => {
     console.log(viewCount)
     const dispatch = useDispatch()
 
-    const docs = [{ uri: endpoint + '/files/' + viewCount }];
+    const [userEmail, setUserEmail] = React.useState("");
+    firebase.auth().onAuthStateChanged((user) => {
+        //if user is logged in then get the user email
+        if (user) {
+            setUserEmail(user.email);
+        }
+    });
+
+    const docs = [{ uri: endpoint + '/files/' + viewCount[0] }];
 
     const handleDownload = () => {
         axios({
             method: 'get',
-            url: endpoint + '/files/' + viewCount,
+            url: endpoint + '/files/' + viewCount[0],
             responseType: 'blob'
         })
             .then((response) => {
-                FileSaver.saveAs(response.data, viewCount);
+                FileSaver.saveAs(response.data, viewCount[0]);
             });
     }
 
@@ -99,6 +108,72 @@ const App = () => {
         return body;
     }
 
+    const [role, setRole] = React.useState(-1);
+
+    React.useEffect(() => handleUser(), [])
+
+    const handleUser = () => {
+        getUser()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                parsed = parsed[0];
+                setRole(parsed.user_role);
+            });
+    }
+
+    const getUser = async () => {
+        const url = endpoint + "/api/getUser";
+        console.log(url);
+        console.log("getting: " + userEmail)
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: userEmail
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
+    const allowView = () => {
+        if (role == 2) {
+            return (
+                <Grid>
+                    <Typography variant="h3" gutterBottom component="div">
+                        Doc View
+                    </Typography>
+                    <Typography variant="h6" component="div">
+                        View comments and edit your document.
+                    </Typography>
+                    <br />
+                    <Grid>
+                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+                    </Grid>
+                    <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
+                    <br />
+                    <Button variant="contained" color='secondary' onClick={() => handleAccept(viewCount)} ><Check /></Button>
+                    <br />
+                    <Button variant="contained" color='secondary' onClick={() => handleReject(viewCount)} ><Clear /></Button>
+                    <br />
+                </Grid>
+            )
+        }
+        else {
+            return (
+                <Grid>
+                    <Typography variant="h3" gutterBottom component="div">
+                        You cannot view this page
+                    </Typography>
+                </Grid>
+            )
+        }
+    }
+
     return (
         <ThemeProvider theme={lightTheme}>
             <MenuBar />
@@ -118,22 +193,8 @@ const App = () => {
                     justify="flex-start"
                     alignItems="stretch"
                 >
-                    <Typography variant="h3" gutterBottom component="div">
-                        Doc View
-                    </Typography>
-                    <Typography variant="h6" component="div">
-                        View comments and edit your document.
-                    </Typography>
-                    <br />
-                    <Grid>
-                        <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
-                    </Grid>
-                    <Button variant="contained" color='secondary' onClick={() => handleDownload()} >Download</Button>
-                    <br />
-                    <Button variant="contained" color='secondary' onClick={() => handleAccept(viewCount)} ><Check /></Button>
-                    <br />
-                    <Button variant="contained" color='secondary' onClick={() => handleReject(viewCount)} ><Clear /></Button>
-                    <br />
+                    {allowView()}
+
                 </MainGridContainer>
 
             </Box>

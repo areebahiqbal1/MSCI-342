@@ -15,6 +15,7 @@ import { setView } from '../Store/viewerSlice';
 import ViewIcon from '@mui/icons-material/Visibility';
 import Check from '@mui/icons-material/Check';
 import Clear from '@mui/icons-material/Clear';
+import firebase from "firebase/app";
 
 const opacityValue = 0.9;
 const serverURL = "";
@@ -46,6 +47,14 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 const App = () => {
     const viewCount = useSelector((state) => state.viewer.value)
     const dispatch = useDispatch()
+
+    const [userEmail, setUserEmail] = React.useState("");
+    firebase.auth().onAuthStateChanged((user) => {
+        //if user is logged in then get the user email
+        if (user) {
+            setUserEmail(user.email);
+        }
+    });
 
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
@@ -109,6 +118,27 @@ const App = () => {
         return body;
     }
 
+    const callApiSetReviewer = async (email, tag) => {
+
+        const url = serverURL + "/api/setReviewer";
+        console.log(url);
+        console.log(viewCount);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: tag,
+                email: email
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
 
     const createList = (givenList) => {
         {
@@ -135,9 +165,10 @@ const App = () => {
         window.location.reload();
     }
 
-    const handleAccept = (id) => {
+    const handleAccept = (id, email, tag) => {
         dispatch(setView(id));
         delDocument(id);
+        callApiSetReviewer(email, tag)
     }
 
     const handleReject = (id) => {
@@ -151,25 +182,40 @@ const App = () => {
         history.push('/AdminView');
     }
 
-    return (
-        <ThemeProvider theme={lightTheme}>
-            <MenuBar />
-            <Box
-                sx={{
-                    height: '100vh',
-                    opacity: opacityValue,
-                    overflow: 'scroll',
-                    backgroundSize: "cover"
-                }}
-            >
-                <MainGridContainer
-                    container
-                    spacing={1}
-                    style={{ maxWidth: '73.5%' }}
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="stretch"
-                >
+    const [role, setRole] = React.useState(-1);
+
+    const handleUser = () => {
+        getUser()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                parsed = parsed[0];
+                setRole(parsed.user_role);
+            });
+    }
+
+    const getUser = async () => {
+        const url = serverURL + "/api/getUser";
+        console.log(url);
+        console.log("getting: " + userEmail)
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: userEmail
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
+    const allowView = () => {
+        if (role == 2) {
+            return (
+                <Grid>
                     <Typography variant="h3" gutterBottom component="div">
                         Admin
                     </Typography>
@@ -196,7 +242,7 @@ const App = () => {
                                             <Grid item xs={4}><Item>{doc.user_email}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id)} ><Check /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id, doc.user_email, doc.tag)} ><Check /></Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleReject(doc.id)} ><Clear /></Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleView([doc.doc_name, doc.id])} ><ViewIcon /></Button>
                                             </Grid>
@@ -209,6 +255,41 @@ const App = () => {
                         {createList(docList)}
                     </Grid>
                     <br />
+                </Grid>
+            )
+        }
+        else {
+            return (
+                <Grid>
+                    <Typography variant="h3" gutterBottom component="div">
+                        You cannot view this page
+                    </Typography>
+                </Grid>
+            )
+        }
+    }
+
+
+    return (
+        <ThemeProvider theme={lightTheme}>
+            <MenuBar />
+            <Box
+                sx={{
+                    height: '100vh',
+                    opacity: opacityValue,
+                    overflow: 'scroll',
+                    backgroundSize: "cover"
+                }}
+            >
+                <MainGridContainer
+                    container
+                    spacing={1}
+                    style={{ maxWidth: '73.5%' }}
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="stretch"
+                >
+                    {allowView()}
                 </MainGridContainer>
 
             </Box>

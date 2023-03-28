@@ -100,7 +100,7 @@ class Calendar extends Component {
                 };
               });
               console.log(events);
-              const startDate = "2023-03-19";
+              const startDate = "2023-03-27";
 
               this.calendar.update({ startDate, events });
             }.bind(this)
@@ -319,8 +319,8 @@ class Calendar extends Component {
                     selectMode={"week"}
                     showMonths={2}
                     skipMonths={2}
-                    startDate={"2023-03-19"}
-                    selectionDay={"2023-03-19"}
+                    startDate={"2023-03-26"}
+                    selectionDay={"2023-03-26"}
                     onTimeRangeSelected={(args) => {
                       this.calendar.update({
                         startDate: args.day,

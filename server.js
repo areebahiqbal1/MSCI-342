@@ -112,8 +112,8 @@ app.post("/api/getIndustryDocs", (req, res) => {
       return console.error(error.message);
     }
 
-    let success = JSON.stringify("Success");
-    res.send({ express: success });
+    let string = JSON.stringify(results);
+    res.send({ express: string });
     connection.end();
   });
 });

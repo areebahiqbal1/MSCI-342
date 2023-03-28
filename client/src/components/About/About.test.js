@@ -3,10 +3,20 @@ import "@testing-library/jest-dom";
 import { render } from "@testing-library/react";
 import App from "./index";
 
-describe('App', () => {
-  it('if Profile page renders', () => {
-      const render = jest.fn().mockName('render');
-      render(<App render={render} />);
-  });
-});
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from 'react-router-dom';
 
+import Home from "./index";
+import { createTheme } from "@material-ui/core/styles";
+
+describe('Home component', () => {
+    it('renders the Home page title', () => {
+      const { getByText } = render(
+        <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+      );
+      const titleElement = getByText('CAN-DO-CO-OP');
+      expect(titleElement).toBeInTheDocument();
+    });
+});

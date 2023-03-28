@@ -48,7 +48,7 @@ class HomeBase extends React.Component {
   }
 
   async componentDidMount() {
-    if (this.props.authUser.uid !== null) {
+    if (this.props.authUser.uid != null) {
       this.setState({ userID: this.props.authUser.uid });
       await this.getToken();
       this.loadUserSettings();

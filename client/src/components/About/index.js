@@ -80,7 +80,7 @@ const App = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <Box textAlign={"center"}>
-                                <img src="./Chicken1.jpg" alt="logo" />
+                                <img src="./Chicken1.jpg" alt="logo" height="200px"/>
                             </Box>
                         </Grid>
                         <Grid item xs={8}>
@@ -106,13 +106,13 @@ const App = () => {
                         </Grid>
                         <Grid item xs={4}>
                             <Box textAlign={"center"}>
-                                <img src="./Chicken3.jpg" alt="logo" />
+                                <img src="./Chicken3.jpg" alt="logo" height="200px"/>
                             </Box>
                         </Grid>
                         <br />
                         <Grid item xs={4}>
                             <Box textAlign={"center"}>
-                                <img src="./Chicken4.jpg" alt="logo" />
+                                <img src="./Chicken4.jpg" alt="logo" height="200px"/>
                             </Box>
                         </Grid>
                         <Grid item xs={8}>
@@ -139,7 +139,7 @@ const App = () => {
                         </Grid>
                         <Grid item xs={4}>
                             <Box textAlign={"center"}>
-                                <img src="./Chicken2.jpg" alt="logo" />
+                                <img src="./Chicken2.jpg" alt="logo" height="200px"/>
                             </Box>
                         </Grid>
                     </Grid>

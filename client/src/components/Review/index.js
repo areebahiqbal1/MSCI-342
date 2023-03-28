@@ -232,14 +232,11 @@ const App = () => {
         }
     }
 
-    const [role, setRole] = React.useState(-1);
+    const [role, setRole] = React.useState(1);
 
     const allowView = () => {
         if (role == 1) {
-        
-    
-
-    return (
+            return (
                 <Grid>
                     <Typography variant="h3" gutterBottom component="div">
                         Review Document
@@ -313,9 +310,9 @@ const App = () => {
                     {allowView()}
                 </MainGridContainer>
 
-                                </Box>
-                            </ThemeProvider>
-                            );
+            </Box>
+        </ThemeProvider>
+    );
 }
 
-                            export default App;
+export default App;

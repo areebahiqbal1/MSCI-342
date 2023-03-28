@@ -258,6 +258,7 @@ class Calendar extends Component {
             height: "100vh",
             opacity: opacityValue,
             overflow: "scroll",
+            backgroundImage: `url(https://source.unsplash.com/_0sEjWfAK3Q)`,
             backgroundSize: "cover",
           }}
         >
@@ -291,7 +292,7 @@ class Calendar extends Component {
               <br></br>
               
               <a href="https://meet.google.com" target="_blank">
-              <img src="./google.jpg" alt="Google Meet Icon" height="40px"/>
+              <img src="./google.jpg" alt="Google Meet Icon" height="50px"/>
             </a>
            <br></br>
             </Typography>

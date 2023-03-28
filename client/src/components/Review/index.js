@@ -10,13 +10,18 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuBar from '../MenuBar/menu';
 import { useSelector, useDispatch } from 'react-redux';
-import { setView } from '../Store/viewerSlice';
-import firebase from "firebase/app";
 import axios from "axios";
-import Paper from '@mui/material/Paper';
-
 import EditIcon from '@mui/icons-material/Edit';
 import ComIcon from '@mui/icons-material/ChatBubble';
+import Paper from '@mui/material/Paper';
+import firebase from "firebase/app";
+import { setView, setView2 } from '../Store/viewerSlice';
+import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const opacityValue = 0.9;
 const endpoint = "http://localhost:4000";
@@ -41,7 +46,6 @@ const lightTheme = createTheme({
     },
 });
 
-
 const MainGridContainer = styled(Grid)(({ theme }) => ({
     margin: theme.spacing(4),
 }))
@@ -49,6 +53,7 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 const App = () => {
 
     const viewCount = useSelector((state) => state.viewer.value)
+    const viewCount2 = useSelector((state) => state.viewer.value2)
     const dispatch = useDispatch()
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -69,8 +74,8 @@ const App = () => {
     });
 
     React.useEffect(() => {
-        if (userEmail !== "") {
-            handleDocSearch();
+        if (userEmail !== "" && industry == "") {
+            handleUserFetch();
         }
     }, [userEmail]);
 
@@ -97,7 +102,35 @@ const App = () => {
     }
     const [docList, setDocList] = React.useState([]);
 
+    React.useEffect(() => {
+        if (docList.length == 0) {
+            handleDocSearch();
+        }
+    }, [docList]);
+
     const handleDocSearch = () => {
+        callApiFindIndustryDocs()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                console.log(parsed + " 5");
+                setDocList(parsed);
+            });
+        console.log("Doc Search Called");
+    }
+
+    const handleUserFetch = () => {
+        getUser()
+            .then(res => {
+                var parsed = JSON.parse(res.express);
+                parsed = parsed[0];
+                console.log(parsed + " 4");
+                setUserID(parsed.user_id);
+                setIndustry(parsed.industry);
+            });
+        console.log("User Search Called");
+    }
+
+    /*const handleDocSearch = () => {
         getUser()
             .then(res => {
                 var parsed = JSON.parse(res.express);
@@ -107,10 +140,12 @@ const App = () => {
                 setIndustry(parsed.industry);
                 setRole(parsed.user_role);
             });
-    }
+    }*/
 
-    React.useEffect(() => {
-        if (industry !== "" & docList == []) {
+    /*React.useEffect(() => {
+        console.log("test1");
+        if (docList.length == 0) {
+            console.log("test2");
             callApiFindIndustryDocs()
                 .then(res => {
                     var docParsed = JSON.parse(res.express);
@@ -118,13 +153,14 @@ const App = () => {
                     setDocList(docParsed);
                 });
         }
-    }, [industry])
+        console.log(docList);
+    }, [industry]) */
 
     const callApiFindIndustryDocs = async () => {
 
         const url = endpoint + "/api/getIndustryDocs";
         console.log(url);
-        console.log(industry);
+        console.log(industry + " 6");
 
         const response = await fetch(url, {
             method: "POST",
@@ -177,13 +213,26 @@ const App = () => {
         return body;
     }
 
-    const handleComSubmit = (id) => {
-        console.log(id);
+    const handleComSubmit = (id, id2) => {
+        console.log(id + " 8");
         dispatch(setView(id))
+        dispatch(setView2(id2))
         history.push('/View');
     }
+    const createList = (givenList) => {
+        {
+            givenList.map((doc) => {
+                return (
+                    <Typography>
+                        {doc.doc_name}
+                    </Typography>
+                )
+            }
+            )
+        }
+    }
 
-    const [role, setRole] = React.useState(-1);
+    const [role, setRole] = React.useState(1);
 
     const allowView = () => {
         if (role == 1) {
@@ -216,7 +265,7 @@ const App = () => {
                                             <Grid item xs={2.5} spacing={0}>
                                                 <Button variant="contained" color='secondary' onClick={() => handleEditSubmit(doc.id)} ><EditIcon /></Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleClaimSubmit(doc.id)} >Claim</Button>
-                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.doc_name)} ><ComIcon /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleComSubmit(doc.doc_name, doc.id)} ><ComIcon /></Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

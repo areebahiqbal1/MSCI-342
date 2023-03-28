@@ -18,7 +18,7 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
-import { setView, setView2} from '../Store/viewerSlice';
+import { setView, setView2 } from '../Store/viewerSlice';
 
 
 const opacityValue = 0.9;
@@ -33,7 +33,7 @@ const lightTheme = createTheme({
         primary: {
             main: '#EEE2DC',
             light: '#f5eae6',
-            dark: '#ffffff',
+            dark: '#EEE2DC',
             background: '#ffffff'
         },
         secondary: {
@@ -90,6 +90,7 @@ const App = () => {
         dispatch(setView(viewCount));
         dispatch(setView2(viewCount2));
         setComment("");
+        history.push('/Rebound');
         history.push('/Rebound');
     }
 
@@ -163,6 +164,8 @@ const App = () => {
         }
     }
 
+    const [baseUser, setBaseUser] = React.useState("");
+
     return (
         <ThemeProvider theme={lightTheme}>
             <MenuBar />
@@ -206,25 +209,45 @@ const App = () => {
                                 <Paper >
                                     Comments:
                                     <Box height="400px">
-                                    {docList.map((doc) => {
-                            if (doc.doc_type !== "Reviewer") {
-                                return (
-                                    <Box
-                                        sx={{
-                                            p: 1,
-                                            bgcolor: 'primary.light',
-                                            display: '',
-                                            gridTemplateColumns: { md: '1fr 1fr' },
-                                            gap: 1,
-                                        }}
-                                    >
-                                        {doc.user_id + ": " +doc.data}
-                                    </Box>
-                                )
-                            }
-                        }
-                        )}
-                        {createList(docList)}
+                                        {docList.map((doc) => {
+                                            if (doc.doc_type !== "Reviewer") {
+                                                if (baseUser == "") {
+                                                    setBaseUser(doc.user_id);
+                                                }
+                                                if (doc.user_id == baseUser) {
+                                                    return (
+                                                        <Box
+                                                            sx={{
+                                                                p: 1,
+                                                                bgcolor: 'primary.light',
+                                                                display: '',
+                                                                gridTemplateColumns: { md: '1fr 1fr' },
+                                                                gap: 1,
+                                                            }}
+                                                        >
+                                                            {doc.user_id + ": " + doc.data}
+                                                        </Box>
+                                                    )
+                                                }
+                                                else {
+                                                    return (
+                                                        <Box
+                                                            sx={{
+                                                                p: 1,
+                                                                bgcolor: 'primary.dark',
+                                                                display: '',
+                                                                gridTemplateColumns: { md: '1fr 1fr' },
+                                                                gap: 1,
+                                                            }}
+                                                        >
+                                                            {doc.user_id + ": " + doc.data}
+                                                        </Box>
+                                                    )
+                                                }
+                                            }
+                                        }
+                                        )}
+                                        {createList(docList)}
                                     </Box>
                                 </Paper>
                                 <Grid container>

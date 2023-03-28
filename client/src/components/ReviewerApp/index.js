@@ -10,7 +10,6 @@ import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import FileApp from './FileApp'
 import MenuBar from '../MenuBar/menu';
-import firebase from "firebase/app";
 
 const opacityValue = 0.9;
 const serverURL = ""
@@ -41,66 +40,6 @@ const MainGridContainer = styled(Grid)(({ theme }) => ({
 
 const App = () => {
 
-    const [userEmail, setUserEmail] = React.useState("");
-    firebase.auth().onAuthStateChanged((user) => {
-        //if user is logged in then get the user email
-        if (user) {
-            setUserEmail(user.email);
-        }
-    });
-
-    const [role, setRole] = React.useState(-1);
-
-    React.useEffect(() => handleUser(), [])
-
-    const handleUser = () => {
-        getUser()
-            .then(res => {
-                var parsed = JSON.parse(res.express);
-                parsed = parsed[0];
-                setRole(parsed.user_role);
-            });
-    }
-
-    const getUser = async () => {
-        const url = serverURL + "/api/getUser";
-        console.log(url);
-        console.log("getting: " + userEmail)
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                type: userEmail
-            })
-        });
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        return body;
-    }
-
-    const allowView = () => {
-        if (role == 1) {
-            return (
-                <Grid>
-                    <FileApp />
-                </Grid>
-            )
-        }
-        else {
-            return (
-                <Grid>
-                    <Typography variant="h3" gutterBottom component="div">
-                        You cannot view this page
-                    </Typography>
-                </Grid>
-            )
-        }
-    }
-
-
     return (
         <ThemeProvider theme={lightTheme}>
             <MenuBar />
@@ -128,7 +67,7 @@ const App = () => {
                     </Typography>
                     <br />
                     <Grid>
-                        {allowView}
+                        <FileApp />
                     </Grid>
                     <br />
                 </MainGridContainer>

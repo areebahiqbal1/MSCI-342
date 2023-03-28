@@ -69,7 +69,6 @@ const App = () => {
 
     React.useEffect(() => {
         handleDocSearch();
-        handleUser();
     }, []);
 
     const handleDocSearch = () => {
@@ -184,13 +183,16 @@ const App = () => {
     }
 
     const [role, setRole] = React.useState(-1);
+    React.useEffect(() => {
+        if (userEmail !== "" & role == -1) {
+            handleUser();
+        }
+    }, [userEmail, role]);
 
     const handleUser = () => {
         getUser()
             .then(res => {
-                var parsed = JSON.parse(res.express);
-                parsed = parsed[0];
-                setRole(parsed.user_role);
+                setRole((JSON.parse(res.express)[0]).user_role);
             });
     }
 
@@ -214,6 +216,7 @@ const App = () => {
     }
 
     const allowView = () => {
+        console.log("role: " + role)
         if (role == 2) {
             return (
                 <Grid>

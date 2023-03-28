@@ -110,15 +110,15 @@ const App = () => {
 
     const [role, setRole] = React.useState(-1);
 
-    React.useEffect(() => handleUser(), [])
+    React.useEffect(() => handleUser(), [userEmail, role])
 
     const handleUser = () => {
-        getUser()
-            .then(res => {
-                var parsed = JSON.parse(res.express);
-                parsed = parsed[0];
-                setRole(parsed.user_role);
-            });
+        if (userEmail !== "" & role == -1) {
+            getUser()
+                .then(res => {
+                    setRole(JSON.parse(res.express)[0].user_role);
+                });
+        }
     }
 
     const getUser = async () => {
@@ -141,6 +141,7 @@ const App = () => {
     }
 
     const allowView = () => {
+        console.log("role: " + role)
         if (role == 2) {
             return (
                 <Grid>

@@ -126,6 +126,7 @@ const App = () => {
                 console.log(parsed + " 4");
                 setUserID(parsed.user_id);
                 setIndustry(parsed.industry);
+                setRole(parsed.user_role);
             });
         console.log("User Search Called");
     }
@@ -232,7 +233,7 @@ const App = () => {
         }
     }
 
-    const [role, setRole] = React.useState(1);
+    const [role, setRole] = React.useState(-1);
 
     const allowView = () => {
         if (role == 1) {
@@ -272,7 +273,7 @@ const App = () => {
                                 )
                             }
                         }
-                        )}
+                        )}{createList(docList)}
                     </Grid>
                 </Grid>
             )

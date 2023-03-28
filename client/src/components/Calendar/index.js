@@ -287,6 +287,13 @@ class Calendar extends Component {
             </Typography>
             <Typography variant="h6" component="div">
               Organize your schedule.
+
+              <br></br>
+              
+              <a href="https://meet.google.com" target="_blank">
+              <img src="./google.jpg" alt="Google Meet Icon" height="40px"/>
+            </a>
+           <br></br>
             </Typography>
             <br />
             <Grid item xs={12}>

@@ -5,4 +5,5 @@ module.exports = {
     "^.+\\.(js|jsx)$": "babel-jest",
     "^.+\\.css$": "jest-css-modules-transform",
     }
+    
     };

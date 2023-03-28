@@ -126,7 +126,7 @@ const App = () => {
                 console.log(parsed + " 4");
                 setUserID(parsed.user_id);
                 setIndustry(parsed.industry);
-                setRole(parsed.user_role)
+                setRole(parsed.user_role);
             });
         console.log("User Search Called");
     }
@@ -273,7 +273,7 @@ const App = () => {
                                 )
                             }
                         }
-                        )}
+                        )}{createList(docList)}
                     </Grid>
                 </Grid>
             )

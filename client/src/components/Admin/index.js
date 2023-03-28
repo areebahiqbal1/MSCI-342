@@ -109,6 +109,27 @@ const App = () => {
         return body;
     }
 
+    const callApiSetReviewer = async (email, tag) => {
+
+        const url = serverURL + "/api/setReviewer";
+        console.log(url);
+        console.log(viewCount);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                type: tag,
+                email: email
+            })
+        });
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    }
+
 
     const createList = (givenList) => {
         {
@@ -135,9 +156,10 @@ const App = () => {
         window.location.reload();
     }
 
-    const handleAccept = (id) => {
+    const handleAccept = (id, email, tag) => {
         dispatch(setView(id));
         delDocument(id);
+        callApiSetReviewer(email, tag)
     }
 
     const handleReject = (id) => {
@@ -196,7 +218,7 @@ const App = () => {
                                             <Grid item xs={4}><Item>{doc.user_email}</Item></Grid>
                                             <Grid item xs={2}><Item>{doc.tag}</Item></Grid>
                                             <Grid item xs={2.5} spacing={0}>
-                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id)} ><Check /></Button>
+                                                <Button variant="contained" color='secondary' onClick={() => handleAccept(doc.id, doc.user_email, doc.tag)} ><Check /></Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleReject(doc.id)} ><Clear /></Button>
                                                 <Button variant="contained" color='secondary' onClick={() => handleView([doc.doc_name, doc.id])} ><ViewIcon /></Button>
                                             </Grid>

@@ -362,7 +362,7 @@ app.post("/api/addReview", (req, res) => {
   const email = req.body.email;
   const defaultName = "no-name user";
 
-  let sql = "INSERT INTO `users` (user_email, user_name) VALUES (?, ?)";
+  let sql = "INSERT INTO `users` (user_email, user_name, user_role) VALUES (?, ?, 0)";
   let data = [email, defaultName];
 
   connection.query(sql, data, (error, results, fields) => {

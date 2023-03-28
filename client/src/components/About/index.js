@@ -120,7 +120,7 @@ const App = () => {
                                 <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
                                     <div>
                                         <h2>Dylan Chow</h2>
-                                        <p>Extremely muscular. Extremely.</p>
+                                        <p>Addicted to puzzle games</p>
                                     </div>
                                 </Box>
                             </Paper>

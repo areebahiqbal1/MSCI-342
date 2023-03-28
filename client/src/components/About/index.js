@@ -88,7 +88,7 @@ const App = () => {
                                 <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
                                     <div>
                                         <h2>Areebah Iqbal</h2>
-                                        <p>Team Captain.</p>
+                                        <p>I am one of 5 siblings.</p>
                                     </div>
                                 </Box>
                             </Paper>
@@ -99,7 +99,7 @@ const App = () => {
                                 <Box fullWidth height="150px" spacing={2} textAlign="center" padding={2}>
                                     <div>
                                         <h2>Aamina</h2>
-                                        <p>Lablet God</p>
+                                        <p>I used to play hockey in high school.</p>
                                     </div>
                                 </Box>
                             </Paper>
@@ -121,7 +121,7 @@ const App = () => {
                                     <div>
                                         <h2>Dylan Chow</h2>
                                         <p>3A Management Engineer</p>
-                                        <p>Extremely muscular. Extremely.</p>
+                                        <p>Addicted to puzzle games</p>
                                     </div>
                                 </Box>
                             </Paper>

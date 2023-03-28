@@ -236,7 +236,7 @@ const App = () => {
     const [role, setRole] = React.useState(-1);
 
     const allowView = () => {
-        if (role == 1) {
+        if (role >= 1) {
             return (
                 <Grid>
                     <Typography variant="h3" gutterBottom component="div">

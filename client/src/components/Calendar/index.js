@@ -100,7 +100,7 @@ class Calendar extends Component {
                 };
               });
               console.log(events);
-              const startDate = "2023-03-27";
+              const startDate = "2023-03-26";
 
               this.calendar.update({ startDate, events });
             }.bind(this)
@@ -133,7 +133,7 @@ class Calendar extends Component {
                 });
               });
               console.log(events);
-              const startDate = "2023-03-19";
+              const startDate = "2023-03-26";
 
               //this.calendar.update({ startDate, events });
             }.bind(this)
@@ -204,7 +204,7 @@ class Calendar extends Component {
                       };
                     });
                     console.log(events);
-                    const startDate = "2023-03-19";
+                    const startDate = "2023-03-26";
 
                     this.calendar.update({ startDate, events });
                   }.bind(this)
